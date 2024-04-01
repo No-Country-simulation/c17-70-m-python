@@ -1,8 +1,16 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Components } from './Pages/Components'
+import { Home } from './Pages/Home'
+import { routes } from './routes'
+
 function App() {
   return (
-    <>
-      <h1>Telemedicina</h1>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path={routes.home} element={<Home />} />
+        <Route path={routes.components} element={<Components />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
