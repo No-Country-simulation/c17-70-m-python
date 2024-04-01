@@ -10,7 +10,7 @@ interface Props {
 const variantButton: Record<TypeButton, string> = {
   primary: 'bg-neutral-400 text-white py-2 px-3 rounded-full',
   secondary:
-    'bg-white text-neutral-400 py-2 px-3 rounded-full border border-neutral-400',
+    'bg-white text-neutral-400 py-2 px-3 rounded-full border-2 border-neutral-400',
 }
 
 export function Button({ typeVariant, children, className }: Props) {
