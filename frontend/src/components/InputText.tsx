@@ -8,7 +8,6 @@ interface Props
   placeholder: string
   className?: string
 }
-// pasar propiedades para el tipo como con los botones
 export const InputText = forwardRef<HTMLInputElement, Props>((props, ref) => {
   const { placeholder, className, ...rest } = props
 
