@@ -3,6 +3,16 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from .models import Profile
 
+
+@receiver(post_save, sender=Profile)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        user_instance = instance.user
+        password = user_instance.password
+        user_instance.set_password(password)
+        user_instance.save()
+
+
 @receiver(post_save, sender=Profile)
 def add_user_to_admins_group(sender, instance, created, **kwargs):
     if created:
