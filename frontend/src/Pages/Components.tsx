@@ -80,7 +80,11 @@ export function Components() {
               onChange={handleChangeEmail}
               value={email}
               type='email'
-              className={`${!isValidEmail ? 'border-error-500' : ''} w-60`}
+              className={`${
+                !isValidEmail
+                  ? 'border-error-400 outline-none ring-error-500 ring-2'
+                  : ''
+              } w-60`}
               placeholder='Correo Electronico'
             />
             {!isValidEmail && (
