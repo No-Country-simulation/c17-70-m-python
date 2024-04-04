@@ -82,7 +82,7 @@ export function Components() {
               type='email'
               className={`${
                 !isValidEmail
-                  ? 'border-error-400 outline-none ring-error-500 ring-2'
+                  ? 'border-0 outline-none ring-error-500 ring-2'
                   : ''
               } w-60`}
               placeholder='Correo Electronico'
