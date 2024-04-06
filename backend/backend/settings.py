@@ -7,7 +7,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
 load_dotenv()
 
 django_insecure_key = "DJANGO_INSECURE_KEY"
@@ -36,14 +35,14 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'coreapi',
-    'account'
+    'accounts',
+    'login'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -74,14 +73,20 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+load_dotenv()
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['RAILWAY_DATABASE_NAME'],
+        'USER': os.environ['RAILWAY_DATABASE_USERNAME'],
+        'PASSWORD': os.environ['RAILWAY_DATABASE_PASSWORD'],
+        'HOST': os.environ['RAILWAY_DATABASE_HOST'],
+        'PORT': os.environ['RAILWAY_DATABASE_PORT'],
     }
 }
 
+
+DEFAULT_CONNECTION_NAME = "default"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -127,6 +132,9 @@ CORES_ALLOW_ORIGINS = [
 
 ]
 REST_FRAMEWORK = {
-    ...:...,
+    ...: ...,
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
 }
