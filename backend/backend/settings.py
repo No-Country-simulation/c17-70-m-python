@@ -19,7 +19,8 @@ SECRET_KEY = os.getenv(django_insecure_key)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv(debug_status, debug_status_default)
-ALLOWED_HOSTS = ['c17-70-m-python-production.up.railway.app']
+load_dotenv()
+ALLOWED_HOSTS = ["HOST_PATH"]
 
 
 
