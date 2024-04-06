@@ -28,31 +28,9 @@ To get a local copy up and running follow these simple example steps.
 ### Requirements
 
 ```bash
-  python -m venv .venv
-```
-```bash
-  pip install django
+  pip install -r requirements.txt
 ```
 
-```bash
-  pip install djangorestframework
-```
-
-```bash
-  pip install django-cors-headers
-```
-
-```bash
-  pip install coreapi
-```
-
-```bash
-  pip install setuptools
-```
-
-```bash
-  pip install setuptools
-```
 
 # from here ignore everything XD
 ### Install
