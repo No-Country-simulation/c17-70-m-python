@@ -19,8 +19,8 @@ SECRET_KEY = os.getenv(django_insecure_key)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv(debug_status, debug_status_default)
+ALLOWED_HOSTS = ['c17-70-m-python-production.up.railway.app']
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -131,6 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORES_ALLOW_ORIGINS = [
 
 ]
+
 REST_FRAMEWORK = {
     ...: ...,
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
