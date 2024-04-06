@@ -77,14 +77,16 @@ load_dotenv()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('NAME'),
-        'USER': os.getenv('USER'),
-        'PASSWORD': os.getenv('PASSWORD'),
-        'HOST': os.getenv('HOST'),
-        'PORT': os.getenv('PORT'),
+        'NAME': os.environ['RAILWAY_DATABASE_NAME'],
+        'USER': os.environ['RAILWAY_DATABASE_USERNAME'],
+        'PASSWORD': os.environ['RAILWAY_DATABASE_PASSWORD'],
+        'HOST': os.environ['RAILWAY_DATABASE_HOST'],
+        'PORT': os.environ['RAILWAY_DATABASE_PORT'],
     }
 }
 
+
+DEFAULT_CONNECTION_NAME = "default"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
