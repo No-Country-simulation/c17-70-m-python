@@ -105,9 +105,18 @@ export function Register() {
               <h2 className='text-xl font-bold'>Crea tu cuenta</h2>
             </div>
             <div className='w-full flex flex-col gap-4'>
-              <InputText className='w-full' placeholder='Correo electrónico' />
-              <InputText className='w-full' placeholder='Contraseña' />
               <InputText
+                type='email'
+                className='w-full'
+                placeholder='Correo electrónico'
+              />
+              <InputText
+                type='password'
+                className='w-full'
+                placeholder='Contraseña'
+              />
+              <InputText
+                type='password'
                 className='w-full'
                 placeholder='Confirma tu contraseña'
               />
