@@ -3,6 +3,7 @@ import './App.css'
 import { Components } from './Pages/Components'
 import { Error404 } from './Pages/Error404'
 import { Home } from './Pages/Home'
+import { Login } from './Pages/Login'
 import { routes } from './routes'
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path={routes.home} element={<Home />} />
+        <Route path={routes.login} element={<Login />} />
         <Route path={routes.components} element={<Components />} />
         <Route path={routes.error} element={<Error404 />} />
       </Routes>
