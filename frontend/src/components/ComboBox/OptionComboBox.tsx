@@ -14,7 +14,7 @@ export function OptionComboBox({ options, onSelect, dropdownPosition }: Props) {
   return (
     <div
       style={dropdownStyle}
-      className='absolute overflow-hidden border border-neutral-900 w-full rounded-3xl'
+      className='absolute overflow-hidden border border-neutral-900 z-40 w-full rounded-3xl'
     >
       {options.map((option, index) => {
         const { image } = option

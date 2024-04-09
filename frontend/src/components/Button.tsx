@@ -15,7 +15,9 @@ export function Button({ typeVariant, children, className, ...props }: Props) {
       'bg-primary-100 text-primary-600 py-2 px-3 rounded-full outline outline-primary-600 hover:bg-primary-200 font-semibold outline-1 disabled:bg-primary-100 disabled:outline-primary-300 disabled:text-primary-300'
   }
 
-  const classVariant = `${variantButton[typeVariant]} ${className || ''}`.trim()
+  const classVariant = `select-none ${variantButton[typeVariant]} ${
+    className || ''
+  }`.trim()
 
   return (
     <button {...props} className={classVariant}>
