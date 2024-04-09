@@ -9,6 +9,7 @@ router.register(r'Account_controller', views.AccountView, 'accounts')
 urlpatterns = [
     path('api/rest/',include(router.urls)),
     path('api/doc/',include_docs_urls(title="account doc")),
+    path('api/hello/', views.home, name="hello"),
 
 
 ]
