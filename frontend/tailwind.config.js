@@ -46,6 +46,7 @@ export default {
         900: '#041322'
       },
       'neutral': {
+        50: '#EDF0F0',
         100: '#E6EBEB',
         200: '#CCD7D7',
         300: '#B3C3C3',

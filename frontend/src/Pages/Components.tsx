@@ -1,15 +1,56 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Button } from '../components/Button'
+import { ComboBox } from '../components/ComboBox/ComboBox'
 import { InputText } from '../components/InputText'
 
 type inputValid = null | boolean
 
 export function Components() {
+  const countryFlags = [
+    {
+      image: 'https://flagicons.lipis.dev/flags/4x3/cl.svg',
+      value: 'Chile',
+      alt: 'image of country Chile'
+    },
+    {
+      image: 'https://flagicons.lipis.dev/flags/4x3/ar.svg',
+      value: 'Argentina',
+      alt: 'image of country Argentina'
+    },
+    {
+      image: 'https://flagicons.lipis.dev/flags/4x3/bo.svg',
+      value: 'Bolivia',
+      alt: 'image of country Bolivia'
+    }
+  ]
+
+  const CountryPhone = [
+    {
+      image: 'https://flagicons.lipis.dev/flags/4x3/cl.svg',
+      value: '+56',
+      country: 'Chile',
+      alt: 'image of country Chile'
+    },
+    {
+      image: 'https://flagicons.lipis.dev/flags/4x3/ar.svg',
+      value: '+54',
+      country: 'Argentina',
+      alt: 'image of country Argentina'
+    },
+    {
+      image: 'https://flagicons.lipis.dev/flags/4x3/bo.svg',
+      value: '+591',
+      country: 'Bolivia',
+      alt: 'image of country Bolivia'
+    }
+  ]
+
   const aritcleClass = 'flex flex-col justify-center items-center gap-3'
   const titleClass = 'text-2xl'
 
   const [email, setEmail] = useState('')
   const [isValidEmail, setIsValidEmail] = useState<inputValid>(null)
+  const [selectedCountry, setSelectedCountry] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -24,6 +65,10 @@ export function Components() {
     setEmail(value)
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     setIsValidEmail(emailRegex.test(value))
+  }
+
+  const handleCountryChange = (countryName: string) => {
+    setSelectedCountry(countryName)
   }
 
   return (
@@ -97,6 +142,30 @@ export function Components() {
             placeholder='Correo Electronico'
             disabled
           />
+        </article>
+        <article className={aritcleClass}>
+          <h1 className={titleClass}>DropDown</h1>
+          <div>
+            <h2 className='text-xl'>Pais</h2>
+            <ComboBox
+              isCapitalized={true}
+              options={countryFlags}
+              placeholder={countryFlags[0].value}
+              handleCountryChange={handleCountryChange}
+              iconShow={true}
+            />
+            <h2 className='text-xl'>Numero Telefonico</h2>
+            <ComboBox
+              className=' w-32'
+              isCapitalized={false}
+              options={CountryPhone}
+              placeholder='+56'
+              readonly={true}
+              selected={CountryPhone.find(
+                country => country.country === selectedCountry
+              )}
+            />
+          </div>
         </article>
       </div>
     </section>
