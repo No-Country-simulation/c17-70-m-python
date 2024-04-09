@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import Account
+from .models import *
 
 
-admin.site.register(Account)
+admin.site.register(Administrator)
+admin.site.register(Doctor)
+admin.site.register(Patient)
+admin.site.register(CustomUser)

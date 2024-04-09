@@ -21,7 +21,8 @@ SECRET_KEY = os.getenv(django_insecure_key)
 DEBUG = os.getenv(debug_status, debug_status_default)
 load_dotenv()
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'c17-70-m-python-production.up.railway.app']
-ALLOWED_HOSTS = ['*']
+
+ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
 
 
 # CSRF_TRUSTED_ORIGINS = [ 'https://c17-70-m-python-production.up.railway.app' ]
@@ -135,6 +136,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORES_ALLOW_ORIGINS = [
 
 ]
+
+############################################################
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "ui/static")]
+# STATIC_ROOT = os.path.join(BASE_DIR, "ui/staticfiles")
+
 
 REST_FRAMEWORK = {
     ...: ...,
