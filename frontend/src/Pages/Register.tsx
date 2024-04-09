@@ -73,7 +73,7 @@ export function Register() {
                 <div className='w-full'>
                   <InputText
                     type='number'
-                    className='w-full appearance-none margin-0'
+                    className='w-full'
                     placeholder='Número'
                   />
                 </div>
