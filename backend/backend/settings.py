@@ -22,7 +22,8 @@ DEBUG = os.getenv(debug_status, debug_status_default)
 load_dotenv()
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'c17-70-m-python-production.up.railway.app']
 
-ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
+ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app",
+                 "https://medicallapi.onrender.com"]
 
 
 # CSRF_TRUSTED_ORIGINS = [ 'https://c17-70-m-python-production.up.railway.app' ]
