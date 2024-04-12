@@ -23,7 +23,7 @@ load_dotenv()
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'c17-70-m-python-production.up.railway.app']
 
 ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app",
-                 "https://medicallapi.onrender.com"]
+                 "medicallapi.onrender.com"]
 
 
 # CSRF_TRUSTED_ORIGINS = [ 'https://c17-70-m-python-production.up.railway.app' ]
