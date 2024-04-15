@@ -3,5 +3,6 @@ export const routes = {
   components: '/components',
   login: '/login',
   register: '/register',
+  profile: '/profile',
   error: '*'
 }
