@@ -98,7 +98,7 @@ export function Home() {
       date: new Date(result.registered.date)
     }
   }))
-  const [showAllSpecialties, setShowAllSpecialties] = useState(true)
+  const [showAllSpecialties, setShowAllSpecialties] = useState(false)
   const [user] = useState<Result[]>(dataUsermocks)
 
   const handleShowSpecialties = () => {
