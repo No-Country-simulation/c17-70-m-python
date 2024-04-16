@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'coreapi',
     'accounts',
     'login',
-    'videochat',
+   # 'videochat',
 ]
 
 MIDDLEWARE = [
