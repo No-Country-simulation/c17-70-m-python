@@ -71,3 +71,5 @@ export interface Picture {
   medium: string
   thumbnail: string
 }
+
+type gender = 'Famele' | 'Male' | 'Others'

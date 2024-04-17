@@ -8,6 +8,18 @@ import { InputText } from '../components/InputText'
 import { CountryPhone, countryFlags } from '../mocks/constantesCountry'
 import { routes } from '../routes'
 
+const gender = [
+  {
+    value: 'Femenino'
+  },
+  {
+    value: 'Masculino'
+  },
+  {
+    value: 'Otro'
+  }
+]
+
 export function Register() {
   // TODO-FEATURE: No dejar avanzar si no se han completado los datos
   //               No dejar crear cuenta sin validar datos
@@ -80,6 +92,13 @@ export function Register() {
                   />
                 </div>
               </div>
+              <ComboBox //obtener input seleccionado
+                flagShow={false}
+                className='w-full'
+                isCapitalized={true}
+                options={gender}
+                placeholder={gender[0].value}
+              />
               <Button
                 onClick={handleChangeStep(2)}
                 className='w-full'
