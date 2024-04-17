@@ -148,6 +148,7 @@ export function Components() {
           <div>
             <h2 className='text-xl'>Pais</h2>
             <ComboBox
+              flagShow={true}
               isCapitalized={true}
               options={countryFlags}
               placeholder={countryFlags[0].value}
@@ -156,6 +157,7 @@ export function Components() {
             />
             <h2 className='text-xl'>Numero Telefonico</h2>
             <ComboBox
+              flagShow={true}
               className=' w-32'
               isCapitalized={false}
               options={CountryPhone}

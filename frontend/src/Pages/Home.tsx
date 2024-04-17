@@ -1,4 +1,5 @@
 import { ReactNode, useState } from 'react'
+import { Link } from 'react-router-dom'
 import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/pagination'
@@ -8,16 +9,18 @@ import { Dots } from '../Icons/Dots'
 import { HeartRate } from '../Icons/HearthRate'
 import { Medical } from '../Icons/Medical'
 import { Pediatrics } from '../Icons/Pediatrics'
+import { useDataUser } from '../Service/global/user'
 import { Button } from '../components/Button'
 import { DrawerRight } from '../components/ComboBox/Drawer'
-import { results } from '../mocks/user.json'
-import { Result, TypeButton } from '../type'
+import { routes } from '../routes'
+import { TypeButton } from '../type'
 
 interface Props {
   children: ReactNode
   type: TypeButton
+  classname?: string
 }
-function TipLink({ children, type }: Props) {
+function TipLink({ children, type, classname }: Props) {
   const variantButton: Record<TypeButton, string> = {
     primary: 'bg-primary-100',
     secondary: 'bg-secondary-100'
@@ -25,7 +28,9 @@ function TipLink({ children, type }: Props) {
 
   const selectColor = variantButton[type]
 
-  const className = `${selectColor} rounded-lg text-secondary-700 font-bold text-sm px-6 py-5 shadow-md max-w-[152px] max-h-[72px] flex items-center justify-center`
+  const className = `${selectColor} ${
+    classname != null ? classname : ''
+  } rounded-lg text-secondary-700 font-bold text-sm px-6 py-5 shadow-md max-w-[152px] max-h-[72px] flex items-center justify-center`
 
   return <div className={`${className}`}>{children}</div>
 }
@@ -87,20 +92,9 @@ const listOfSpecialties = [
 ]
 
 export function Home() {
-  const dataUsermocks = results.map(result => ({
-    ...result,
-    dob: {
-      ...result.dob,
-      date: new Date(result.dob.date)
-    },
-    registered: {
-      ...result.registered,
-      date: new Date(result.registered.date)
-    }
-  }))
   const [showAllSpecialties, setShowAllSpecialties] = useState(false)
-  const [user] = useState<Result[]>(dataUsermocks)
-
+  const { user } = useDataUser()
+  const { first } = user[0].name
   const handleShowSpecialties = () => {
     setShowAllSpecialties(prev => !prev)
   }
@@ -109,13 +103,11 @@ export function Home() {
     <main className='px-5 py-8 max-w-[500px]'>
       <nav className='flex justify-between mb-7'>
         <img className=' object-contain' src='logo.png' />
-        <DrawerRight user={user} />
+        <DrawerRight />
       </nav>
       <section className='flex flex-col gap-4 max-w-[360px] overflow-hidden pb-4'>
         <div className='flex flex-col mb-2'>
-          <h2 className='text-xl font-bold '>
-            Hola, {dataUsermocks[0].name.first}!
-          </h2>
+          <h2 className='text-xl font-bold '>Hola, {first}!</h2>
           <span className='tracking-wide'>Agenda tu consulta virtual</span>
         </div>
         <div>
@@ -126,11 +118,13 @@ export function Home() {
           />
         </div>
         <div className='flex gap-4'>
-          <TipLink type='primary'>
-            <span className='text-center'>Agenda una consulta médica</span>
-          </TipLink>
+          <Link to={routes.schedule}>
+            <TipLink classname='text-center' type='primary'>
+              Agenda una consulta médica
+            </TipLink>
+          </Link>
           <TipLink type='secondary'>
-            <span className='text-center'>Agenda una consulta médica</span>
+            <span className='text-center'>Tus próximas consultas</span>
           </TipLink>
         </div>
         <div className='flex flex-col gap-4'>
@@ -203,7 +197,9 @@ export function Home() {
             <span className='max-w-[178px] text-center text-xs'>
               Elige el día y horario que prefieras para tu consulta médica
             </span>
-            <Button typeVariant='primary'>Agendar una consulta</Button>
+            <Link to={routes.schedule}>
+              <Button typeVariant='primary'>Agendar una consulta</Button>
+            </Link>
           </div>
         </div>
       </section>

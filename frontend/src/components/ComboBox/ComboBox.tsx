@@ -5,7 +5,7 @@ import { OptionComboBox } from './OptionComboBox'
 
 export interface option {
   image?: string
-  alt: string
+  alt?: string
   value: string
 }
 
@@ -17,6 +17,7 @@ interface Props {
   readonly?: boolean
   selected?: option
   iconShow?: boolean
+  flagShow?: boolean
   handleCountryChange?: (countryName: string) => void
 }
 
@@ -28,6 +29,7 @@ export function ComboBox({
   readonly,
   selected,
   iconShow,
+  flagShow,
   handleCountryChange
 }: Props) {
   const [isActive, setIsActive] = useState(false)
@@ -169,7 +171,9 @@ export function ComboBox({
         placeholder={placeholder}
         className={`${className ? className : ''} rounded-full mb-2 mt-2 ${
           iconShow != null && iconShow !== false ? 'pr-12' : ''
-        } pl-12 border-neutral-900 border px-2 py-2 text-black focus:outline-none focus:border-primary-500 shadow-sm focus:ring-primary-500 focus:ring-2 focus:caret-primary-500 disabled:bg-neutral-100 disabled:placeholder:text-neutral:300 disabled:border-neutral-300`}
+        } ${
+          flagShow != null && flagShow !== false ? 'pl-12' : 'pl-5'
+        } border-neutral-900 border px-2 py-2 text-black focus:outline-none focus:border-primary-500 shadow-sm focus:ring-primary-500 focus:ring-2 focus:caret-primary-500 disabled:bg-neutral-100 disabled:placeholder:text-neutral:300 disabled:border-neutral-300`}
       />
       {readonly !== true && isActive && (
         <OptionComboBox
