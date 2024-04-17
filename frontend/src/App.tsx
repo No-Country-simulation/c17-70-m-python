@@ -5,6 +5,7 @@ import { Error404 } from './Pages/Error404'
 import { Home } from './Pages/Home'
 import { Login } from './Pages/Login'
 import { Register } from './Pages/Register'
+import { Schedule } from './Pages/Schedule'
 import { routes } from './routes'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.register} element={<Register />} />
         <Route path={routes.components} element={<Components />} />
+        <Route path={routes.schedule} element={<Schedule />} />
         <Route path={routes.error} element={<Error404 />} />
       </Routes>
     </BrowserRouter>

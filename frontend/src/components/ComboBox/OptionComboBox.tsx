@@ -4,8 +4,14 @@ interface Props {
   options: option[]
   onSelect: (option: option) => void
   dropdownPosition: 'top' | 'bottom'
+  flagshow?: boolean
 }
-export function OptionComboBox({ options, onSelect, dropdownPosition }: Props) {
+export function OptionComboBox({
+  options,
+  onSelect,
+  dropdownPosition,
+  flagshow
+}: Props) {
   const dropdownStyle =
     dropdownPosition === 'top' ? { bottom: '100%' } : { top: '100%' }
 
@@ -33,7 +39,9 @@ export function OptionComboBox({ options, onSelect, dropdownPosition }: Props) {
             )}
             <div
               onClick={() => onSelect(option)}
-              className={`pl-12 py-2 bg-neutral-50 hover:bg-primary-100`}
+              className={`${
+                flagshow != null && flagshow !== false ? 'pl-12' : 'pl-5'
+              } py-2 bg-neutral-50 hover:bg-primary-100`}
             >
               {option.value}
             </div>

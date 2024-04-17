@@ -10,15 +10,13 @@ import { LeftArrowCircle } from '../../Icons/LeftArrowCircle'
 import { Note } from '../../Icons/Note'
 import { Option } from '../../Icons/Option'
 import { User } from '../../Icons/User'
+import { useDataUser } from '../../Service/global/user'
 import { routes } from '../../routes'
-import { Result } from '../../type'
 
 const drawerWidth = 280
 
-interface Props {
-  user: Result[]
-}
-export function DrawerRight({ user }: Props) {
+export function DrawerRight() {
+  const { user } = useDataUser()
   const profile = user[0]
   const [open, setOpen] = React.useState(false)
 

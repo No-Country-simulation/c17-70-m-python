@@ -52,6 +52,7 @@ export function Register() {
                 placeholder='Fecha de nacimiento'
               />
               <ComboBox
+                flagShow={true}
                 className='w-full'
                 isCapitalized={true}
                 options={countryFlags}
@@ -61,6 +62,7 @@ export function Register() {
               />
               <div className='flex flex-row gap-4 w-full items-center justify-center'>
                 <ComboBox
+                  flagShow={true}
                   className='w-32'
                   isCapitalized={false}
                   options={CountryPhone}
