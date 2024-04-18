@@ -1,31 +1,41 @@
-from rest_framework import routers
-from django.urls import path, include
-from accounts import views
-from rest_framework.documentation import include_docs_urls
-
-administrator_router = routers.DefaultRouter()
-doctor_router = routers.DefaultRouter()
-patient_router = routers.DefaultRouter()
-user_router = routers.DefaultRouter()
-
-administrator_router.register(r'administrators', views.AdministratorView)
-doctor_router.register(r'doctors', views.DoctorView)
-patient_router.register(r'patients', views.PatientView)
-user_router.register(r'users', views.UserView)
+from django.urls import path
+from .views import *
 
 urlpatterns = [
+    # URLs para Doctor
+    path('doctors/', DoctorListCreate.as_view(), name='doctor-list'),
+    path('doctors/<uuid:pk>/', DoctorRetrieveUpdateDestroy.as_view(), name='doctor-detail'),
 
-    # API
-    path('api/administator/',include(administrator_router.urls)),
-    path('api/doctor/',include(doctor_router.urls)),
-    path('api/patient/',include(patient_router.urls)),
-    path('api/user/',include(user_router.urls)),
+    # URLs para Patient
+    path('patients/', PatientListCreate.as_view(), name='patient-list'),
+    path('patients/<uuid:pk>/', PatientRetrieveUpdateDestroy.as_view(), name='patient-detail'),
 
-    # documentation
-    path('doc/', include_docs_urls(title=f"API doc")),
+    # URLs para Medicament
+    path('medicaments/', MedicamentListCreate.as_view(), name='medicament-list'),
+    path('medicaments/<uuid:pk>/', MedicamentRetrieveUpdateDestroy.as_view(), name='medicament-detail'),
 
-    # views
-    path('api/hello/', views.home, name="hello"),
+    # URLs para Treatment
+    path('treatments/', TreatmentListCreate.as_view(), name='treatment-list'),
+    path('treatments/<uuid:pk>/', TreatmentRetrieveUpdateDestroy.as_view(), name='treatment-detail'),
 
+    # URLs para Recipe
+    path('recipes/', RecipeListCreate.as_view(), name='recipe-list'),
+    path('recipes/<uuid:pk>/', RecipeRetrieveUpdateDestroy.as_view(), name='recipe-detail'),
+
+    # URLs para Medical_consultation_history
+    path('medical-consultation-histories/', MedicalConsultationHistoryListCreate.as_view(), name='medical-consultation-history-list'),
+    path('medical-consultation-histories/<uuid:pk>/', MedicalConsultationHistoryRetrieveUpdateDestroy.as_view(), name='medical-consultation-history-detail'),
+
+    # URLs para Medical_consultation
+    path('medical-consultations/', MedicalConsultationListCreate.as_view(), name='medical-consultation-list'),
+    path('medical-consultations/<uuid:pk>/', MedicalConsultationRetrieveUpdateDestroy.as_view(), name='medical-consultation-detail'),
+
+    # URLs para Administrator
+    path('administrators/', AdministratorListCreate.as_view(), name='administrator-list'),
+    path('administrators/<uuid:pk>/', AdministratorRetrieveUpdateDestroy.as_view(), name='administrator-detail'),
+
+    # URLs para Medical_consultation
+    path('users/', UserListCreate.as_view(), name='user-list'),
+    path('users/<uuid:pk>/', UserRetrieveUpdateDestroy.as_view(), name='user-detail'),
 
 ]
