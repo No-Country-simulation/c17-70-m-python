@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     # URLs para Doctor
@@ -40,6 +41,8 @@ urlpatterns = [
   
     # views
     path('api/hello/', views.home, name="hello"),
-    path('patient/<uuid:pk>/pdf', GeneratePdf.as_view(), name='patient-pdf')
+    path('patient/<uuid:pk>/pdf', GeneratePdf.as_view(), name='patient-pdf'),
+    
+    path('documentation/', include_docs_urls(title=f"API doc")),
 
 ]
