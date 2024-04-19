@@ -4,10 +4,7 @@ from .models import *
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = '__all__'
-
-
-
+        fields = ['id', 'email', 'user_photo', 'is_doctor', 'is_patient', 'is_administrator', 'groups', 'birthdate', 'country', 'phone_number', 'gender', 'user_permissions']
 
 class DoctorSerializer(serializers.ModelSerializer):
     class Meta:

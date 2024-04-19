@@ -10,7 +10,6 @@ class DoctorListCreate(generics.ListCreateAPIView):
 class DoctorRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
-
 # Patient
 class PatientListCreate(generics.ListCreateAPIView):
     queryset = Patient.objects.all()
@@ -75,8 +74,8 @@ class AdministratorRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AdministratorSerializer
 
 class UserListCreate(generics.ListCreateAPIView):
-    queryset = Administrator.objects.all()
-    serializer_class = AdministratorSerializer
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
 
 class UserRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
