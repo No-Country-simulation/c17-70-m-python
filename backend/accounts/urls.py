@@ -26,6 +26,7 @@ urlpatterns = [
 
     # views
     path('api/hello/', views.home, name="hello"),
+    path('patient/<uuid:pk>/pdf', GeneratePdf.as_view(), name='patient-pdf')
 
 
 ]
