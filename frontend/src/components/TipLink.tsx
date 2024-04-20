@@ -1,14 +1,15 @@
 import { ReactNode } from 'react'
-import { TypeButton } from '../type'
+
+type ButtonType = 'primary' | 'secondary'
 
 interface Props {
   children: ReactNode
-  type: TypeButton
+  type: ButtonType
   classname?: string
 }
 
 export function TipLink({ children, type, classname }: Props) {
-  const variantButton: Record<TypeButton, string> = {
+  const variantButton: Record<ButtonType, string> = {
     primary: 'bg-primary-100',
     secondary: 'bg-secondary-100'
   }
