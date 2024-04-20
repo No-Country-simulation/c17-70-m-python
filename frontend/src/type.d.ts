@@ -1,3 +1,5 @@
+import { DateInput } from '@formkit/tempo'
+
 export type TypeButton = 'primary' | 'secondary' | 'tertiary'
 
 export interface Result {
@@ -16,7 +18,7 @@ export interface Result {
 }
 
 export interface Dob {
-  date: Date
+  date: DateInput
   age: number
 }
 
