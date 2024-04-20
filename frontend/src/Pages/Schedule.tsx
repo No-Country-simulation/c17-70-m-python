@@ -261,12 +261,16 @@ function ScheduledTime() {
         </span>
 
         <div className='flex flex-col gap-4 w-full px-10'>
-          <Button className='w-full' typeVariant='primary'>
-            Ver agenda de consultas
-          </Button>
-          <Button className='w-full' typeVariant='secondary'>
-            <Link to={routes.home}>Volver a inicio</Link>
-          </Button>
+          <Link to={routes.profileShedule} className='w-full'>
+            <Button className='w-full' typeVariant='primary'>
+              Ver agenda de consultas
+            </Button>
+          </Link>
+          <Link className='w-full' to={routes.home}>
+            <Button className='w-full' typeVariant='secondary'>
+              Volver a inicio
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
