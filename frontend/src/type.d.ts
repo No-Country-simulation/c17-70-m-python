@@ -1,4 +1,4 @@
-export type TypeButton = 'primary' | 'secondary'
+export type TypeButton = 'primary' | 'secondary' | 'tertiary'
 
 export interface Result {
   gender: string
@@ -73,3 +73,19 @@ export interface Picture {
 }
 
 type gender = 'Famele' | 'Male' | 'Others'
+
+export interface Date {
+  full: string
+  short: string
+  fromDate: string
+  toDate: string
+}
+export interface Info {
+  img: string
+  name: string
+  specialty: string
+  date: Date
+}
+export interface Props {
+  infoDoctor: Info
+}

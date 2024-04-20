@@ -3,6 +3,5 @@ export async function getUser() {
   const result = await fetch(url)
   const json = await result.json()
   const { results } = json
-  console.log('a: ', results)
   return results
 }

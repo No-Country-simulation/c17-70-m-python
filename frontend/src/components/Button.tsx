@@ -12,7 +12,9 @@ export function Button({ typeVariant, children, className, ...props }: Props) {
     primary:
       'bg-primary-500 text-white py-2 px-3 rounded-full hover:bg-primary-700 disabled:bg-primary-100 disabled:text-primary-300',
     secondary:
-      'bg-primary-100 text-primary-600 py-2 px-3 rounded-full outline outline-primary-600 hover:bg-primary-200 font-semibold outline-1 disabled:bg-primary-100 disabled:outline-primary-300 disabled:text-primary-300'
+      'bg-primary-100 text-primary-600 py-2 px-3 rounded-full outline outline-primary-600 hover:bg-primary-200 font-semibold outline-1 disabled:bg-primary-100 disabled:outline-primary-300 disabled:text-primary-300',
+    tertiary:
+      'bg-secondary-400 text-neutral-50 py-2 px-3 rounded-full hover:bg-secondary-500 disabled:bg-secondary-200 disabled:text-secondary-300'
   }
 
   const classVariant = `select-none ${variantButton[typeVariant]} ${

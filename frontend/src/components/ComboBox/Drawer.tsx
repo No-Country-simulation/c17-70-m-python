@@ -14,8 +14,10 @@ import { useDataUser } from '../../Service/global/user'
 import { routes } from '../../routes'
 
 const drawerWidth = 280
-
-export function DrawerRight() {
+interface Props {
+  type?: string
+}
+export function DrawerRight({ type }: Props) {
   const { user } = useDataUser()
   const profile = user[0]
   const [open, setOpen] = React.useState(false)
@@ -31,7 +33,7 @@ export function DrawerRight() {
   return (
     <div className='flex flex-col'>
       <button onClick={handleDrawerOpen} className='p-1 rounded-full'>
-        <BurgerMenu className='w-7 h-7' />
+        <BurgerMenu type={type} className='w-7 h-7' />
       </button>
 
       <Drawer
@@ -48,7 +50,7 @@ export function DrawerRight() {
       >
         <div>
           <div className='flex justify-between px-5 py-8'>
-            <img src='logo.png' className=' object-contain' />
+            <img src='/logo.png' className=' object-contain' />
             <button onClick={handleDrawerClose}>
               <Close className='w-7 h-7' />
             </button>

@@ -291,7 +291,7 @@ export function Schedule() {
               <LeftArrow />
             </Link>
             <h2 className='text-xl text-primary-500 font-semibold'>
-              Programá una consulta
+              Programa una consulta
             </h2>
             <DrawerRight />
           </div>
