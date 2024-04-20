@@ -40,7 +40,7 @@ export function OptionComboBox({
             <div
               onClick={() => onSelect(option)}
               className={`${
-                flagshow != null && flagshow !== false ? 'pl-12' : 'pl-5'
+                flagshow != null && flagshow !== false ? 'pl-12' : 'pl-12'
               } py-2 bg-neutral-50 hover:bg-primary-100`}
             >
               {option.value}

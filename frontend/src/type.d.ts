@@ -1,4 +1,6 @@
-export type TypeButton = 'primary' | 'secondary'
+import { DateInput } from '@formkit/tempo'
+
+export type TypeButton = 'primary' | 'secondary' | 'tertiary'
 
 export interface Result {
   gender: string
@@ -16,7 +18,7 @@ export interface Result {
 }
 
 export interface Dob {
-  date: Date
+  date: DateInput
   age: number
 }
 
@@ -73,3 +75,19 @@ export interface Picture {
 }
 
 type gender = 'Famele' | 'Male' | 'Others'
+
+export interface Date {
+  full: string
+  short: string
+  fromDate: string
+  toDate: string
+}
+export interface Info {
+  img: string
+  name: string
+  specialty: string
+  date: Date
+}
+export interface Props {
+  infoDoctor: Info
+}

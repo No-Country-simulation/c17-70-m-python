@@ -1,7 +1,9 @@
 interface Props {
   className: string
+  type?: string
 }
-export function BurgerMenu({ className }: Props) {
+export function BurgerMenu({ className, type }: Props) {
+  const color = type != null && type === 'secondary' ? '#EDF0F0' : '#49BAB3'
   return (
     <svg
       className={className}
@@ -18,19 +20,19 @@ export function BurgerMenu({ className }: Props) {
       <g id='SVGRepo_iconCarrier'>
         <path
           d='M4 18L20 18'
-          stroke='#49BAB3'
+          stroke={color}
           strokeWidth='2'
           stroke-linecap='round'
         ></path>{' '}
         <path
           d='M4 12L20 12'
-          stroke='#49BAB3'
+          stroke={color}
           strokeWidth='2'
           strokeLinecap='round'
         ></path>{' '}
         <path
           d='M4 6L20 6'
-          stroke='#49BAB3'
+          stroke={color}
           strokeWidth='2'
           strokeLinecap='round'
         ></path>
