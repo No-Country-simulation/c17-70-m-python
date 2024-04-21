@@ -6,8 +6,10 @@ from rest_framework import status
 from login.permissions import IsPatient, IsDoctor
 from .models import Appointment, WorkShift
 from .serializers import AppointmentSerializer, WorkShiftSerializer
+from django.views.decorators.csrf import csrf_exempt
 
-
+""" HABILITAR CROSS ORIGIN """
+@csrf_exempt
 class WorkShiftViewSet(viewsets.ModelViewSet):
     queryset = WorkShift.objects.all()
     serializer_class = WorkShiftSerializer
@@ -23,6 +25,7 @@ class WorkShiftViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
+@csrf_exempt
 class AppointmentViewSet(viewsets.ModelViewSet):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
@@ -40,6 +43,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
         return queryset
 
 
+@csrf_exempt
 class BookAppointmentViewSet(viewsets.ModelViewSet):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
@@ -66,6 +70,7 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
             return Response({'error': 'Patient not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 
+@csrf_exempt
 class PatientAppointmentViewSet(viewsets.ModelViewSet):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer

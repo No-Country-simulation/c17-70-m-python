@@ -18,7 +18,7 @@ class Imagen(models.Model):
 
 class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user_photo = models.URLField(blank=True, null=True)
+    user_photo = models.URLField(blank=True, null=True, max_length=500)
     username = models.CharField(
         max_length=255, unique=True, null=False, blank=False)
     email = models.EmailField(unique=True)
