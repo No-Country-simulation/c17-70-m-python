@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class VideochatConfig(AppConfig):
+class VideoconferenceConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'videochat'
+    name = 'videoconference'

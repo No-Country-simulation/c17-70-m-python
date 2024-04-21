@@ -1,23 +1,13 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-from datetime import date
 import uuid
-
-
-from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser, Group, Permission
+from datetime import date
 
 class Imagen(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     large = models.CharField(max_length=300)
     short = models.CharField(max_length=300)
     icon = models.CharField(max_length=300)
-from django.db import models
-from datetime import date
-import uuid
-from django.contrib.auth.models import Group, Permission
-
 class CustomUser(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_photo = models.ForeignKey(Imagen, on_delete=models.CASCADE, related_name='image_user', null=True, blank=True)
