@@ -40,7 +40,7 @@ urlpatterns = [
     path('users/<uuid:pk>/', UserRetrieveUpdateDestroy.as_view(), name='user-detail'),
   
     # views
-    path('api/hello/', views.home, name="hello"),
+    #path('api/hello/', views.home, name="hello"),
     path('patient/<uuid:pk>/pdf', GeneratePdf.as_view(), name='patient-pdf'),
     
     path('documentation/', include_docs_urls(title=f"API doc")),
