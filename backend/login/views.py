@@ -8,6 +8,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
+from .serializers import CustomUserSerializer
 
 
 class LoginView(APIView):
@@ -36,7 +37,7 @@ class LoginView(APIView):
 
         if user is not None:
             login(request, user)
-            user_data = self.request.user
+            user_data = CustomUserSerializer(user).data
             return Response({'message': 'Login successful',
                              'user_data': user_data},
                             status=status.HTTP_200_OK)
