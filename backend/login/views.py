@@ -34,7 +34,9 @@ class LoginView(APIView):
 
         if user is not None:
             login(request, user)
-            return JsonResponse({'message': 'Login successful'})
+            user_data = self.request.user
+            JsonResponse({'message': 'Login successful'})
+            return user_data
 
         print(username, password)
         return JsonResponse({'message': 'Invalid username or password'}, status=400)
