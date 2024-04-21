@@ -44,6 +44,8 @@ class DoctorListCreate(generics.ListCreateAPIView):
         doctors_group = Group.objects.get(name='Doctors')
         doctor.groups.add(doctors_group)
         headers = self.get_success_headers(serializer.data)
+        serializer.data['user_photo'] = request.build_absolute_uri(
+            doctor.get_absolute_url())
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
@@ -84,6 +86,8 @@ class PatientListCreate(generics.ListCreateAPIView):
         patients_group = Group.objects.get(name='Patients')
         patients.groups.add(patients_group)
         headers = self.get_success_headers(serializer.data)
+        serializer.data['user_photo'] = request.build_absolute_uri(
+            doctor.get_absolute_url())
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
