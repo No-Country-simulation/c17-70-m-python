@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
+from rest_framework import status
+from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
@@ -35,11 +37,12 @@ class LoginView(APIView):
         if user is not None:
             login(request, user)
             user_data = self.request.user
-            JsonResponse({'message': 'Login successful'})
-            return user_data
+            return Response({'message': 'Login successful',
+                             'user_data': user_data.to_dict()},
+                            status=status.HTTP_200_OK)
 
         print(username, password)
-        return JsonResponse({'message': 'Invalid username or password'}, status=400)
+        return Response({'message': 'Invalid username or password'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GoogleLogin(SocialLoginView):
