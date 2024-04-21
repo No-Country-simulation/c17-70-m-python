@@ -179,7 +179,7 @@ class UserRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.UserSerializer
 
 
-class GeneratePdf(View):
+"""class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
         patient_id = kwargs.get('pk')
         patient = Patient.object.get(id=patient_id)
@@ -212,3 +212,4 @@ class GeneratePdf(View):
                 filename}'
             return response
         return HttpResponse('Not found')
+"""
