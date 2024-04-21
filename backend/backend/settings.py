@@ -107,8 +107,7 @@ DATABASES = {
 }
 
 
-DATABASES["default"] = dj_database_url.parse(
-    "postgres://admin:blpfKtLmbJ2bjh2VPX58ym7AWK5BqnHz@dpg-coiks40l5elc73d9598g-a.oregon-postgres.render.com/medicalldb")
+DATABASES["default"] = dj_database_url.parse(os.getenv(DATABASE_URL))
 
 DEFAULT_CONNECTION_NAME = "default"
 
