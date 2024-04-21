@@ -1,21 +1,46 @@
 from rest_framework import serializers
 from .models import *
 
+
 class UserSerializer(serializers.ModelSerializer):
+    role = serializers.IntegerField(source='groups.first.id', read_only=True)
+
     class Meta:
         model = CustomUser
-        fields = ['id', 'email', 'user_photo', 'is_doctor', 'is_patient', 'is_administrator', 'groups', 'birthdate', 'country', 'phone_number', 'gender', 'user_permissions']
+        fields = ['id', 'email', 'user_photo',
+                  'groups', 'birthdate', 'country', 'phone_number', 'gender', 'user_permissions', 'role']
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'is_active': {'read_only': True},
+        }
+
 
 class DoctorSerializer(serializers.ModelSerializer):
+    role = serializers.IntegerField(source='groups.first.id', read_only=True)
+
     class Meta:
         model = Doctor
-        fields = '__all__'
+        fields = ['id', 'email', 'password', 'first_name', 'last_name', 'id_number',
+                  'birthdate', 'country', 'gender', 'phone_number', 'specialty', 'role']
+
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'is_active': {'read_only': True},
+        }
 
 
 class PatientSerializer(serializers.ModelSerializer):
+    role = serializers.IntegerField(source='groups.first.id', read_only=True)
+
     class Meta:
         model = Patient
-        fields = '__all__'
+        fields = ['id', 'email', 'password', 'first_name', 'last_name', 'id_number',
+                  'birthdate', 'country', 'gender', 'phone_number', 'role']
+
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'is_active': {'read_only': True},
+        }
 
 
 class MedicamentSerializer(serializers.ModelSerializer):
