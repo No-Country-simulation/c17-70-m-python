@@ -38,7 +38,7 @@ class LoginView(APIView):
             login(request, user)
             user_data = self.request.user
             return Response({'message': 'Login successful',
-                             'user_data': user_data.to_dict()},
+                             'user_data': user_data},
                             status=status.HTTP_200_OK)
 
         print(username, password)
