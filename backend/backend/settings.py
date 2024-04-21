@@ -1,7 +1,7 @@
+
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,41 +37,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_filters',
     'corsheaders',
     'rest_framework',
-    'rest_framework.authtoken',
-    'dj_rest_auth',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'dj_rest_auth.registration',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
     'coreapi',
     'accounts',
     'login',
-    'appointments',
-    # 'videochat',
+   # 'videochat',
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
-
-SITE_ID = 1
 
 TEMPLATES = [
     {
@@ -106,8 +91,6 @@ DATABASES = {
     }
 }
 
-
-DATABASES["default"] = dj_database_url.parse(os.getenv("DATABASE_URL"))
 
 DEFAULT_CONNECTION_NAME = "default"
 
@@ -167,42 +150,7 @@ CORES_ALLOW_ORIGINS = [
 REST_FRAMEWORK = {
     ...: ...,
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
-    )
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
 }
-
-AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend"
-)
-
-AUTH_USER_MODEL = 'accounts.CustomUser'
-SOCIALACCOUNT_ADAPTER = 'login.adapters.CustomSocialAccountAdapter'
-
-load_dotenv()
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv(
-    'SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
-SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = os.getenv(
-    'SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI')
-
-ACCOUNT_EMAIL_VERIFICATION = "none"
-
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "APP": {
-            "client_id": SOCIAL_AUTH_GOOGLE_OAUTH2_KEY,
-            "secret": SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET,
-            "key": ""
-        },
-        "SCOPE": [
-            "profile",
-            "email",
-        ],
-        "AUTH_PARAMS": {
-            "access_type": "offline",
-        },
-        'FETCH_USERINFO': True
-    }}

@@ -1,8 +1,11 @@
-import uuid
-from datetime import date
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group, Permission
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import AbstractUser
+from datetime import date
+import uuid
+
+
+from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 class Imagen(models.Model):
@@ -10,62 +13,43 @@ class Imagen(models.Model):
     large = models.CharField(max_length=300)
     short = models.CharField(max_length=300)
     icon = models.CharField(max_length=300)
+from django.db import models
+from datetime import date
+import uuid
+from django.contrib.auth.models import Group, Permission
 
-
-""" SACAR VALORES NULL DE LOS CAMPOS First_NAME, LAST_NAME, USERNAME"""
-
-
-class CustomUser(AbstractUser):
+class CustomUser(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user_photo = models.ForeignKey(
-        Imagen, on_delete=models.CASCADE, related_name='image_user', null=True, blank=True)
-    username = models.CharField(
-        max_length=255, unique=True, null=False, blank=False)
+    user_photo = models.ForeignKey(Imagen, on_delete=models.CASCADE, related_name='image_user', null=True, blank=True)
     email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=30, default=" ")
-    last_name = models.CharField(max_length=30, default=" ")
-    id_number = models.PositiveIntegerField(unique=True, default=0)
+    password = models.CharField(max_length=100, default='password')
     birthdate = models.DateField(default=date.today)
-    country = models.CharField(max_length=100, default='ARGENTINA')
-    gender = models.CharField(max_length=20, default="")
+    country = models.CharField(max_length=100, default='ARGENTINA')  
     phone_number = models.CharField(max_length=100, default='0000')
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['user_photo', 'first_name', 'last_name', 'id_number',
-                       'birthdate', 'country', 'gender', 'phone_number']
-
-    def save(self, *args, **kwargs):
-        if not self.username:
-            self.username = self.email
-        if self.password:
-            self.password = make_password(self.password)
-        super().save(*args, **kwargs)
-
-    is_active = models.BooleanField(default=True)
-
-    groups = models.ManyToManyField(
-        Group, related_name='custom_users', blank=True
-    )
-
-    user_permissions = models.ManyToManyField(
-        Permission, related_name='custom_user_permissions', blank=True
-    )
+    gender = models.CharField(max_length=20, default="")
+    
+    groups = models.ManyToManyField(Group, related_name='custom_user_groups')
+    is_doctor = models.BooleanField(default=False)
+    is_patient = models.BooleanField(default=False)
+    is_administrator = models.BooleanField(default=False)
+    user_permissions = models.ManyToManyField(Permission, related_name='custom_user_permissions', blank=True)
 
 
 class Medicament(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    medicament_photo = models.ForeignKey(
-        Imagen, on_delete=models.CASCADE, related_name='image_medicament', null=True, blank=True)
+    medicament_photo = models.ForeignKey(Imagen, on_delete=models.CASCADE, related_name='image_medicament', null=True, blank=True)
     name_medicament = models.CharField(max_length=100)
     description = models.TextField(default="description to medicament")
 
 
-class Doctor(CustomUser):
-    specialty = models.CharField(max_length=100)
+class Doctor(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    class Meta:
-        verbose_name = 'Doctor'
-        verbose_name_plural = 'Doctors'
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    speciality = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.user.get_full_name()} - {self.speciality}"
 
 
 class Treatment(models.Model):
@@ -74,28 +58,24 @@ class Treatment(models.Model):
 
 class Recipe(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    medicament = models.OneToOneField(
-        Medicament, on_delete=models.CASCADE, default=None)
+    medicament = models.OneToOneField(Medicament, on_delete=models.CASCADE, default=None)
     dose = models.CharField(max_length=50)
     frequency = models.CharField(max_length=100)
     start_date = models.DateField(default=date.today)
     ending_date = models.DateField(default=date.today)
-    treatment = models.ForeignKey(
-        Treatment, on_delete=models.CASCADE, related_name='recipes')
+    treatment = models.ForeignKey(Treatment, on_delete=models.CASCADE, related_name='recipes')
 
 
-class Patient(CustomUser):
-    class Meta:
-        verbose_name = 'Patient'
-        verbose_name_plural = 'Patients'
+class Patient(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.user.get_full_name()}"
 
 class Medical_consultation_history(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    patient = models.ForeignKey(
-        Patient, on_delete=models.CASCADE, null=True, blank=True
-    )
-
+    patient = models.OneToOneField(Patient, on_delete=models.CASCADE, null=True, blank=True) 
 
 class Medical_consultation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -103,12 +83,15 @@ class Medical_consultation(models.Model):
     date = models.DateField()
     doctor = models.OneToOneField(Doctor, on_delete=models.CASCADE)
     treatment = models.OneToOneField(Treatment, on_delete=models.CASCADE)
-    consultation_history = models.ForeignKey(
-        Medical_consultation_history, on_delete=models.CASCADE, related_name='history')
+    consultation_history = models.ForeignKey(Medical_consultation_history, on_delete=models.CASCADE, related_name='history')
 
 
-class Administrator(CustomUser):
 
-    class meta:
-        verbose_name = 'Administrator'
-        verbose_name_plural = 'Administrators'
+
+class Administrator(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.get_full_name()
