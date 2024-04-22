@@ -3,11 +3,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import viewsets, filters
 from rest_framework.response import Response
 from rest_framework import status
-from login.permissions import IsPatient, IsDoctor
+from login.permissions import IsPatient, IsDoctor, IsDoctorOrPatient
 from .models import Appointment, WorkShift
 from .serializers import AppointmentSerializer, WorkShiftSerializer
-
-""" HABILITAR CROSS ORIGIN """
 
 
 class WorkShiftViewSet(viewsets.ModelViewSet):
@@ -31,7 +29,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
     filter_fields = ['work_shift__doctor__specialty', 'cancelled']
-    permission_classes = [IsPatient]
+    permission_classes = [IsDoctorOrPatient]
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -64,8 +62,8 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
             appointment.save()
             serializer = self.get_serializer(appointment)
             return Response(serializer.data, status=status.HTTP_200_OK)
-
-        return Response({'error': 'Patient not found.'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({'error': 'Patient not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class PatientAppointmentViewSet(viewsets.ModelViewSet):
