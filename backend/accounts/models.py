@@ -6,6 +6,7 @@ from datetime import date
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.contrib.auth.hashers import make_password
+from django.urls import reverse
 
 
 class Imagen(models.Model):
@@ -21,8 +22,7 @@ class CustomUser(models.Model):
 
 class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user_photo = models.ForeignKey(
-        Imagen, on_delete=models.CASCADE, related_name='image_user', null=True, blank=True)
+    user_photo = models.URLField(blank=True, null=True, max_length=500)
     username = models.CharField(
         max_length=255, unique=True, null=False, blank=False)
     email = models.EmailField(unique=True)
@@ -67,6 +67,9 @@ class Medicament(models.Model):
 class Doctor(CustomUser):
     specialty = models.CharField(max_length=100)
 
+    def get_absolute_url(self):
+        return reverse('doctor-detail', args=[str(self.id)])
+
     class Meta:
         verbose_name = 'Doctor'
         verbose_name_plural = 'Doctors'
@@ -89,6 +92,9 @@ class Recipe(models.Model):
 
 
 class Patient(CustomUser):
+    def get_absolute_url(self):
+        return reverse('doctor-detail', args=[str(self.id)])
+
     class Meta:
         verbose_name = 'Patient'
         verbose_name_plural = 'Patients'
@@ -112,7 +118,6 @@ class Medical_consultation(models.Model):
 
 
 class Administrator(CustomUser):
-
     class meta:
         verbose_name = 'Administrator'
         verbose_name_plural = 'Administrators'

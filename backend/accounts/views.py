@@ -6,9 +6,7 @@ from . import serializers
 from django.contrib.auth.models import Group
 from rest_framework.response import Response
 from rest_framework import status
-from django.http import HttpResponse
 from .models import Patient, Medical_consultation, Recipe  # Treatment, Doctor
-from django.views.generic import View
 # Create your views here.
 
 
@@ -46,6 +44,8 @@ class DoctorListCreate(generics.ListCreateAPIView):
         doctors_group = Group.objects.get(name='Doctors')
         doctor.groups.add(doctors_group)
         headers = self.get_success_headers(serializer.data)
+        serializer.data['user_photo'] = request.build_absolute_uri(
+            doctor.get_absolute_url())
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
@@ -82,10 +82,12 @@ class PatientListCreate(generics.ListCreateAPIView):
         """
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        doctor = self.perform_create(serializer)
-        doctors_group = Group.objects.get(name='Patients')
-        doctor.groups.add(doctors_group)
+        patients = self.perform_create(serializer)
+        patients_group = Group.objects.get(name='Patients')
+        patients.groups.add(patients_group)
         headers = self.get_success_headers(serializer.data)
+        serializer.data['user_photo'] = request.build_absolute_uri(
+            patients.get_absolute_url())
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):

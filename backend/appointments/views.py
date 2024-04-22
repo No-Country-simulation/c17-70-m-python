@@ -7,6 +7,8 @@ from login.permissions import IsPatient, IsDoctor
 from .models import Appointment, WorkShift
 from .serializers import AppointmentSerializer, WorkShiftSerializer
 
+""" HABILITAR CROSS ORIGIN """
+
 
 class WorkShiftViewSet(viewsets.ModelViewSet):
     queryset = WorkShift.objects.all()
