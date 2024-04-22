@@ -7,6 +7,8 @@ from login.permissions import IsPatient, IsDoctor
 from .models import Appointment, WorkShift
 from .serializers import AppointmentSerializer, WorkShiftSerializer
 
+""" HABILITAR CROSS ORIGIN """
+
 
 class WorkShiftViewSet(viewsets.ModelViewSet):
     queryset = WorkShift.objects.all()
@@ -47,8 +49,6 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         appointment_id = request.data.get('appointment_id')
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
         if not appointment_id:
             return Response({'error': 'Appointment ID is required.'}, status=status.HTTP_400_BAD_REQUEST)
         try:
@@ -64,6 +64,7 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
             appointment.save()
             serializer = self.get_serializer(appointment)
             return Response(serializer.data, status=status.HTTP_200_OK)
+
         return Response({'error': 'Patient not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 
