@@ -67,7 +67,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>Alejandro Quiñones</td>
+              <td>Gustavo Nievas</td>
               <td>
                 <a href="https://github.com/blackSamuelBellamy">
                   <img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
@@ -80,7 +80,7 @@
               </td>
             </tr>
              <tr>
-              <td>Alejandro Quiñones</td>
+              <td>Johan</td>
               <td>
                 <a href="https://github.com/blackSamuelBellamy">
                   <img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
@@ -93,7 +93,7 @@
               </td>
             </tr>
             <tr>
-              <td>Brandon Sánchez</td>
+              <td>Juan Fierro</td>
               <td>
                 <a href="https://github.com/brandonSG6A">
                   <img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
