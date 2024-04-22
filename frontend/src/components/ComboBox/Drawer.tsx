@@ -85,21 +85,21 @@ export function DrawerRight({ type }: Props) {
             <span className='text-xl'>Inicio</span>
           </Link>
           <Link
-            to={routes.home}
+            to={routes.schedule}
             className='flex gap-x-4 justify-start items-center'
           >
             <Health />
             <span className='text-xl'>Especialidades</span>
           </Link>
           <Link
-            to={routes.home}
+            to={routes.profileShedule}
             className='flex gap-x-4 justify-start items-center'
           >
             <User />
             <span className='text-xl'>Agenda de consultas</span>
           </Link>
           <Link
-            to={routes.home}
+            to={routes.schedule}
             className='flex gap-x-4 justify-start items-center'
           >
             <Note />
