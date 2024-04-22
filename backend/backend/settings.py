@@ -20,6 +20,8 @@ SECRET_KEY = os.getenv(django_insecure_key)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv(debug_status, debug_status_default)
 load_dotenv()
+
+CORS_ORIGIN_ALLOW_ALL = True
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'c17-70-m-python-production.up.railway.app']
 
 ALLOWED_HOSTS = ["*"]
@@ -34,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
-    #'corsheaders',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
@@ -46,7 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'coreapi',
     'accounts',
-    #'videoconference'
+    # 'videoconference'
     'login',
     'appointments',
     # 'videochat',
@@ -57,7 +59,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    #'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
