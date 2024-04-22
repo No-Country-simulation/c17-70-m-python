@@ -125,19 +125,19 @@
           </thead>
           <tbody>
             <tr>
-              <td>Nehuen Grosso</td>
+              <td>Fiorella Otero</td>
               <td>
-                <a href="https://github.com/Nehuengrosso">
+                <a href="https://github.com/fiorella-otero">
                   <img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
                 </a>
               </td>
               <td>
-                <a href="https://ar.linkedin.com/in/nehuen-grosso-a28a1015b">
+                <a href="https://www.linkedin.com/in/fiorella-otero-972707204/">
                   <img src="https://img.shields.io/badge/linkedin-%230A66C2.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/>
                 </a>
               </td>
               <td>
-                <a href="https://www.behance.net/nehuengrosso">
+                <a href="https://www.behance.net/fiorellaotero">
                   <img src="https://img.shields.io/badge/behance-%231769FF.svg?&style=for-the-badge&logo=behance&logoColor=white">
                 </a>
               </td>
