@@ -68,7 +68,6 @@ class Appointment(models.Model):
         cancelled (bool): indica si la cita fue cancelada por algún motivo.
 
     """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     patient = models.OneToOneField(
         Patient, on_delete=models.CASCADE, blank=True, null=True)
 
