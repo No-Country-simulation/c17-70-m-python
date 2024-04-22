@@ -2,6 +2,20 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { URL } from '../../constants'
 
+const InitDataUser = {
+  birthdate: 'cumpleaños',
+  country: 'Pais',
+  email: 'Email',
+  first_name: 'Primer nombre',
+  gender: 'Genero',
+  id: 'Id',
+  id_number: 0,
+  last_name: 'Segundo nombre',
+  phone_number: 'Numero',
+  role: 0,
+  user_photo: 'IMG'
+}
+
 interface UserData {
   birthdate: string
   country: string
@@ -16,7 +30,7 @@ interface UserData {
   user_photo: string
 }
 interface UserState {
-  user?: UserData
+  user: UserData
   isLogin: boolean
   isLoading: boolean
   fetchUser: ({ userName, password }: Props) => Promise<void>
@@ -36,7 +50,7 @@ export const useDataUser = create<UserState>()(
     persist(
       (set, get) => {
         return {
-          user: undefined,
+          user: InitDataUser,
           isLogin: false,
           isLoading: false,
           fetchUser: async ({ userName, password }: Props) => {

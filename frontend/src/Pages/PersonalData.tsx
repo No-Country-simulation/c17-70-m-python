@@ -1,4 +1,3 @@
-import { format } from '@formkit/tempo'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { LeftArrow } from '../Icons/LeftArrow'
@@ -50,8 +49,10 @@ const CountryPhone = [
 
 export function PersonalData() {
   const { user } = useDataUser()
-  const profile = user[0]
-  const newFormat = format(profile.dob.date, 'DD/MM/YYYY', 'en')
+  const profile = user
+  const profileBirthdate = profile?.birthdate
+  console.log(profileBirthdate)
+  //const newFormat = format(profileBirthdate, 'DD/MM/YYYY', 'en')
   const [selectedCountry, setSelectedCountry] = useState('Chile')
 
   const handleCountryChange = (countryName: string) => {
@@ -72,19 +73,19 @@ export function PersonalData() {
         <div className='rounded-full overflow-hidden border-2 border-primary-500 w-[128px]'>
           <img
             className='object-contain object-center'
-            src={profile.picture.large}
-            alt={`imagen de perfil del usuario ${profile.name.first}`}
+            src={profile?.user_photo}
+            alt={`imagen de perfil del usuario ${profile?.first_name}`}
           />
         </div>
       </div>
       <div className='flex flex-col gap-4'>
         <h2 className='font-bold text-xl'>Datos personales</h2>
         <div className='flex gap-4'>
-          <InputText placeholder={profile.name.first} />
-          <InputText placeholder={profile.name.last} />
+          <InputText placeholder={profile.first_name} />
+          <InputText placeholder={profile.last_name} />
         </div>
-        <InputText placeholder={profile.id.value} />
-        <InputText placeholder={newFormat} />
+        <InputText placeholder={profile.id_number.toString()} />
+        <InputText placeholder={'cum'} />
         <ComboBox
           className='w-full'
           iconShow={true}
@@ -107,7 +108,7 @@ export function PersonalData() {
             )}
           />
           <div className='w-full'>
-            <InputText className='w-full' placeholder={profile.cell} />
+            <InputText className='w-full' placeholder={profile.phone_number} />
           </div>
         </div>
       </div>
