@@ -18,14 +18,14 @@ class UserSerializer(serializers.ModelSerializer):
 class DoctorSerializer(serializers.ModelSerializer):
     role = serializers.IntegerField(source='groups.first.id', read_only=True)
     user_photo = serializers.URLField(required=False)
-    first_name = serializers.CharField(source='first_name', read_only=True)
-    last_name = serializers.CharField(source='last_name', read_only=True)
-    specialty = serializers.CharField(source='specialty', read_only=True)
+    first_name = serializers.CharField(read_only=True)
+    last_name = serializers.CharField(read_only=True)
+    specialty = serializers.CharField(read_only=True)
     user_photo_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Doctor
-        fields = ['id', 'user_photo', 'user_photo_url', 'email', 'password', 'first_name', 'last_name', 'id_number',
+        fields = ['id', 'user_photo', 'user_photo_url' 'email', 'password', 'first_name', 'last_name', 'id_number',
                   'birthdate', 'country', 'gender', 'phone_number', 'specialty', 'role']
 
         extra_kwargs = {
