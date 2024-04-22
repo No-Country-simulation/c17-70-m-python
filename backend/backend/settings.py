@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'coreapi',
     'accounts',
-    'videoconference'
+    #'videoconference'
     'login',
     'appointments',
     # 'videochat',
