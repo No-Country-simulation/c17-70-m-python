@@ -46,4 +46,5 @@ class AppointmentSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'patient': {'write_only': False, 'read_only': True},
             'work_shift': {'write_only': True},
+            'role': {'write_only': True},
         }
