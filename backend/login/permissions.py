@@ -13,4 +13,8 @@ class IsDoctor(BasePermission):
 
 class IsDoctorOrPatient(BasePermission):
     def has_permission(self, request, view):
-        return request.user and (request.user.is_doctor or request.user.is_patient)
+        if request.user.groups.filter(name='Patients').exists():
+            return True
+        if request.user.groups.filter(name='Doctors').exists():
+            return True
+        return False
