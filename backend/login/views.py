@@ -59,7 +59,6 @@ class LogoutView(APIView):
     Atributos:
         - Permiso_clases (lista): lista de clases de permisos requeridas para esta vista..
     """
-    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         """
