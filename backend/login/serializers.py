@@ -3,7 +3,9 @@ from accounts.models import CustomUser
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
+    role = serializers.IntegerField(source='groups.first.id', read_only=True)
+
     class Meta:
         model = CustomUser
         fields = ['id', 'email', 'user_photo',
-                  'groups', 'birthdate', 'country', 'phone_number', 'gender', 'user_permissions']
+                  'birthdate', 'country', 'phone_number', 'gender', 'role']
