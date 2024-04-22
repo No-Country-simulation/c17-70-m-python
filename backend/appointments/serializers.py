@@ -27,13 +27,14 @@ class WorkShiftSerializer(serializers.ModelSerializer):
 
 class AppointmentSerializer(serializers.ModelSerializer):
     patient = PatientSerializer(read_only=True)
+    date = serializers.DateField(read_only=True)
     start_time = serializers.TimeField(read_only=True)
     doctor = AppoimentmentDoctorSerializer(
         read_only=True, source='work_shift.doctor')
 
     class Meta:
         model = Appointment
-        fields = ['id', 'patient', 'start_time',
+        fields = ['id', 'patient', 'date', 'start_time',
                   'cancelled', 'doctor']
         extra_kwargs = {
             'patient': {'write_only': False, 'read_only': True},
