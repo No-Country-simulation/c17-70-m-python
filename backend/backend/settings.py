@@ -26,8 +26,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 ALLOWED_HOSTS = ["*"]
 
-CSRF_USE_SESSIONS = True
-
 # CSRF_TRUSTED_ORIGINS = ["https://c17-70-m-python-pr-69.onrender.com", "https://c17-70-m-python.vercel.app/"]
 
 # Application definition
