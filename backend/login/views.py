@@ -43,12 +43,12 @@ class LoginView(APIView):
                             status=status.HTTP_200_OK)
 
         print(username, password)
-        return Response({'message': 'Invalid username or password'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': 'Usuario o constraseña invalido'},
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 class GoogleLogin(SocialLoginView):
     permission_classes = [AllowAny]
-
     adapter_class = GoogleOAuth2Adapter
     callback_url = settings.SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI
     client_class = OAuth2Client
@@ -69,7 +69,7 @@ class LogoutView(APIView):
             JsonResponse: un mensaje de éxito
         """
         logout(request)
-        return JsonResponse({'message': 'Logout successful'})
+        return JsonResponse({'message': 'Logout exitoso'})
 
 
 class HomeView(APIView):
