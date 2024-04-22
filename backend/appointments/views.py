@@ -10,7 +10,7 @@ from .serializers import AppointmentSerializer, WorkShiftSerializer
 
 class WorkShiftViewSet(viewsets.ModelViewSet):
     """
-    VistaSet para administrar turnos de trabajo.
+    ViewSet para administrar turnos de trabajo.
 
     Esta clase proporciona operaciones CRUD para administrar turnos de trabajo. Utiliza la clase
     `WorkShiftSerializer` para la serialización y filtrado.
@@ -38,7 +38,7 @@ class WorkShiftViewSet(viewsets.ModelViewSet):
 
 class AppointmentViewSet(viewsets.ModelViewSet):
     """
-    VistaSet para administrar citas.
+    ViewSet para administrar citas.
 
     Esta clase proporciona operaciones CRUD para administrar citas. Utiliza la clase `AppointmentSerializer`
     para la serialización y filtrado.
@@ -71,7 +71,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
 
 class BookAppointmentViewSet(viewsets.ModelViewSet):
     """
-    VistaSet para reservar una cita.
+    ViewSet para reservar una cita.
 
     Esta clase proporciona una operación de creación para reservar una cita
     utilizando el ID de la cita disponible. El usuario debe estar autenticado
@@ -131,7 +131,7 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
 
 class PatientAppointmentViewSet(viewsets.ModelViewSet):
     """
-    VistaSet para obtener las citas de un paciente.
+    y para obtener las citas de un paciente.
 
     Esta clase proporciona operaciones CRUD para obtener las citas de un paciente
     autenticado. Utiliza la clase `AppointmentSerializer` para la serialización y
