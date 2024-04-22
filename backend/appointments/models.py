@@ -84,4 +84,4 @@ class Appointment(models.Model):
     class Meta:
         verbose_name = 'Appointment'
         verbose_name_plural = 'Appointments'
-        unique_together = ('start_time')
+        unique_together = ['start_time']
