@@ -50,7 +50,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Appointment
-        fields = ['id', 'patient', 'start_time', 'cancelled', 'doctor_name',
+        fields = ['id', 'patient', 'start_time', 'cancelled', 'doctor_name', 'work_shift',
                   'doctor_last_name', 'doctor_specialty', 'doctor_user_photo']
         extra_kwargs = {
             'patient': {'write_only': False, 'read_only': True},
