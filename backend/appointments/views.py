@@ -49,6 +49,8 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         appointment_id = request.data.get('appointment_id')
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         if not appointment_id:
             return Response({'error': 'Appointment ID is required.'}, status=status.HTTP_400_BAD_REQUEST)
         try:
@@ -64,8 +66,7 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
             appointment.save()
             serializer = self.get_serializer(appointment)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Patient not found.'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': 'Patient not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class PatientAppointmentViewSet(viewsets.ModelViewSet):

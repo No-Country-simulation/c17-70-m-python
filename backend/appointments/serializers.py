@@ -3,6 +3,15 @@ from rest_framework import serializers
 from .models import *
 
 
+class AppoimentmentDoctorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Doctor
+        fields = ['id', 'user_photo', 'first_name',
+                  'last_name', 'specialty']
+        extra_kwargs = {
+        }
+
+
 def workshift_date_validator(value):
     if value.data['date'] < timezone.now().date():
         raise serializers.ValidationError(
@@ -19,8 +28,8 @@ class WorkShiftSerializer(serializers.ModelSerializer):
 class AppointmentSerializer(serializers.ModelSerializer):
     patient = PatientSerializer(read_only=True)
     start_time = serializers.TimeField(read_only=True)
-    doctor = DoctorSerializer(read_only=True, source='work_shift.doctor', fields=[
-                              'first_name', 'last_name', 'user_photo', 'specialty'])
+    doctor = AppoimentmentDoctorSerializer(
+        read_only=True, source='work_shift.doctor')
 
     class Meta:
         model = Appointment
@@ -28,5 +37,4 @@ class AppointmentSerializer(serializers.ModelSerializer):
                   'cancelled', 'doctor']
         extra_kwargs = {
             'patient': {'write_only': False, 'read_only': True},
-            'role': {'write_only': True},
         }
