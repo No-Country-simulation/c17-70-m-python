@@ -18,6 +18,10 @@ class UserSerializer(serializers.ModelSerializer):
 class DoctorSerializer(serializers.ModelSerializer):
     role = serializers.IntegerField(source='groups.first.id', read_only=True)
     user_photo = serializers.URLField(required=False)
+    first_name = serializers.CharField(source='first_name', read_only=True)
+    last_name = serializers.CharField(source='last_name', read_only=True)
+    specialty = serializers.CharField(source='specialty', read_only=True)
+    user_photo_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Doctor
@@ -28,6 +32,9 @@ class DoctorSerializer(serializers.ModelSerializer):
             'password': {'write_only': True},
             'is_active': {'read_only': True},
         }
+
+    def get_user_photo_url(self, obj):
+        return obj.user_photo
 
 
 class PatientSerializer(serializers.ModelSerializer):

@@ -4,6 +4,7 @@ from datetime import timedelta
 from django.db import models
 from django.utils import timezone
 from accounts.models import Patient, Doctor
+from accounts.serializers import DoctorSerializer
 
 
 def current_time():

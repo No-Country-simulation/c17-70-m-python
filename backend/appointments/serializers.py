@@ -20,13 +20,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
     work_shift = WorkShiftSerializer()
     patient = PatientSerializer(read_only=True)
     start_time = serializers.TimeField(read_only=True)
-    doctor_name = serializers.StringRelatedField(
-        source='work_shift.doctor.first_name', read_only=True)
-    doctor_last_name = serializers.StringRelatedField(
-        source='work_shift.doctor.last_name', read_only=True)
-    doctor_specialty = serializers.SlugRelatedField(
-        source='work_shift.doctor.specialty', slug_field='specialty', read_only=True)
-    doctor_user_photo = serializers.SerializerMethodField()
+    doctor = DoctorSerializer(read_only=True, source='work_shift.doctor')
 
     def validate_start_time(self, value):
         work_shift = self.context['view'].get_object()
@@ -45,13 +39,10 @@ class AppointmentSerializer(serializers.ModelSerializer):
         validated_data['patient'] = patient
         return super().create(validated_data)
 
-    def get_doctor_user_photo(self, obj):
-        return obj.work_shift.doctor.user_photo
-
     class Meta:
         model = Appointment
-        fields = ['id', 'patient', 'start_time', 'cancelled', 'doctor_name', 'work_shift',
-                  'doctor_last_name', 'doctor_specialty', 'doctor_user_photo']
+        fields = ['id', 'patient', 'start_time', 'cancelled', 'work_shift']
         extra_kwargs = {
             'patient': {'write_only': False, 'read_only': True},
+            'work_shift': {'write_only': True},
         }
