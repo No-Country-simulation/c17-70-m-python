@@ -168,8 +168,7 @@ REST_FRAMEWORK = {
     ...: ...,
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication"
     )
 }
 
@@ -180,6 +179,12 @@ AUTHENTICATION_BACKENDS = (
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 SOCIALACCOUNT_ADAPTER = 'login.adapters.CustomSocialAccountAdapter'
+
+CSRF_COOKIE_NAME = "csrftoken"
+
+CSRF_COOKIE_HTTPONLY = False
+
+CSRF_COOKIE_SECURE = False
 
 load_dotenv()
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
