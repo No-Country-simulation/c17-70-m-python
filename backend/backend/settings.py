@@ -21,7 +21,7 @@ SECRET_KEY = os.getenv(django_insecure_key)
 DEBUG = os.getenv(debug_status, debug_status_default)
 load_dotenv()
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'c17-70-m-python-production.up.railway.app']
 
 ALLOWED_HOSTS = ["*"]
