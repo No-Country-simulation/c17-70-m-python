@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from login.permissions import IsPatient, IsDoctor, IsDoctorOrPatient
 from .models import Appointment, WorkShift
-from .serializers import AppointmentSerializer, WorkShiftSerializer
+from .serializers import AppointmentSerializer, WorkShiftSerializer, AppointmentPatientSerializer
 
 
 class WorkShiftViewSet(viewsets.ModelViewSet):
@@ -153,3 +153,8 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
         queryset = super().get_queryset()
         queryset = queryset.filter(patient=self.request.user.patient)
         return queryset
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve' or self.action == 'list':
+            return AppointmentPatientSerializer
+        return super().get_serializer_class()
