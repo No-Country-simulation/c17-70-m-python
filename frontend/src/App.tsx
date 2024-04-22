@@ -12,27 +12,80 @@ import { PersonalData } from './Pages/PersonalData'
 import { Profile } from './Pages/Profile'
 import { Register } from './Pages/Register'
 import { Schedule } from './Pages/Schedule'
+import { ProtectedRoute } from './components/ProtectedRoute'
 import { routes } from './routes'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={routes.home} element={<Home />} />
+        <Route
+          path={routes.home}
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.register} element={<Register />} />
-        <Route path={routes.profile} element={<Profile />} />
-        <Route path={routes.profileHistory} element={<HistoryMedical />} />
-        <Route path={routes.profileHistoryOffice} element={<HistoryOficce />} />
+        <Route
+          path={routes.profile}
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={routes.profileHistory}
+          element={
+            <ProtectedRoute>
+              <HistoryMedical />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={routes.profileHistoryOffice}
+          element={
+            <ProtectedRoute>
+              <HistoryOficce />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path={routes.profileHistoryTreatment}
-          element={<HistoryTreatment />}
+          element={
+            <ProtectedRoute>
+              <HistoryTreatment />
+            </ProtectedRoute>
+          }
         />
-
-        <Route path={routes.profileShedule} element={<MySchedule />} />
-        <Route path={routes.account} element={<PersonalData />} />
+        <Route
+          path={routes.profileShedule}
+          element={
+            <ProtectedRoute>
+              <MySchedule />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={routes.account}
+          element={
+            <ProtectedRoute>
+              <PersonalData />
+            </ProtectedRoute>
+          }
+        />
         <Route path={routes.components} element={<Components />} />
-        <Route path={routes.schedule} element={<Schedule />} />
+        <Route
+          path={routes.schedule}
+          element={
+            <ProtectedRoute>
+              <Schedule />
+            </ProtectedRoute>
+          }
+        />
         <Route path={routes.error} element={<Error404 />} />
       </Routes>
     </BrowserRouter>

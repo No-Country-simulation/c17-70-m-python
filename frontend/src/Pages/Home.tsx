@@ -49,7 +49,7 @@ const listOfSpecialties = [
 export function Home() {
   const [showAllSpecialties, setShowAllSpecialties] = useState(false)
   const { user } = useDataUser()
-  const { first } = user[0].name
+  const first = user?.first_name
   const handleShowSpecialties = () => {
     setShowAllSpecialties(prev => !prev)
   }
