@@ -120,7 +120,7 @@ DATABASES = {
 }
 
 
-# DATABASES["default"] = dj_database_url.parse(os.getenv("DATABASE_URL"))
+DATABASES["default"] = dj_database_url.parse(os.getenv("DATABASE_URL"))
 
 DEFAULT_CONNECTION_NAME = "default"
 
