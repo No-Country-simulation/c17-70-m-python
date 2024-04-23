@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Appointment',
                 'verbose_name_plural': 'Appointments',
-                'unique_together': ('patient', 'start_time')
+                'unique_together': ('patient', 'work_shift', 'start_time')
             },
         ),
     ]
