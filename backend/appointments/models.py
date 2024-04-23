@@ -62,15 +62,10 @@ class Appointment(models.Model):
     asignada a un paciente. 
 
     Atributos:
-        patient (Patient): el paciente asociado a la cita.
-        work_shift (WorkShift): el turno de trabajo asociado a la cita.
         start_time (Time): la hora de inicio de la cita.
         cancelled (bool): indica si la cita fue cancelada por algún motivo.
 
     """
-    patient = models.OneToOneField(
-        Patient, on_delete=models.CASCADE, blank=True, null=True)
-
     work_shift = models.ForeignKey(
         WorkShift, on_delete=models.CASCADE, related_name='appointments'
     )
@@ -83,4 +78,4 @@ class Appointment(models.Model):
     class Meta:
         verbose_name = 'Appointment'
         verbose_name_plural = 'Appointments'
-        unique_together = ('patient_id', 'work_shift_id', 'start_time')
+        unique_together = ('patient', 'work_shift_id', 'start_time')
