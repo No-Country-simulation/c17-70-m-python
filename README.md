@@ -38,12 +38,12 @@
             <tr>
               <td>Franco Espinoza</td>
               <td>
-                <a href="https://github.com/santiagoarielv98">
+                <a href="https://github.com/FrancoEspinozaV">
                   <img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
                 </a>
               </td>
               <td>
-                <a href="https://www.linkedin.com/in/santiagoarielv">
+                <a href="https://www.linkedin.com/in/francoespinoza/">
                   <img src="https://img.shields.io/badge/linkedin-%230A66C2.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/>
                 </a>
               </td>
@@ -69,25 +69,25 @@
             <tr>
               <td>Gustavo Nievas</td>
               <td>
-                <a href="https://github.com/blackSamuelBellamy">
+                <a href="https://github.com/NievasGustavo">
                   <img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
                 </a>
               </td>
               <td>
-                <a href="https://www.linkedin.com/in/alejandro-quinones-arenas/">
+                <a href="https://www.linkedin.com/in/nievas-gustavo/">
                   <img src="https://img.shields.io/badge/linkedin-%230A66C2.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/>
                 </a>
               </td>
             </tr>
              <tr>
-              <td>Johan</td>
+              <td>Johan Beltran</td>
               <td>
-                <a href="https://github.com/blackSamuelBellamy">
+                <a href="https://github.com/dantalion-py">
                   <img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
                 </a>
               </td>
               <td>
-                <a href="https://www.linkedin.com/in/alejandro-quinones-arenas/">
+                <a href="https://www.linkedin.com/in/johan-beltran-backend-dev/">
                   <img src="https://img.shields.io/badge/linkedin-%230A66C2.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/>
                 </a>
               </td>
@@ -95,12 +95,12 @@
             <tr>
               <td>Juan Fierro</td>
               <td>
-                <a href="https://github.com/brandonSG6A">
+                <a href="https://github.com/Patata1234">
                   <img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
                 </a>
               </td>
               <td>
-                <a href="https://www.linkedin.com/in/brandon-sánchez-47b2a3267">
+                <a href="https://www.linkedin.com/in/juan-fierro-/">
                   <img src="https://img.shields.io/badge/linkedin-%230A66C2.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/>
                 </a>
               </td>
