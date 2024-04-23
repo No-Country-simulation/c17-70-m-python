@@ -50,7 +50,7 @@ class WorkShift(models.Model):
                 date=self.date,
                 start_time=start_time.time(),
                 patient=None,
-                end_time=start_time + (appointment_duration * 2)
+                end_time=start_time + appointment_duration
             )
             start_time += appointment_duration
 
