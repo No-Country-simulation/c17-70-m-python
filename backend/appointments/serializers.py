@@ -43,7 +43,12 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
 
 class AppointmentPatientSerializer(serializers.ModelSerializer):
+    doctor = AppoimentmentDoctorSerializer(
+        read_only=True, source='work_shift.doctor')
+
     class Meta:
         model = Appointment
-        fields = ['id', 'date', 'start_time', 'end_time', 'doctor']
-        read_only_fields = ['patient']
+        fields = ['id', 'date', 'start_time', 'end_time',
+                  'doctor']
+        extra_kwargs = {
+        }
