@@ -42,7 +42,7 @@ CORS_ALLOW_HEADERS = (
     'withcredentials'
 )
 
-SESSION_COOKIE_SAMESITE = True
+SESSION_COOKIE_SAMESITE = 'None'
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'c17-70-m-python-production.up.railway.app']
 
