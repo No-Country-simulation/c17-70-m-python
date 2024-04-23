@@ -8,8 +8,7 @@ import { routes } from '../routes'
 
 export function Profile() {
   const { user } = useDataUser()
-  const profile = user[0]
-
+  const profile = user
   return (
     <div
       className='w-screen max-h-screen'
@@ -30,13 +29,13 @@ export function Profile() {
         <div className='flex flex-col items-center justify-center'>
           <div className='w-[78px] h-[78px] overflow-hidden rounded-full my-5'>
             <img
-              className='object-contain object-center'
-              src={profile.picture.large}
-              alt={`imagen de perfil del usuario ${profile.name.first}`}
+              className='w-[78px] h-[78px] object-contain object-center'
+              src={profile.user_photo}
+              alt={`imagen de perfil del usuario ${profile.first_name}`}
             />
           </div>
           <span className='text-white font-bold text-2xl'>
-            {profile.name.first} {profile.name.last}
+            {profile.first_name} {profile.last_name}
           </span>
         </div>
       </div>
