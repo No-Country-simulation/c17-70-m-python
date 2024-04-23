@@ -49,6 +49,10 @@ CORS_ALLOWED_ORIGINS = [
 
 SESSION_COOKIE_SAMESITE = False
 
+CSRF_COOKIE_SAMESITE = False
+
+CSRF_COOKIE_SECURE = True
+
 SESSION_COOKIE_SECURE = True
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'c17-70-m-python-production.up.railway.app']
