@@ -113,12 +113,6 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
 
         patient = request.user.patient
         if patient:
-            # Verificar que no haya otra cita con el mismo doctor a esa hora
-            if Appointment.objects.filter(start_time=appointment.start_time).exists():
-                return Response(
-                    {'error': 'El paciente ya tiene una cita con el mismo doctor a esa hora.'},
-                    status=status.HTTP_400_BAD_REQUEST)
-
             appointment.patient = patient
             appointment.save()
 
