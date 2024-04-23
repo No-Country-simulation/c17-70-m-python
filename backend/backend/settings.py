@@ -38,7 +38,8 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'x-requested-with',
     'referer'
-    'sessionid'
+    'sessionid',
+    'withcredentials'
 )
 
 SESSION_COOKIE_SAMESITE = False
