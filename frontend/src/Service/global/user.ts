@@ -1,4 +1,4 @@
-//import Cookies from 'js-cookie'
+import Cookie from 'js-cookie'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { URL } from '../../constants'
@@ -63,7 +63,7 @@ export const useDataUser = create<UserState>()(
                 credentials: 'include',
                 headers: {
                   'Content-Type': 'application/json',
-                  'withCredentials': 'true'
+                  'Referer': `${URL}`
                 },
                 body: JSON.stringify({
                   username: userName,
@@ -72,12 +72,16 @@ export const useDataUser = create<UserState>()(
               })
 
               if (!response.ok) {
-                throw new Error('Network response was not ok')
+                throw new Error(
+                  `Status ${response.status} Ha ocurrido un problema`
+                )
               }
+              const cookies = response.headers.get('Set-Cookie')
+              console.log('Cookies:', cookies)
 
-              //const sessionid = Cookies.get('sessionid')
+              const cookie = Cookie.get()
+              console.log(cookie)
 
-              //console.log('sesion: ', sessionid)
               const { user_data: userData } = await response.json()
               set({ user: userData, isLogin: true })
             } catch (error) {
