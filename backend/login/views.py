@@ -17,7 +17,6 @@ class LoginView(APIView):
     Esta clase proporciona un método POST para autenticar a un usuario según
     nombre de usuario y contraseña proporcionados.
     """
-
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -44,7 +43,6 @@ class LoginView(APIView):
                                 status=status.HTTP_200_OK)
             return Response({'message': 'Usuario o constraseña invalido'},
                             status=status.HTTP_400_BAD_REQUEST)
-
         except Exception as e:
             return Response({'message': str(e)},
                             status=status.HTTP_400_BAD_REQUEST)
