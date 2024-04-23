@@ -66,6 +66,10 @@ class AppointmentViewSet(viewsets.ModelViewSet):
         specialty = self.request.query_params.get('specialty', None)
         if specialty:
             queryset = queryset.filter(work_shift__doctor__specialty=specialty)
+            queryset = sorted(queryset, key=lambda x: (
+                x.date, x.start_time), reverse=False)
+        queryset = sorted(queryset, key=lambda x: (
+            x.date, x.start_time), reverse=False)
         return queryset
 
 
