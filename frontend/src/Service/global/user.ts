@@ -92,7 +92,22 @@ export const useDataUser = create<UserState>()(
             const { user } = get()
             console.log(user)
           },
-          logout: () => {
+          logout: async () => {
+            const url = `${URL}/api/auth/logout/`
+            const token = Cookie.get('csrftoken')
+            try {
+              await fetch(url, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Referer': `${URL}`,
+                  'X-CSRFToken': `${token}`
+                }
+              })
+            } catch (error) {
+              console.error('Hubo un problema con la solicitud:', error)
+              throw error
+            }
             set({ isLogin: false })
           },
           isLoadingTrue: () => {
