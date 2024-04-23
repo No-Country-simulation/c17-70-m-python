@@ -38,8 +38,9 @@ class LoginView(APIView):
             if user is not None:
                 login(request, user)
                 user_data = CustomUserSerializer(user).data
+                sessionid = request.session.session_key
                 return Response({'message': 'Login Exitoso',
-                                 'user_data': user_data},
+                                 'user_data': user_data, 'sessionid': sessionid},
                                 status=status.HTTP_200_OK)
             return Response({'message': 'Usuario o constraseña invalido'},
                             status=status.HTTP_400_BAD_REQUEST)
