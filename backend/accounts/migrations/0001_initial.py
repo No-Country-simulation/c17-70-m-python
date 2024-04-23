@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('user_photo', models.URLField(blank=True, null=True)),
+                ('user_photo', models.URLField(blank=True, max_length=500, null=True)),
                 ('username', models.CharField(max_length=255, unique=True)),
                 ('email', models.EmailField(max_length=254, unique=True)),
                 ('first_name', models.CharField(default=' ', max_length=30)),
