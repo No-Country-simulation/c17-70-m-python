@@ -69,7 +69,7 @@ class Appointment(models.Model):
 
     """
     patient = models.ForeignKey(
-        Patient, on_delete=models.CASCADE, blank=True, null=True, related_name='appointments'
+        Patient, on_delete=models.CASCADE, blank=True, null=True,
     )
 
     work_shift = models.ForeignKey(
@@ -84,4 +84,4 @@ class Appointment(models.Model):
     class Meta:
         verbose_name = 'Appointment'
         verbose_name_plural = 'Appointments'
-        unique_together = ('patient', 'start_time')
+        unique_together = ['patient', 'start_time']
