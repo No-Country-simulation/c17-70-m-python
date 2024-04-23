@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from login.permissions import IsPatient, IsDoctor, IsDoctorOrPatient
 from .models import Appointment, WorkShift
-from .serializers import AppointmentSerializer, WorkShiftSerializer
+from .serializers import AppointmentSerializer, WorkShiftSerializer, PatientAppointmentSerializer
 
 
 class WorkShiftViewSet(viewsets.ModelViewSet):
@@ -139,11 +139,12 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
         get_queryset(): Devuelve el QuerySet filtrado por el paciente autenticado.
     """
     queryset = Appointment.objects.all()
-    serializer_class = AppointmentSerializer
+    serializer_class = PatientAppointmentSerializer
     permission_classes = [IsPatient]
 
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(patient=self.request.user.patient)
-        queryset = sorted(queryset, key=lambda x: (x.date, x.start_time), reverse=False)
+        queryset = sorted(queryset, key=lambda x: (
+            x.date, x.start_time), reverse=False)
         return queryset
