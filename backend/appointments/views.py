@@ -31,7 +31,7 @@ class WorkShiftViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
-        workshift = self.get_serializer().instance
+        workshift = serializer.instance
         workshift.create_appointments()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
