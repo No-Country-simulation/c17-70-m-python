@@ -21,13 +21,16 @@ class DoctorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Doctor
-        fields = ['id', 'user_photo', 'email', 'password', 'first_name', 'last_name', 'id_number',
-                  'birthdate', 'country', 'gender', 'phone_number', 'specialty', 'role']
+        fields = ['id', 'user_photo', 'email', 'password', 'first_name', 'last_name',
+                  'id_number', 'birthdate', 'country', 'gender', 'phone_number', 'specialty', 'role']
 
         extra_kwargs = {
             'password': {'write_only': True},
             'is_active': {'read_only': True},
         }
+
+    def get_user_photo_url(self, obj):
+        return obj.user_photo
 
 
 class PatientSerializer(serializers.ModelSerializer):

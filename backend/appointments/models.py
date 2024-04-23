@@ -28,8 +28,10 @@ class WorkShift(models.Model):
         """
         Crear citas para el turno de trabajo.
 
-        Este método crea citas para el turno de trabajo según la hora de inicio y finalización del turno.
-        Cada cita se crea con una duración de 30 minutos. Las citas se crean para el turno de trabajo.
+        Este método crea citas para el turno de trabajo según 
+        la hora de inicio y finalización del turno.
+        Cada cita se crea con una duración de 30 minutos. 
+        Las citas se crean para el turno de trabajo.
         e inicialmente no se asignan a ningún paciente.
 
         Parámetros:
@@ -44,7 +46,12 @@ class WorkShift(models.Model):
         end_time = datetime.combine(self.date, self.end_time)
         while start_time <= end_time:
             Appointment.objects.create(
-                work_shift=self, start_time=start_time.time(), patient=None)
+                work_shift=self,
+                date=self.date,
+                start_time=start_time.time(),
+                patient=None,
+                end_time=start_time + appointment_duration
+            )
             start_time += appointment_duration
 
         class Meta:
@@ -66,18 +73,19 @@ class Appointment(models.Model):
         cancelled (bool): indica si la cita fue cancelada por algún motivo.
 
     """
-    patient = models.OneToOneField(
-        Patient, on_delete=models.CASCADE, blank=True, null=True)
+    patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, blank=True, null=True,
+    )
 
     work_shift = models.ForeignKey(
         WorkShift, on_delete=models.CASCADE, related_name='appointments'
     )
-
+    date = models.DateField(default=timezone.now)
     start_time = models.TimeField(default=current_time)
+    end_time = models.TimeField(default=current_time)
     cancelled = models.BooleanField(default=False)
     objects = AppointmentManager()
 
     class Meta:
         verbose_name = 'Appointment'
         verbose_name_plural = 'Appointments'
-        unique_together = (('patient', 'work_shift', 'start_time'))
