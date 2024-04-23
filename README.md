@@ -7,7 +7,7 @@
 
 *Medicall* es una plataforma de telemedicina diseñada para mejorar la eficiencia en las consultas médicas. Nuestro objetivo principal es permitir el acceso a servicios médicos desde cualquier ubicación, facilitando así la atención médica remota. Esta plataforma busca ofrecer una experiencia fluida y conveniente para pacientes y profesionales de la salud, contribuyendo así a optimizar el proceso de atención médica.
 <p align='left'>
-<a href='c17-70-m-python.vercel.app' target='_blank'>
+<a href='https://c17-70-m-python.vercel.app/login' target='_blank'>
   <img src='https://img.shields.io/badge/Ver%20Demo-2E2E3E?style=for-the-badge&logo=Vercel&logoColor=white' />
 </a>
 </p>
@@ -166,7 +166,7 @@
   Backend
 </h3>
 <p align='left'>
-  <img src='https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white' />
+  <img src='https://img.shields.io/badge/Python-fed241?style=for-the-badge&logo=python' />
   <img src='https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white' />
   <img src='https://img.shields.io/badge/Laragon-0E83CD?style=for-the-badge&logo=Laragon&logoColor=white' />
 </p>
