@@ -74,6 +74,7 @@ class Appointment(models.Model):
     work_shift = models.ForeignKey(
         WorkShift, on_delete=models.CASCADE, related_name='appointments'
     )
+    date = models.DateField(default=timezone.now)
     start_time = models.TimeField(default=current_time)
     cancelled = models.BooleanField(default=False)
     objects = AppointmentManager()
