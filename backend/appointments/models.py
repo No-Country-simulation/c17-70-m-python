@@ -46,7 +46,7 @@ class WorkShift(models.Model):
         end_time = datetime.combine(self.date, self.end_time)
         while start_time <= end_time:
             Appointment.objects.create(
-                work_shift=self, date=self.date, start_time=start_time.time(), patient=None)
+                work_shift=self, date=self.date, start_time=start_time.time(),  end_time=self.end_time, patient=None)
             start_time += appointment_duration
 
         class Meta:
