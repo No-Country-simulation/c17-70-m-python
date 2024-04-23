@@ -54,11 +54,7 @@ export function Login() {
           <div className='w-full flex items-center justify-center text-xl font-bold mb-8'>
             <h2>Inicia sesión</h2>
           </div>
-          <form
-            action=''
-            className='flex flex-col gap-4'
-            onSubmit={handleLogin}
-          >
+          <form className='flex flex-col gap-4' onSubmit={handleLogin}>
             <div className='flex flex-col gap-y-4'>
               <InputText
                 name='email'

@@ -1,4 +1,3 @@
-import Cookie from 'js-cookie'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { URL } from '../../constants'
@@ -77,10 +76,6 @@ export const useDataUser = create<UserState>()(
                 )
               }
 
-              const sessionid = Cookie.get('sessionid')
-              const token = Cookie.get('csrftoken')
-              console.log(sessionid, token)
-
               const { user_data: userData } = await response.json()
               set({ user: userData, isLogin: true })
             } catch (error) {
@@ -94,14 +89,12 @@ export const useDataUser = create<UserState>()(
           },
           logout: async () => {
             const url = `${URL}/api/auth/logout/`
-            const token = Cookie.get('csrftoken')
             try {
               await fetch(url, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Referer': `${URL}`,
-                  'X-CSRFToken': `${token}`
+                  'Referer': `${URL}`
                 }
               })
             } catch (error) {
