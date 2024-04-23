@@ -27,7 +27,8 @@ class LoginView(APIView):
             - Solicitud: el objeto de solicitud HTTP que contiene datos del usuario.
 
         Devoluciones:
-            - Una respuesta JSON que indica el éxito o el fracaso del intento de inicio de sesión.
+            - Una respuesta JSON que indica el éxito o el
+            fracaso del intento de inicio de sesión.
         """
         username = request.data.get('username')
         password = request.data.get('password')
