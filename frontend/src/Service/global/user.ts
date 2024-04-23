@@ -1,3 +1,4 @@
+//import Cookies from 'js-cookie'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { URL } from '../../constants'
@@ -59,6 +60,7 @@ export const useDataUser = create<UserState>()(
             try {
               const response = await fetch(url, {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                   'Content-Type': 'application/json',
                   'withCredentials': 'true'
@@ -73,6 +75,9 @@ export const useDataUser = create<UserState>()(
                 throw new Error('Network response was not ok')
               }
 
+              //const sessionid = Cookies.get('sessionid')
+
+              //console.log('sesion: ', sessionid)
               const { user_data: userData } = await response.json()
               set({ user: userData, isLogin: true })
             } catch (error) {
