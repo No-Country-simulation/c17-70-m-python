@@ -76,6 +76,7 @@ class Appointment(models.Model):
     )
     date = models.DateField(default=timezone.now)
     start_time = models.TimeField(default=current_time)
+    end_time = models.TimeField(default=current_time)
     cancelled = models.BooleanField(default=False)
     objects = AppointmentManager()
 
