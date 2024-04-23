@@ -19,6 +19,8 @@ urlpatterns = [
     path('work_shifts/', include(work_shifts_router.urls)),
     path('book-appointment/',
          BookAppointmentViewSet.as_view({'post': 'create'})),
+    path('doctors-specialty/',
+         DoctorsSpecialtyViewSet.as_view({'get': 'list'})),
 
     # Citas Medicas Resrervadas por Paciente
     path('patient-appointments/', include(patient_appointments_router.urls)),
