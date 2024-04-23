@@ -33,19 +33,16 @@ class LoginView(APIView):
         password = request.data.get('password')
 
         user = authenticate(username=username, password=password)
-        try:
-            if user is not None:
-                login(request, user)
-                user_data = CustomUserSerializer(user).data
-                sessionid = request.session.session_key
-                return Response({'message': 'Login Exitoso',
-                                 'user_data': user_data, 'sessionid': sessionid},
-                                status=status.HTTP_200_OK)
-            return Response({'message': 'Usuario o constraseña invalido'},
-                            status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-            return Response({'message': str(e)},
-                            status=status.HTTP_400_BAD_REQUEST)
+        if user is not None:
+            login(request, user)
+            user_data = CustomUserSerializer(user).data
+            sessionid = request.session.session_key
+            csrftoken = request.COOKIES['csrftoken']
+            return Response({'message': 'Login Exitoso',
+                             'user_data': user_data, 'sessionid': sessionid, 'csrftoken': csrftoken},
+                            status=status.HTTP_200_OK)
+        return Response({'message': 'Usuario o constraseña invalido'},
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 class GoogleLogin(SocialLoginView):
