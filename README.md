@@ -167,8 +167,8 @@
 </h3>
 <p align='left'>
   <img src='https://img.shields.io/badge/Python-fed241?style=for-the-badge&logo=python' />
-  <img src='https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white' />
-  <img src='https://img.shields.io/badge/Laragon-0E83CD?style=for-the-badge&logo=Laragon&logoColor=white' />
+  <img src='https://img.shields.io/badge/Django-0F3D2D?style=for-the-badge&logo=django' />
+  <img src='https://img.shields.io/badge/postgresql-white?style=for-the-badge&logo=postgresql' />
 </p>
 <h3 align='left'>
   Diseño
