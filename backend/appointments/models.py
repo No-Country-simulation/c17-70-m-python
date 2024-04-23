@@ -68,7 +68,7 @@ class Appointment(models.Model):
         cancelled (bool): indica si la cita fue cancelada por algún motivo.
 
     """
-    patient = models.OneToOneField(
+    patient = models.ForeignKey(
         Patient, on_delete=models.CASCADE, blank=True, null=True)
 
     work_shift = models.ForeignKey(
