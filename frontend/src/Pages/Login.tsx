@@ -19,8 +19,14 @@ function ModalLoading() {
 }
 
 export function Login() {
-  const { fetchUser, isLogin, isLoading, isLoadingFalse, isLoadingTrue } =
-    useDataUser()
+  const {
+    fetchUser,
+    isLogin,
+    isLoading,
+    isLoadingFalse,
+    isLoadingTrue,
+    logout
+  } = useDataUser()
   const navigate = useNavigate()
   const { state } = useLocation()
 
@@ -75,9 +81,17 @@ export function Login() {
             <div className='flex justify-end text-primary-700'>
               Olvidaste tu contraseña?
             </div>
-            <div>
+            <div className='flex  gap-4'>
               <Button type='submit' className='w-full' typeVariant='primary'>
                 Iniciar sesión
+              </Button>
+              <Button
+                onClick={logout}
+                type='submit'
+                className='w-full'
+                typeVariant='primary'
+              >
+                logout
               </Button>
             </div>
           </form>
