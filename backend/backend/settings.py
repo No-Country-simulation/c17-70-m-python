@@ -42,13 +42,16 @@ CORS_ALLOW_HEADERS = (
     'withcredentials'
 )
 
-SESSION_COOKIE_SAMESITE = 'NoneJ'
+SESSION_COOKIE_SAMESITE = 'None'
+
+SESSION_COOKIE_SECURE = True
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'c17-70-m-python-production.up.railway.app']
 
 ALLOWED_HOSTS = ["*"]
 
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
