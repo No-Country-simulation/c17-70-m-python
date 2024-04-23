@@ -36,6 +36,8 @@ class Migration(migrations.Migration):
                 ('date', models.DateField(default=django.utils.timezone.now)),
                 ('start_time', models.TimeField(
                     default=appointments.models.current_time)),
+                ('end_time', models.TimeField(
+                    default=appointments.models.current_time)),
                 ('cancelled', models.BooleanField(default=False)),
                 ('patient', models.OneToOneField(blank=True, null=True,
                  on_delete=django.db.models.deletion.CASCADE, to='accounts.patient')),
@@ -45,7 +47,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Appointment',
                 'verbose_name_plural': 'Appointments',
-                'unique_together': ['start_time'],
+                'unique_together': {('patient', 'start_time')}
             },
         ),
     ]

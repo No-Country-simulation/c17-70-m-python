@@ -75,12 +75,12 @@ class Appointment(models.Model):
         WorkShift, on_delete=models.CASCADE, related_name='appointments'
     )
     date = models.DateField(default=timezone.now)
-    end_time = models.TimeField(default=current_time)
     start_time = models.TimeField(default=current_time)
+    end_time = models.TimeField(default=current_time)
     cancelled = models.BooleanField(default=False)
     objects = AppointmentManager()
 
     class Meta:
         verbose_name = 'Appointment'
         verbose_name_plural = 'Appointments'
-        unique_together = ['start_time']
+        unique_together = ('patient', 'start_time')
