@@ -37,7 +37,6 @@ class LoginView(APIView):
             login(request, user)
             user_data = CustomUserSerializer(user).data
             sessionid = request.session.session_key
-            csrftoken = request.session.get('csrftoken')
             return Response({'message': 'Login Exitoso',
                              'user_data': user_data, 'sessionid': sessionid, 'csrftoken': csrftoken},
                             status=status.HTTP_200_OK)
