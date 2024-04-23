@@ -16,7 +16,7 @@ class Imagen(models.Model):
     icon = models.CharField(max_length=300)
 
 
-""" SACAR VALORES NULL DE LOS CAMPOS First_NAME, LAST_NAME, USERNAME"""
+""" SACAR VALORES NULL DE LOS CAMPOS First_NAME, LAST_NAME,USERNAME"""
 
 
 class CustomUser(AbstractUser):
