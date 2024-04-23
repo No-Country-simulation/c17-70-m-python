@@ -76,11 +76,10 @@ export const useDataUser = create<UserState>()(
                   `Status ${response.status} Ha ocurrido un problema`
                 )
               }
-              const cookies = response.headers.get('Set-Cookie')
-              console.log('Cookies:', cookies)
 
-              const cookie = Cookie.get()
-              console.log(cookie)
+              const sessionid = Cookie.get('sessionid')
+              const token = Cookie.get('csrftoken')
+              console.log(sessionid, token)
 
               const { user_data: userData } = await response.json()
               set({ user: userData, isLogin: true })
