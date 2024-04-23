@@ -12,6 +12,12 @@ class AppoimentmentDoctorSerializer(serializers.ModelSerializer):
         }
 
 
+class DoctorsSpecialtySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Doctor
+        fields = ['specialty']
+
+
 def workshift_date_validator(value):
     if value.data['date'] < timezone.now().date():
         raise serializers.ValidationError(

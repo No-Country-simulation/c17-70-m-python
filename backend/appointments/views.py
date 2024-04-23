@@ -5,7 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from login.permissions import IsPatient, IsDoctor, IsDoctorOrPatient
 from .models import Appointment, WorkShift
-from .serializers import AppointmentSerializer, WorkShiftSerializer, PatientAppointmentSerializer
+from .serializers import AppointmentSerializer, WorkShiftSerializer, PatientAppointmentSerializer, DoctorsSpecialtySerializer
+from accounts.models import Doctor
 
 
 class WorkShiftViewSet(viewsets.ModelViewSet):
@@ -151,4 +152,18 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
         queryset = queryset.filter(patient=self.request.user.patient)
         queryset = sorted(queryset, key=lambda x: (
             x.date, x.start_time), reverse=False)
+        return queryset
+
+
+class DoctorsSpecialtyViewSet(viewsets.ModelViewSet):
+    "ViewSet para obtener las especialidades los doctores."
+    queryset = Doctor.objects.all()
+    serializer_class = DoctorsSpecialtySerializer
+    permission_classes = [IsDoctorOrPatient]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(specialty__isnull=False)
+        queryset = sorted(queryset, key=lambda x: (
+            x.specialty), reverse=False)
         return queryset
