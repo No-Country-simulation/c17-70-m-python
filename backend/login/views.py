@@ -52,6 +52,7 @@ class GoogleLogin(SocialLoginView):
 
 
 class LogoutView(APIView):
+    permission_classes = [AllowAny]
     """Maneja la funcionalidad de cierre de sesión del usuario.
     Atributos:
         - Permiso_clases (lista): lista de clases de permisos requeridas para esta vista..
