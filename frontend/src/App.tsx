@@ -12,10 +12,13 @@ import { PersonalData } from './Pages/PersonalData'
 import { Profile } from './Pages/Profile'
 import { Register } from './Pages/Register'
 import { Schedule } from './Pages/Schedule'
+import { useDataUser } from './Service/global/user'
+import { Button } from './components/Button'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { routes } from './routes'
 
 function App() {
+  const { logout } = useDataUser()
   return (
     <BrowserRouter>
       <Routes>
@@ -28,6 +31,16 @@ function App() {
           }
         />
         <Route path={routes.login} element={<Login />} />
+        <Route
+          path={'/logout'}
+          element={
+            <div>
+              <Button onClick={logout} typeVariant='secondary'>
+                Des Login
+              </Button>
+            </div>
+          }
+        />
 
         <Route path={routes.register} element={<Register />} />
         <Route

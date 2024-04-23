@@ -10,7 +10,13 @@ export function getAppointment() {
 export async function getDoctorSpecialties() {
   //const paramSpecialty = specialty ?? ''
   const url = `${URL}/api/appointments/appointments/appointments/?specialty=`
-  const response = await fetch(url)
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Referer': `${URL}`
+    }
+  })
   console.log(response)
   if (!response.ok) throw new Error('un problema en encontrar la especialidad')
   const json = await response.json()
