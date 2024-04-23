@@ -46,8 +46,6 @@ SESSION_COOKIE_SAMESITE = False
 
 SESSION_COOKIE_SECURE = True
 
-CSRF_COOKIE_SECURE = True
-
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'c17-70-m-python-production.up.railway.app']
 
 ALLOWED_HOSTS = ["*"]
