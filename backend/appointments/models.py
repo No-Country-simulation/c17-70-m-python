@@ -46,8 +46,7 @@ class WorkShift(models.Model):
         end_time = datetime.combine(self.date, self.end_time)
         while start_time <= end_time:
             Appointment.objects.create(
-                work_shift=self, date=self.date, start_time=start_time.time(),
-                end_time=self.end_time, patient=None)
+                work_shift=self, date=self.date, start_time=start_time.time(), patient=None)
             start_time += appointment_duration
 
         class Meta:
@@ -77,7 +76,6 @@ class Appointment(models.Model):
     )
     date = models.DateField(default=timezone.now)
     start_time = models.TimeField(default=current_time)
-    end_time = models.TimeField(default=current_time)
     cancelled = models.BooleanField(default=False)
     objects = AppointmentManager()
 
