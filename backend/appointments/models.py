@@ -69,7 +69,8 @@ class Appointment(models.Model):
 
     """
     patient = models.ForeignKey(
-        Patient, on_delete=models.CASCADE, blank=True, null=True)
+        Patient, on_delete=models.CASCADE, blank=True, null=True, related_name='appointments'
+    )
 
     work_shift = models.ForeignKey(
         WorkShift, on_delete=models.CASCADE, related_name='appointments'
