@@ -42,7 +42,7 @@ CORS_ALLOW_HEADERS = (
     'withcredentials'
 )
 
-SESSION_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = False
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'c17-70-m-python-production.up.railway.app']
 
@@ -128,7 +128,7 @@ DATABASES = {
 }
 
 
-# DATABASES["default"] = dj_database_url.parse(os.getenv("DATABASE_URL"))
+DATABASES["default"] = dj_database_url.parse(os.getenv("DATABASE_URL"))
 
 DEFAULT_CONNECTION_NAME = "default"
 
