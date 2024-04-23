@@ -145,4 +145,5 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(patient=self.request.user.patient)
+        queryset = sorted(queryset, key=lambda x: x.date, reverse=True)
         return queryset
