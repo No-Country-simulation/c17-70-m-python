@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 import dj_database_url
-from datetime import timedelta 
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,61 +21,19 @@ SECRET_KEY = os.getenv(django_insecure_key)
 DEBUG = os.getenv(debug_status, debug_status_default)
 load_dotenv()
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = [
+    'https://c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app',
+]
 
-CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ALLOW_CREDENTIALS = True
-
-CORS_ALLOW_PRIVATE_NETWORK = True
-
-CORS_ALLOW_HEADERS = (
+CORS_ALLOW_HEADERS = [
     'accept',
-    'accept-encoding',
-    'authorization',
+    'accept-language',
     'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-    'referer'
-    'sessionid',
-    'withCredentials',
-    'Cookie',
-    'alt-used'
-)
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
-    'https://c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app',
-    'https://c17-70-m-python-pr-75.onrender.com'
+    'authorization',
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:5173',
-    'https://c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app',
-    'https://www.c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app'
-    'https://c17-70-m-python-pr-75.onrender.com',
-    'https://www.c17-70-m-python-pr-75.onrender.com'
-]
-
-
-CSRF_COOKIE_SAMESITE = 'None'
-
-CSRF_COOKIE_SECURE = False
-
-SESSION_COOKIE_SECURE = False
-
-SESSION_COOKIE_SAMESITE = 'None'
-
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'c17-70-m-python-production.up.railway.app',
-    'c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app',
-    'c17-70-m-python-pr-75.onrender.com',
-]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -217,6 +175,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'CORS_MIDDLEWARE': 'corsheaders.middleware.CorsMiddleware',
 }
 
 AUTHENTICATION_BACKENDS = (
