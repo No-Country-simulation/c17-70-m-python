@@ -9,10 +9,7 @@ from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from .serializers import CustomUserSerializer
-from django.views.decorators.csrf import csrf_exempt
 
-
-@csrf_exempt
 class LoginView(APIView):
     """
     Vista API para autenticación de usuarios.
