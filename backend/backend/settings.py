@@ -123,6 +123,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CSRF_EXEMPT_URLS = [
+
+    '/api/auth/login/',
+
+]
+
+
 ROOT_URLCONF = 'backend.urls'
 
 SITE_ID = 1
