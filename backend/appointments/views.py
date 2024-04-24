@@ -26,6 +26,7 @@ class WorkShiftViewSet(viewsets.ModelViewSet):
     """
     queryset = WorkShift.objects.all()
     serializer_class = WorkShiftSerializer
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsDoctor]
 
     def create(self, request, *args, **kwargs):
@@ -93,6 +94,7 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
     """
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsPatient]
 
     def create(self, request, *args, **kwargs):
@@ -146,6 +148,7 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
     """
     queryset = Appointment.objects.all()
     serializer_class = PatientAppointmentSerializer
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsPatient]
 
     def get_queryset(self):
@@ -160,6 +163,7 @@ class DoctorsSpecialtyViewSet(viewsets.ModelViewSet):
     "ViewSet para obtener las especialidades los doctores."
     queryset = Doctor.objects.all()
     serializer_class = DoctorsSpecialtySerializer
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsDoctorOrPatient]
 
     def get_queryset(self):
