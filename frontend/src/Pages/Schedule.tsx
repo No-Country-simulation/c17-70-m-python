@@ -194,8 +194,10 @@ export function Schedule() {
 
   useEffect(() => {
     const getDoctors = async () => {
-      const docs = await getDoctorSpecialties()
-      console.log(docs)
+      setTimeout(async () => {
+        const docs = await getDoctorSpecialties()
+        console.log(docs)
+      }, 1600)
     }
     getDoctors()
   }, [])
