@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 import { URL } from '../constants'
 
 export function getAppointment() {
@@ -10,11 +11,16 @@ export function getAppointment() {
 export async function getDoctorSpecialties() {
   //const paramSpecialty = specialty ?? ''
   const url = `${URL}/api/appointments/appointments/appointments/?specialty=`
+  const token = Cookies.get('csrftoken')
+  const sessionid = Cookies.get('sessionid')
+  console.log(`Token: ${token}, Session: ${sessionid}`)
   const response = await fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Referer': `${URL}`
+      'Referer': `${URL}`,
+      'X-CSRFToken': `${token}`,
+      'sessionid': `${sessionid}`
     }
   })
   console.log(response)
