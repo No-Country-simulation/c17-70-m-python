@@ -59,6 +59,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
     filter_fields = ['work_shift__doctor__specialty', 'cancelled']
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsDoctorOrPatient]
 
     def get_queryset(self):
