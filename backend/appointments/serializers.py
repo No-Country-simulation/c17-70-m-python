@@ -17,6 +17,11 @@ class DoctorsSpecialtySerializer(serializers.ModelSerializer):
         model = Doctor
         fields = ['specialty']
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['value'] = data.pop('specialty')
+        return data
+
 
 def workshift_date_validator(value):
     if value.data['date'] < timezone.now().date():
