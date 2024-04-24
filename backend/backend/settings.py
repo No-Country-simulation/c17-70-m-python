@@ -35,6 +35,7 @@ CORS_ALLOW_HEADERS = (
     'accept',
     'accept-encoding',
     'authorization',
+    'priority',
     'content-type',
     'dnt',
     'origin',
@@ -45,7 +46,7 @@ CORS_ALLOW_HEADERS = (
     'sessionid',
     'withCredentials',
     'Cookie',
-    'alt-used'
+    #'alt-used'
 )
 
 
