@@ -105,7 +105,6 @@ function BasicModal({
 
   const handleBook = async () => {
     setShowCompleted(true)
-    console.log(id)
     await postAppointment({ access, id })
   }
   return (
