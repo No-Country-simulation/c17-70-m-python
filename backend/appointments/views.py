@@ -7,7 +7,7 @@ from login.permissions import IsPatient, IsDoctor, IsDoctorOrPatient
 from .models import Appointment, WorkShift
 from .serializers import AppointmentSerializer, WorkShiftSerializer, PatientAppointmentSerializer, DoctorsSpecialtySerializer
 from accounts.models import Doctor
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class WorkShiftViewSet(viewsets.ModelViewSet):
     """
