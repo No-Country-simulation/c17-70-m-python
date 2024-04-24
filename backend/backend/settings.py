@@ -49,6 +49,12 @@ CORS_ALLOWED_ORIGINS = [
     'https://c17-70-m-python-pr-75.onrender.com'
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5173',
+    'https://c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app',
+    'https://c17-70-m-python-pr-75.onrender.com'
+]
+
 
 CSRF_COOKIE_SAMESITE = 'None'
 
