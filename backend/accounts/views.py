@@ -1,7 +1,8 @@
+import datetime
 from rest_framework import generics
-from .models import Doctor, Patient, Medicament, Treatment, Recipe, Medical_consultation_history, Medical_consultation, Administrator, CustomUser
 from rest_framework import viewsets
 from . import serializers
+from rest_framework.decorators import api_view
 
 from django.contrib.auth.models import Group
 from rest_framework.response import Response
@@ -9,9 +10,10 @@ from rest_framework import status
 from django.http import HttpResponse
 from .models import Patient, Medical_consultation, Recipe  # Treatment, Doctor
 from django.views.generic import View
-# Create your views here.
-
-
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from .models import *
+from .serializers import *
 class AdministratorView(viewsets.ModelViewSet):
     serializer_class = serializers.AdministratorSerializer
     queryset = Administrator.objects.all()
@@ -213,3 +215,43 @@ class UserRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
             return response
         return HttpResponse('Not found')
 """
+@api_view(['GET'])
+def filter_consultations_by_date(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    date_str = request.GET.get('date')
+    if date_str:
+        try:
+            date = datetime.strptime(date_str, '%Y-%m-%d').date()
+            consultations = Medical_consultation.objects.filter(doctor=user, date=date)
+            serializer = MedicalConsultationSerializer(consultations, many=True)
+            return Response(serializer.data)
+        except ValueError:
+            return Response({'error': 'Invalid date format. Use YYYY-MM-DD.'}, status=400)
+    else:
+        return Response({'error': 'Parameter "date" is required'}, status=400)
+
+
+@api_view(['GET'])
+def list_all_recipes(request):
+    patient_id = request.GET.get('patient_id')
+    if patient_id:
+        recipes = Recipe.objects.filter(treatment__patient_id=patient_id)
+        serializer = RecipeSerializer(recipes, many=True)
+        return Response(serializer.data)
+    else:
+        return JsonResponse({'error': 'Parameter "patient_id" is required'}, status=400)
+
+
+@api_view(['GET'])
+def list_all_consultations(request, pk):
+    patient = get_object_or_404(Patient, pk=pk)
+    consultations = Medical_consultation.objects.filter(consultation_history__patient=patient)
+    serializer = MedicalConsultationSerializer(consultations, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def list_all_treatments(request, pk):
+    patient = get_object_or_404(Patient, pk=pk)
+    treatments = Treatment.objects.filter(recipes__treatment__consultation_history__patient=patient)
+    serializer = TreatmentSerializer(treatments, many=True)
+    return Response(serializer.data)
