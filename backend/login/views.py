@@ -11,6 +11,7 @@ from dj_rest_auth.registration.views import SocialLoginView
 from .serializers import CustomUserSerializer
 from .permissions import CsrfExemptSessionAuthentication
 from rest_framework.authentication import BasicAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class LoginView(APIView):
@@ -76,6 +77,7 @@ class LogoutView(APIView):
 
 
 class HomeView(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
