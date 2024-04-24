@@ -21,9 +21,14 @@ SECRET_KEY = os.getenv(django_insecure_key)
 DEBUG = os.getenv(debug_status, debug_status_default)
 load_dotenv()
 
+
+CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = False
+
 CORS_ORIGIN_WHITELIST = [
     'https://c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app',
+    'https://dashboard.render.com/web/srv-cojs99g21fec7394nqs0/events',
+    'http://localhost:5173/',
 ]
 
 CORS_ALLOW_HEADERS = [
@@ -31,6 +36,7 @@ CORS_ALLOW_HEADERS = [
     'accept-language',
     'content-type',
     'authorization',
+    'priority',
 ]
 
 ALLOWED_HOSTS = ['*']
