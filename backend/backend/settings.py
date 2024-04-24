@@ -21,6 +21,8 @@ SECRET_KEY = os.getenv(django_insecure_key)
 DEBUG = os.getenv(debug_status, debug_status_default)
 load_dotenv()
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
