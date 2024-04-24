@@ -12,7 +12,6 @@ from .serializers import CustomUserSerializer
 
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.exceptions import ValidationError
-from django.views.decorators.csrf import csrf_exempt
 
 
 class LoginView(APIView):
@@ -23,8 +22,7 @@ class LoginView(APIView):
     """
     permission_classes = [AllowAny]
     authentication_classes = [SessionAuthentication]
-
-    @csrf_exempt
+    
     def post(self, request):
         """
         Autenticar al usuario con el nombre de usuario y contraseña proporcionados.
