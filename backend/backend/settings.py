@@ -46,6 +46,7 @@ CORS_ALLOW_HEADERS = (
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'https://c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app',
+    'https://c17-70-m-python-pr-75.onrender.com'
 ]
 
 
