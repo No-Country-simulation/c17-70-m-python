@@ -40,7 +40,8 @@ CORS_ALLOW_HEADERS = (
     'referer'
     'sessionid',
     'withCredentials',
-    'Cookie'
+    'Cookie',
+    'alt-used'
 )
 
 CORS_ALLOWED_ORIGINS = [
