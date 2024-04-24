@@ -10,10 +10,6 @@ from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from .serializers import CustomUserSerializer
 
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.exceptions import ValidationError
-from django.views.decorators.csrf import csrf_exempt
-
 
 class LoginView(APIView):
     """
@@ -21,8 +17,8 @@ class LoginView(APIView):
     Esta clase proporciona un método POST para autenticar a un usuario según
     nombre de usuario y contraseña proporcionados.
     """
+    perimission_classes = [AllowAny]
     
-    @csrf_exempt
     def post(self, request):
         """
         Autenticar al usuario con el nombre de usuario y contraseña proporcionados.
