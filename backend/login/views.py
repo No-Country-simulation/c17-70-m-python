@@ -9,7 +9,8 @@ from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from .serializers import CustomUserSerializer
-from django.views.decorators.csrf import csrf_exempt
+from .permissions import CsrfExemptSessionAuthentication
+from rest_framework.authentication import BasicAuthentication
 
 
 class LoginView(APIView):
@@ -19,6 +20,8 @@ class LoginView(APIView):
     nombre de usuario y contraseña proporcionados.
     """
     perimission_classes = [AllowAny]
+    authentication_classes = (
+        CsrfExemptSessionAuthentication, BasicAuthentication)
 
     def post(self, request):
         """
