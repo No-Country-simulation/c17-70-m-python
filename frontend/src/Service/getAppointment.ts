@@ -19,8 +19,7 @@ export async function getDoctorSpecialties() {
     headers: {
       'Content-Type': 'application/json',
       'Referer': `${URL}`,
-      'X-CSRFToken': `${token}`,
-      'sessionid': `${sessionid}`
+      'Cookie': `csrftoken=${token}; sessionid=${sessionid}`
     }
   })
   console.log(response)
