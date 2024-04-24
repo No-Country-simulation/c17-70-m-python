@@ -3,11 +3,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import viewsets, filters
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from login.permissions import IsPatient, IsDoctor, IsDoctorOrPatient
+from accounts.models import Doctor
 from .models import Appointment, WorkShift
 from .serializers import AppointmentSerializer, WorkShiftSerializer, PatientAppointmentSerializer, DoctorsSpecialtySerializer
-from accounts.models import Doctor
-from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 class WorkShiftViewSet(viewsets.ModelViewSet):
     """

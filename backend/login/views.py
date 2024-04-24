@@ -1,21 +1,19 @@
 from django.conf import settings
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenError
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from .serializers import CustomUserSerializer
-from rest_framework_simplejwt.authentication import JWTAuthentication
-
-
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenError
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from django.contrib.auth import get_user_model
-from django.views.decorators.csrf import csrf_exempt
 
 User = get_user_model()
 
@@ -53,6 +51,7 @@ class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
     callback_url = settings.SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI
     client_class = OAuth2Client
+
 
 class HomeView(APIView):
     authentication_classes = [JWTAuthentication]

@@ -46,7 +46,6 @@ CORS_ALLOW_HEADERS = (
     'sessionid',
     'withCredentials',
     'Cookie',
-    #v'alt-used'
 )
 
 
