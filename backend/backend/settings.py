@@ -58,14 +58,6 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 
-CSRF_COOKIE_SAMESITE = 'None'
-
-CSRF_COOKIE_SECURE = False
-
-SESSION_COOKIE_SECURE = False
-
-SESSION_COOKIE_SAMESITE = 'None'
-
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
@@ -213,7 +205,16 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-    )
+    ),
+    'CSRF_COOKIE_HTTPONLY': False,
+
+    'CSRF_COOKIE_SAMESITE': 'None',
+
+    'CSRF_COOKIE_SECURE': False,
+
+    'SESSION_COOKIE_SAMESITE': 'None',
+
+    'SESSION_COOKIE_SECURE': False,
 }
 
 AUTHENTICATION_BACKENDS = (
