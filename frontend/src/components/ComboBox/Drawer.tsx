@@ -10,7 +10,7 @@ import { LeftArrowCircle } from '../../Icons/LeftArrowCircle'
 import { Note } from '../../Icons/Note'
 import { Option } from '../../Icons/Option'
 import { User } from '../../Icons/User'
-import { useDataUser } from '../../Service/global/user'
+import { dataUser } from '../../Service/global/user'
 import { routes } from '../../routes'
 
 const drawerWidth = 280
@@ -18,7 +18,7 @@ interface Props {
   type?: string
 }
 export function DrawerRight({ type }: Props) {
-  const { user, logout, isLogin } = useDataUser()
+  const { user, logout, isLogin } = dataUser()
   const profile = user
   const [open, setOpen] = React.useState(false)
 

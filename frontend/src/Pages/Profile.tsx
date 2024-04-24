@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom'
 import { ReducedLogo } from '../Icons/ReducedLogo'
 import { RightArrow } from '../Icons/RightArrow'
 import { User } from '../Icons/User'
-import { useDataUser } from '../Service/global/user'
+import { dataUser } from '../Service/global/user'
 import { DrawerRight } from '../components/ComboBox/Drawer'
 import { routes } from '../routes'
 
 export function Profile() {
-  const { user } = useDataUser()
+  const { user } = dataUser()
   const profile = user
   return (
     <div

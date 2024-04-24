@@ -1,7 +1,7 @@
 import { CircularProgress, Divider } from '@mui/material'
 import { FormEvent } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { useDataUser } from '../Service/global/user'
+import { dataUser } from '../Service/global/user'
 import { Button } from '../components/Button'
 import { FrameCredential } from '../components/Frame/FrameCredential'
 import { InputText } from '../components/InputText'
@@ -20,7 +20,7 @@ function ModalLoading() {
 
 export function Login() {
   const { fetchUser, isLogin, isLoading, isLoadingFalse, isLoadingTrue } =
-    useDataUser()
+    dataUser()
   const navigate = useNavigate()
   const { state } = useLocation()
 

@@ -1,4 +1,3 @@
-import Cookie from 'js-cookie'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { URL } from '../../constants'
@@ -34,6 +33,7 @@ interface UserState {
   user: UserData
   isLogin: boolean
   isLoading: boolean
+  access: string
   fetchUser: ({ userName, password }: Props) => Promise<void>
   getDataUser: () => void
   logout: () => void
@@ -46,7 +46,7 @@ interface Props {
   password: string
 }
 
-export const useDataUser = create<UserState>()(
+export const dataUser = create<UserState>()(
   devtools(
     persist(
       (set, get) => {
@@ -54,19 +54,19 @@ export const useDataUser = create<UserState>()(
           user: InitDataUser,
           isLogin: false,
           isLoading: false,
+          access: '',
           fetchUser: async ({ userName, password }: Props) => {
             const url = `${URL}/api/auth/login/`
 
             try {
               const response = await fetch(url, {
                 method: 'POST',
-                credentials: 'include',
                 headers: {
                   'Content-Type': 'application/json',
                   'Referer': `${URL}`
                 },
                 body: JSON.stringify({
-                  username: userName,
+                  email: userName,
                   password: password
                 })
               })
@@ -77,8 +77,8 @@ export const useDataUser = create<UserState>()(
                 )
               }
 
-              const { user_data: userData } = await response.json()
-              set({ user: userData, isLogin: true })
+              const { user, access } = await response.json()
+              set({ user, isLogin: true, access })
             } catch (error) {
               console.error('Hubo un problema con la solicitud:', error)
               throw error
@@ -89,22 +89,12 @@ export const useDataUser = create<UserState>()(
             console.log(user)
           },
           logout: async () => {
-            const url = `${URL}/api/auth/logout/`
-            const token = Cookie.get('csrftoken')
-            try {
-              await fetch(url, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Referer': `${URL}`,
-                  'X-CSRFToken': `${token}`
-                }
-              })
-            } catch (error) {
-              console.error('Hubo un problema con la solicitud:', error)
-              throw error
-            }
-            set({ isLogin: false })
+            set({
+              user: InitDataUser,
+              isLogin: false,
+              isLoading: false,
+              access: ''
+            })
           },
           isLoadingTrue: () => {
             set({ isLoading: true })

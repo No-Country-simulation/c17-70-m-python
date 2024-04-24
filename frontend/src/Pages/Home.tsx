@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { HeartRate } from '../Icons/HearthRate'
 import { Medical } from '../Icons/Medical'
 import { Pediatrics } from '../Icons/Pediatrics'
-import { useDataUser } from '../Service/global/user'
+import { dataUser } from '../Service/global/user'
 import { Button } from '../components/Button'
 import { DrawerRight } from '../components/ComboBox/Drawer'
 import { DoctorInfo } from '../components/DoctorInfo'
@@ -48,7 +48,7 @@ const listOfSpecialties = [
 
 export function Home() {
   const [showAllSpecialties, setShowAllSpecialties] = useState(false)
-  const { user } = useDataUser()
+  const { user } = dataUser()
   const first = user?.first_name
   const handleShowSpecialties = () => {
     setShowAllSpecialties(prev => !prev)

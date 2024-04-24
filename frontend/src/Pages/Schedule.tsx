@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckCircle } from '../Icons/CheckCircle'
 import { LeftArrow } from '../Icons/LeftArrow'
-import { getDoctorSpecialties } from '../Service/getAppointment'
+import { getSpecialties } from '../Service/getAppointment'
+import { dataUser } from '../Service/global/user'
 import { Button } from '../components/Button'
 import { DrawerRight } from '../components/ComboBox/Drawer'
 import { routes } from '../routes'
@@ -191,16 +192,15 @@ export function Schedule() {
   const [showCompleted /*setShowCompleted*/] = useState(false)
   //const [selectedSpecialty, setSelectedSpecialty] = useState('')
   //const [doctors, setDoctors] = useState([])
+  const { access } = dataUser()
 
   useEffect(() => {
-    const getDoctors = async () => {
-      setTimeout(async () => {
-        const docs = await getDoctorSpecialties()
-        console.log(docs)
-      }, 1600)
+    const specialties = async () => {
+      const specialties = await getSpecialties({ access })
+      console.log(specialties)
     }
-    getDoctors()
-  }, [])
+    specialties()
+  }, [access])
 
   return (
     <section className='px-4 py-2 max-w-[500px] flex flex-col gap-4'>
