@@ -18,7 +18,7 @@ class LoginView(APIView):
     nombre de usuario y contraseña proporcionados.
     """
     perimission_classes = [AllowAny]
-    
+
     def post(self, request):
         """
         Autenticar al usuario con el nombre de usuario y contraseña proporcionados.
