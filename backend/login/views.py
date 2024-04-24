@@ -9,7 +9,9 @@ from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from .serializers import CustomUserSerializer
-from django.views.decorators.csrf import csrf_exempt
+
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.exceptions import ValidationError
 
 
 class LoginView(APIView):
@@ -19,8 +21,9 @@ class LoginView(APIView):
     nombre de usuario y contraseña proporcionados.
     """
     permission_classes = [AllowAny]
-
-    @csrf_exempt
+    authentication_classes = [SessionAuthentication]
+    
+    
     def post(self, request):
         """
         Autenticar al usuario con el nombre de usuario y contraseña proporcionados.
