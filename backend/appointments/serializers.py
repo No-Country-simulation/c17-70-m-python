@@ -6,7 +6,7 @@ from .models import *
 class AppoimentmentDoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
-        fields = ['id', 'user_photo', 'first_name',
+        fields = ['id', 'user_photo', 'gender', 'first_name',
                   'last_name', 'specialty']
         extra_kwargs = {
         }
