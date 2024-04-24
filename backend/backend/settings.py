@@ -27,17 +27,27 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = [
     'https://c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app',
-    'https://dashboard.render.com/web/srv-cojs99g21fec7394nqs0/events',
-    'http://localhost:5173/',
+    'https://dashboard.render.com/web/srv-cojs99g21fec7394nqs0',
+    'http://localhost:5173',
 ]
 
-CORS_ALLOW_HEADERS = [
+CORS_ALLOW_HEADERS = (
     'accept',
-    'accept-language',
-    'content-type',
+    'accept-encoding',
     'authorization',
-    'priority',
-]
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'referer'
+    'sessionid',
+    'withCredentials',
+    'Cookie',
+    'alt-used'
+)
+
 
 ALLOWED_HOSTS = ['*']
 
