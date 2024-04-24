@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import 'swiper/css'
 import 'swiper/css/free-mode'
@@ -8,12 +8,12 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { HeartRate } from '../Icons/HearthRate'
 import { Medical } from '../Icons/Medical'
 import { Pediatrics } from '../Icons/Pediatrics'
+import { getAppointment } from '../Service/getAppointment'
 import { dataUser } from '../Service/global/user'
 import { Button } from '../components/Button'
 import { DrawerRight } from '../components/ComboBox/Drawer'
 import { DoctorInfo } from '../components/DoctorInfo'
 import { TipLink } from '../components/TipLink'
-import { scheduleDoctor } from '../mocks/doctor'
 import { routes } from '../routes'
 
 interface PropType {
@@ -48,8 +48,18 @@ const listOfSpecialties = [
 
 export function Home() {
   const [showAllSpecialties, setShowAllSpecialties] = useState(false)
-  const { user } = dataUser()
-  const first = user?.first_name
+  const [appointments, setAppointments] = useState([])
+  const { user, access } = dataUser()
+  const first = user.first_name
+
+  useEffect(() => {
+    const getAppointments = async () => {
+      const appointment = await getAppointment({ access })
+      setAppointments(appointment)
+    }
+    getAppointments()
+  }, [access])
+
   const handleShowSpecialties = () => {
     setShowAllSpecialties(prev => !prev)
   }
@@ -144,9 +154,10 @@ export function Home() {
         <div className='flex flex-col gap-4'>
           <h2 className='text-xl font-semibold'>Tu próxima consulta</h2>
           <div className='flex flex-col gap-4'>
-            {scheduleDoctor.map((info, index) => {
-              return <DoctorInfo key={index} infoDoctor={info} />
-            })}
+            {appointments.length !== 0 &&
+              appointments.map((info, index) => {
+                return <DoctorInfo key={index} infoDoctor={info} />
+              })}
           </div>
           <div
             className='w-[320px] bg-primary-400 h-[145px] bg-no-repeat rounded-3xl self-center flex flex-col items-center justify-center gap-2'

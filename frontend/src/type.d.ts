@@ -82,12 +82,19 @@ export interface Date {
   fromDate: string
   toDate: string
 }
-export interface Info {
-  img: string
-  name: string
+export interface Doctor {
+  id: `${string}-${string}-${string}-${string}-${string}`
+  first_name: string
+  last_name: string
   specialty: string
-  date: Date
+  user_photo: string
+  gender: string
 }
-export interface Props {
-  infoDoctor: Info
+
+export interface PropsDoctor {
+  id: number
+  doctor: Doctor
+  end_time: string
+  start_time: string
+  date: string
 }

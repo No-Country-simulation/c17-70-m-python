@@ -1,92 +1,90 @@
 //import { Box, Modal } from '@mui/material'
+import { format } from '@formkit/tempo'
+import { Box, Modal } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckCircle } from '../Icons/CheckCircle'
 import { LeftArrow } from '../Icons/LeftArrow'
-import { getSpecialties } from '../Service/getAppointment'
+import {
+  getDoctorSpecialties,
+  getSpecialties,
+  postAppointment
+} from '../Service/getAppointment'
 import { dataUser } from '../Service/global/user'
 import { Button } from '../components/Button'
+import { ComboBox } from '../components/ComboBox/ComboBox'
 import { DrawerRight } from '../components/ComboBox/Drawer'
 import { routes } from '../routes'
+import { PropsDoctor } from '../type'
+import { convertirFormatoHora } from '../utils/date'
 
-/*interface Doctor {
-  id: `${string}-${string}-${string}-${string}-${string}`
-  nameDoctor: string
-  specialty: string
-  img: string
-}*/
-
-/*const specialty = [
-  'Medicina General',
-  'Cardiología',
-  'Pediatría',
-  'Ginecología',
-  'Otorrinolaringología',
-  'Psicología'
-]*/
-/*interface PropsDoctor {
-  doctor: Doctor
-  toDate: string
-  fromDate: string
-  date: string
-  changeSpecialty?: string
-}*/
-
-/*function arrayToComboBoxFormat(array: string[]) {
-  return array.map(element => ({ value: element }))
-}*/
-
-/*interface PropsDoctors {
+interface PropsDoctors {
   doctor: PropsDoctor
   setShowCompleted: (isSelected: boolean) => void
-}*/
-/*function DoctorSelect({ doctor, setShowCompleted }: PropsDoctors) {
+}
+function DoctorSelect({ doctor, setShowCompleted }: PropsDoctors) {
+  const date = new Date(doctor.date)
+  const formatDate = format(date, 'long')
   return (
     <div className='bg-neutral-50 rounded-xl shadow-md p-2 flex gap-2'>
       <div className='w-[89px] rounded-md overflow-hidden h-[89px]'>
         <img
           className='w-[89px] h-[89px] object-cover object-top'
-          src={doctor.doctor.img}
-          alt={`imagen del doctor/a ${doctor.doctor.nameDoctor}`}
+          src={doctor.doctor.user_photo}
+          alt={`imagen del doctor/a ${doctor.doctor.first_name}`}
         />
       </div>
       <div className='w-full'>
         <div>
           <h2 className='text-secondary-500 font-bold'>
-            {doctor.fromDate} a {doctor.toDate} hs
+            {convertirFormatoHora(doctor.start_time)} a{' '}
+            {convertirFormatoHora(doctor.end_time)} hs
           </h2>
-          <span className='text-secondary-500 text-sm'>{doctor.date}</span>
+          <span className='text-secondary-500 text-sm'>{formatDate}</span>
         </div>
         <div className='w-full flex justify-between'>
           <div className='flex flex-col'>
-            <span className='text-xs'>{doctor.doctor.nameDoctor}</span>
+            <span className='text-xs'>{`${
+              doctor.doctor.gender === 'Femenino' ? 'Dra' : 'Dr'
+            } ${doctor.doctor.first_name} ${doctor.doctor.last_name}`}</span>
             <span className='text-xs'>{doctor.doctor.specialty}</span>
           </div>
           <BasicModal
+            id={doctor.id}
             setShowCompleted={setShowCompleted}
-            date={doctor.date}
-            hour={`${doctor.fromDate} a ${doctor.toDate}`}
-            doctor={doctor.doctor.nameDoctor}
+            date={formatDate}
+            hour={`${convertirFormatoHora(
+              doctor.start_time
+            )} a ${convertirFormatoHora(doctor.end_time)} hs`}
+            doctor={`${doctor.doctor.gender === 'Femenino' ? 'Dra' : 'Dr'} ${
+              doctor.doctor.first_name
+            } ${doctor.doctor.last_name}`}
             speciality={doctor.doctor.specialty}
           />
         </div>
       </div>
     </div>
   )
-}*/
+}
 
-/*interface PropModal {
+interface Specialty {
+  value: string
+}
+
+interface PropModal {
   date: string
   hour: string
   doctor: string
   speciality: string
+  id: number
   setShowCompleted: (isSelected: boolean) => void
-}*/
-/*function BasicModal({
+}
+function BasicModal({
   date,
   hour,
   doctor,
   speciality,
+  id,
   setShowCompleted
 }: PropModal) {
   const [open, setOpen] = useState(false)
@@ -102,6 +100,13 @@ import { routes } from '../routes'
     bgcolor: 'white',
     borderRadius: '19px',
     p: 2
+  }
+  const { access } = dataUser()
+
+  const handleBook = async () => {
+    setShowCompleted(true)
+    console.log(id)
+    await postAppointment({ access, id })
   }
   return (
     <div>
@@ -137,10 +142,7 @@ import { routes } from '../routes'
               </span>
             </div>
             <div className='flex flex-col gap-4 mt-5'>
-              <Button
-                onClick={() => setShowCompleted(true)}
-                typeVariant='primary'
-              >
+              <Button onClick={handleBook} typeVariant='primary'>
                 Agendar consulta
               </Button>
               <Button onClick={handleClose} typeVariant='secondary'>
@@ -152,7 +154,7 @@ import { routes } from '../routes'
       </Modal>
     </div>
   )
-}*/
+}
 
 function ScheduledTime() {
   return (
@@ -189,18 +191,30 @@ function ScheduledTime() {
 }
 
 export function Schedule() {
-  const [showCompleted /*setShowCompleted*/] = useState(false)
-  //const [selectedSpecialty, setSelectedSpecialty] = useState('')
-  //const [doctors, setDoctors] = useState([])
+  const [showCompleted, setShowCompleted] = useState(false)
+  const [selectedSpecialty, setSelectedSpecialty] = useState('')
+  const [doctors, setDoctors] = useState([])
+  const [speciality, setSpecialty] = useState<Specialty[]>([])
   const { access } = dataUser()
 
   useEffect(() => {
     const specialties = async () => {
       const specialties = await getSpecialties({ access })
-      console.log(specialties)
+      setSpecialty(specialties)
     }
     specialties()
   }, [access])
+
+  useEffect(() => {
+    const getDoctors = async () => {
+      const doctors = await getDoctorSpecialties({
+        access,
+        specialty: selectedSpecialty
+      })
+      setDoctors(doctors)
+    }
+    getDoctors()
+  }, [access, selectedSpecialty])
 
   return (
     <section className='px-4 py-2 max-w-[500px] flex flex-col gap-4'>
@@ -218,20 +232,21 @@ export function Schedule() {
           <div className='flex flex-col'>
             <h3 className='font-semibold'>Selecciona una especialidad</h3>
             <div className='w-full flex flex-col justify-center items-start'>
-              {/*<ComboBox
-                handleCountryChange={setSelectedSpecialty}
-                className='w-full'
-                iconShow={false}
-                isCapitalized={true}
-                options={specialtyFormat}
-                placeholder={specialtyFormat[0].value}
-      />*/}
+              {speciality.length !== 0 && (
+                <ComboBox
+                  handleCountryChange={setSelectedSpecialty}
+                  className='w-full'
+                  iconShow={false}
+                  isCapitalized={true}
+                  options={speciality}
+                  placeholder={speciality[0].value}
+                />
+              )}
             </div>
           </div>
-          {/*<div className='flex flex-col gap-4'>
-            {selectedSpecialty &&
-              specialty.includes(selectedSpecialty) &&
-              selectedArrayDoctors.map((doc, index) => {
+          <div className='flex flex-col gap-4'>
+            {doctors.length !== 0 &&
+              doctors.map((doc, index) => {
                 return (
                   <DoctorSelect
                     setShowCompleted={setShowCompleted}
@@ -240,7 +255,7 @@ export function Schedule() {
                   />
                 )
               })}
-            </div>*/}
+          </div>
         </div>
       ) : (
         <ScheduledTime />
