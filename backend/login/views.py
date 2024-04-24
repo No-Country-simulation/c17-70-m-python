@@ -9,45 +9,32 @@ from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from .serializers import CustomUserSerializer
-from .permissions import CsrfExemptSessionAuthentication
-from rest_framework.authentication import BasicAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.contrib.auth import get_user_model
 
-class LoginView(APIView):
-    """
-    Vista API para autenticación de usuarios.
-    Esta clase proporciona un método POST para autenticar a un usuario según
-    nombre de usuario y contraseña proporcionados.
-    """
-    perimission_classes = [AllowAny]
-    authentication_classes = (
-        CsrfExemptSessionAuthentication, BasicAuthentication)
+User = get_user_model()
 
-    def post(self, request):
-        """
-        Autenticar al usuario con el nombre de usuario y contraseña proporcionados.
 
-        Parámetros:
-            - Solicitud: el objeto de solicitud HTTP que contiene datos del usuario.
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def create(self, validated_data):
+        raise NotImplementedError('create() method not implemented')
 
-        Devoluciones:
-            - Una respuesta JSON que indica el éxito o el
-            fracaso del intento de inicio de sesión.
-        """
-        username = request.data.get('username')
-        password = request.data.get('password')
+    def update(self, instance, validated_data):
+        raise NotImplementedError('update() method not implemented')
 
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-            user_data = CustomUserSerializer(user).data
-            sessionid = request.session.session_key
-            return Response({'message': 'Login Exitoso',
-                             'user_data': user_data, 'sessionid': sessionid},
-                            status=status.HTTP_200_OK)
-        return Response({'message': 'Usuario o constraseña invalido'},
-                        status=status.HTTP_400_BAD_REQUEST)
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        user = self.user
+        data['user'] = CustomUserSerializer(user, context=self.context).data
+        return data
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+    permission_classes = [AllowAny]
 
 
 class GoogleLogin(SocialLoginView):
