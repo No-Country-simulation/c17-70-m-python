@@ -10,7 +10,6 @@ from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from .serializers import CustomUserSerializer
 
-
 class LoginView(APIView):
     """
     Vista API para autenticación de usuarios.
@@ -18,7 +17,7 @@ class LoginView(APIView):
     nombre de usuario y contraseña proporcionados.
     """
     perimission_classes = [AllowAny]
-
+    
     def post(self, request):
         """
         Autenticar al usuario con el nombre de usuario y contraseña proporcionados.

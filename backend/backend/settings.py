@@ -21,7 +21,7 @@ SECRET_KEY = os.getenv(django_insecure_key)
 DEBUG = os.getenv(debug_status, debug_status_default)
 load_dotenv()
 
-CORS_ORIGIN_ALLOW_ALL = True
+"""CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -69,17 +69,27 @@ CSRF_COOKIE_SAMESITE = 'None'
 
 CSRF_COOKIE_SECURE = False
 
+
+CSRF_EXEMPT_URLS = [
+
+    '/api/auth/login/',
+
+]
+
+
+"""
+
 SESSION_COOKIE_SECURE = False
 
 SESSION_COOKIE_SAMESITE = 'None'
 
-ALLOWED_HOSTS = [
+"""ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'c17-70-m-python-production.up.railway.app',
     'c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app',
     'c17-70-m-python-pr-75.onrender.com',
-]
+]"""
 
 # Application definition
 
@@ -91,7 +101,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
-    'corsheaders',
+    #'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
@@ -111,7 +121,7 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    #'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -121,12 +131,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'allauth.account.middleware.AccountMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-CSRF_EXEMPT_URLS = [
-
-    '/api/auth/login/',
-
 ]
 
 
