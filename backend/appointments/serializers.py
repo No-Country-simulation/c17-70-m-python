@@ -57,9 +57,11 @@ class PatientAppointmentSerializer(serializers.ModelSerializer):
     patient = serializers.HiddenField(default=serializers.CurrentUserDefault())
     date = serializers.DateField(read_only=True)
     start_time = serializers.TimeField(read_only=True)
+    end_time = serializers.TimeField(read_only=True)
     doctor = AppoimentmentDoctorSerializer(
         read_only=True, source='work_shift.doctor')
 
     class Meta:
         model = Appointment
-        fields = ['id', 'date', 'start_time', 'cancelled', 'doctor', 'patient']
+        fields = ['id', 'date', 'start_time',
+                  'end_time', 'cancelled', 'doctor', 'patient']
