@@ -160,7 +160,7 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
             x.date, x.start_time), reverse=False)
         return queryset
 
-    @action(methods=['post'], detail=True)
+    @action(methods=['delete'], detail=True)
     def cancel_appointment(self, request, pk=None):
         appointment = self.get_object()
         if appointment.cancelled:
