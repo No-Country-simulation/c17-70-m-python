@@ -27,6 +27,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = [
     'https://c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app',
+    'https://c17-70-m-python-git-78-videollamada-francoespinozavs-projects.vercel.app/'
     'https://dashboard.render.com',
     'http://localhost:5173',
 ]
@@ -203,7 +204,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 SOCIALACCOUNT_ADAPTER = 'login.adapters.CustomSocialAccountAdapter'
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days= 1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=50),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,

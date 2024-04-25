@@ -48,6 +48,16 @@ class PatientSerializer(serializers.ModelSerializer):
         }
 
 
+class PatientPartialUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Patient
+        fields = ['user_photo', 'first_name', 'last_name', 'id_number',
+                  'birthdate', 'country', 'gender', 'phone_number']
+        extra_kwargs = {
+            'is_active': {'read_only': True},
+        }
+
+
 class MedicamentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medicament
