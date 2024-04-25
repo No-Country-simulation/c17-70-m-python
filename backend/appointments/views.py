@@ -1,3 +1,4 @@
+from datetime import datetime
 from django_filters.rest_framework import DjangoFilterBackend
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import F
@@ -6,10 +7,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from login.permissions import IsPatient, IsDoctor, IsDoctorOrPatient
-from accounts.models import Doctor
+from accounts.models import Doctor, Patient, Diagnosis, Medication
 from .models import Appointment, WorkShift
-from .serializers import AppointmentSerializer, WorkShiftSerializer, PatientAppointmentSerializer, DoctorsSpecialtySerializer
-
+from .serializers import AppointmentSerializer, WorkShiftSerializer, PatientAppointmentSerializer, DoctorsSpecialtySerializer, DiagnosisSerializer
+from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 
 class WorkShiftViewSet(viewsets.ModelViewSet):
     """
@@ -173,3 +175,41 @@ class DoctorsSpecialtyViewSet(viewsets.ModelViewSet):
         queryset = queryset.values('specialty').annotate(
             specialty_name=F('specialty')).order_by().distinct()
         return queryset
+    
+
+    
+class MedicationListView(viewsets.ModelViewSet):
+    serializer_class = DiagnosisSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        patient_id = self.request.query_params.get('patient_id')
+
+        if patient_id:
+            patient = get_object_or_404(Patient, id=patient_id)
+            
+            queryset = Diagnosis.objects.filter(patient=patient)
+            return queryset
+        else:
+            return Diagnosis.objects.none()
+
+class PatientDiagnosisListView(viewsets.ModelViewSet):
+    serializer_class = DiagnosisSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        patient_id = self.request.query_params.get('patient_id')
+        date_param = self.request.query_params.get('date')
+
+        print("Patient ID:", patient_id)
+        print("Date:", date_param)
+
+        if patient_id:
+            queryset = Diagnosis.objects.filter(patient_id=patient_id)
+            if date_param:
+                queryset = queryset.filter(date=date_param)
+            return queryset
+        else:
+            return Diagnosis.objects.none()

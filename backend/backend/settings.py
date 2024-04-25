@@ -1,3 +1,4 @@
+from distutils import config
 import os
 from dotenv import load_dotenv
 from pathlib import Path
@@ -117,27 +118,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 load_dotenv()
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['RAILWAY_DATABASE_NAME'],
-        'USER': os.environ['RAILWAY_DATABASE_USERNAME'],
-        'PASSWORD': os.environ['RAILWAY_DATABASE_PASSWORD'],
-        'HOST': os.environ['RAILWAY_DATABASE_HOST'],
-        'PORT': os.environ['RAILWAY_DATABASE_PORT'],
-    }
+    'default': dj_database_url.parse(os.getenv("DATABASE_URL"))
 }
-
-
-DATABASES["default"] = dj_database_url.parse(os.getenv("DATABASE_URL"))
-
 DEFAULT_CONNECTION_NAME = "default"
 
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -155,8 +144,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -167,22 +154,17 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
+
 
 STATIC_URL = 'static/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORES_ALLOW_ORIGINS = [
 
 ]
 
-############################################################
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "ui/static")]
-# STATIC_ROOT = os.path.join(BASE_DIR, "ui/staticfiles")
 
 
 REST_FRAMEWORK = {

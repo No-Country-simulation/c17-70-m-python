@@ -1,8 +1,8 @@
 from accounts.serializers import PatientSerializer
 from rest_framework import serializers
 from .models import *
-
-
+from accounts.models import Medication, Diagnosis
+from django.utils import timezone
 class AppoimentmentDoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
@@ -62,3 +62,13 @@ class PatientAppointmentSerializer(serializers.ModelSerializer):
         model = Appointment
         fields = ['id', 'date', 'start_time',
                   'end_time', 'cancelled', 'doctor', 'patient']
+class DiagnosisSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Diagnosis
+        fields = '__all__'
+
+        
+class MedicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Medication
+        fields = '__all__'

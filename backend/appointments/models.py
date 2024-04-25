@@ -2,8 +2,8 @@ import uuid
 from datetime import datetime
 from datetime import timedelta
 from django.db import models
-from django.utils import timezone
 from accounts.models import Patient, Doctor
+from django.utils import timezone
 
 
 def current_time():
@@ -89,3 +89,5 @@ class Appointment(models.Model):
     class Meta:
         verbose_name = 'Appointment'
         verbose_name_plural = 'Appointments'
+
+
