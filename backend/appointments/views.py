@@ -125,11 +125,10 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
         if patient:
             appointment.patient = patient
             appointment.save()
-
             serializer = self.get_serializer(appointment)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Paciente no encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        return Response({'error': 'Paciente no encontrado.'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class PatientAppointmentViewSet(viewsets.ModelViewSet):
