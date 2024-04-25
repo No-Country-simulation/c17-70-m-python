@@ -12,6 +12,7 @@ import { PersonalData } from './Pages/PersonalData'
 import { Profile } from './Pages/Profile'
 import { Register } from './Pages/Register'
 import { Schedule } from './Pages/Schedule'
+import { VideoCall } from './Pages/VideoCall'
 import { dataUser } from './Service/global/user'
 import { Button } from './components/Button'
 import { ProtectedRoute } from './components/ProtectedRoute'
@@ -88,6 +89,14 @@ function App() {
           element={
             <ProtectedRoute>
               <PersonalData />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={routes.videoCall}
+          element={
+            <ProtectedRoute>
+              <VideoCall />
             </ProtectedRoute>
           }
         />
