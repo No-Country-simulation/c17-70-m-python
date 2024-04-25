@@ -62,6 +62,11 @@ class PatientListCreate(generics.ListCreateAPIView):
     queryset = Patient.objects.all()
     serializer_class = serializers.PatientSerializer
 
+    def get_serializer_class(self):
+        if self.request.method == 'PUT':
+            return serializers.PatientUpdateSerializer
+        return serializers.PatientSerializer
+
     def create(self, request, *args, **kwargs):
         """
         Cree una nueva instancia del modelo utilizando los datos proporcionados.
@@ -92,11 +97,6 @@ class PatientListCreate(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save()
-
-    def get_serializer_class(self):
-        if self.request.method == 'PUT':
-            return serializers.PatientUpdateSerializer
-        return serializers.PatientSerializer
 
 
 class PatientRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
