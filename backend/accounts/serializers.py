@@ -47,6 +47,15 @@ class PatientSerializer(serializers.ModelSerializer):
             'is_active': {'read_only': True},
         }
 
+        def update(self, instance, validated_data):
+            email = validated_data.get('email', instance.email)
+            password = validated_data.get('password', instance.password)
+            instance.email = email
+            instance.set_password(password)
+            instance.save()
+            return instance
+
+
 class MedicamentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medicament
