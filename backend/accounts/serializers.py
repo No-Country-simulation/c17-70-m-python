@@ -48,10 +48,10 @@ class PatientSerializer(serializers.ModelSerializer):
         }
 
         def update(self, instance, validated_data):
-            email = validated_data.get('email', instance.email)
-            password = validated_data.get('password', instance.password)
-            instance.email = email
-            instance.set_password(password)
+            instance.email = validated_data.get(
+                'email', default=instance.email) or instance.email
+            instance.password = validated_data.get(
+                'password', default=instance.password) or instance.password
             instance.save()
             return instance
 
