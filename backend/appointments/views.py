@@ -172,5 +172,5 @@ class DoctorsSpecialtyViewSet(viewsets.ModelViewSet):
         queryset = super().get_queryset()
         queryset = queryset.filter(specialty__isnull=False)
         queryset = queryset.values('specialty').annotate(
-            specialty=F('specialty')).order_by().distinct()
+            specialty_name=F('specialty')).order_by().distinct()
         return queryset
