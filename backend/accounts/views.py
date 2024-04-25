@@ -107,7 +107,7 @@ class PatientListCreate(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save()
-    
+
     def perform_update(self, serializer):
         original_instance = self.get_object()
         original_email = original_instance.email
@@ -117,10 +117,10 @@ class PatientListCreate(generics.ListCreateAPIView):
 
         if original_email != updated_instance.email and 'email' not in self.request.data:
             updated_instance.email = original_email
-
         if original_password != updated_instance.password and 'password' not in self.request.data:
             updated_instance.set_password(original_password)
-        return updated_instance.save()
+
+        updated_instance.save()
 
 
 class PatientRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
