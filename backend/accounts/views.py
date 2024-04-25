@@ -93,19 +93,6 @@ class PatientListCreate(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         return serializer.save()
 
-    def update(self, instance, validated_data):
-        email = validated_data.get('email', instance.email)
-        password = validated_data.get('password', instance.password)
-        instance.email = email
-        if password:
-            instance.set_password(password)
-        instance.save()
-        return instance
-
-    def perform_update(self, serializer):
-        serializer.save()
-
-
 class PatientRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Patient.objects.all()
     serializer_class = serializers.PatientSerializer
