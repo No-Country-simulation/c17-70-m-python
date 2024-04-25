@@ -111,18 +111,6 @@ export function ComboBox({
     option.value.toLowerCase().includes(inputValue.toLowerCase())
   )
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && filteredOptions.length > 0) {
-      const value = filteredOptions[0].value
-      setInputValue(value)
-      if (handleCountryChange != null) {
-        handleCountryChange(value)
-      }
-      if (filteredOptions[0]) setSelectedImage(filteredOptions[0])
-      setIsActive(false)
-    }
-  }
-
   return (
     <div
       className={`${className ? className : ''} relative`}
@@ -158,7 +146,6 @@ export function ComboBox({
       )}
       <input
         readOnly={readonly}
-        onKeyDown={handleKeyDown}
         ref={inputRef}
         type='text'
         value={selected == null ? inputValue : selected.value}

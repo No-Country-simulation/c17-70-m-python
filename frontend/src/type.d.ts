@@ -93,8 +93,9 @@ export interface Doctor {
 
 export interface PropsDoctor {
   id: number
-  doctor: Doctor
-  end_time: string
-  start_time: string
   date: string
+  start_time: string
+  end_time: string
+  cancelled: boolean
+  doctor: Doctor
 }
