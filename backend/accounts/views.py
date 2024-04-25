@@ -120,7 +120,7 @@ class PatientListCreate(generics.ListCreateAPIView):
         if original_password != updated_instance.password and 'password' not in self.request.data:
             updated_instance.set_password(original_password)
 
-        updated_instance.save()
+        return updated_instance.save()
 
 
 class PatientRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
