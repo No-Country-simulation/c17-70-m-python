@@ -1,11 +1,6 @@
-from django.urls import path, include
+from django.urls import path
 from .views import *
 from rest_framework.documentation import include_docs_urls
-from rest_framework import routers
-
-patients_router = routers.DefaultRouter()
-
-patients_router.register(r'patients', PatientListCreate)
 
 urlpatterns = [
     # URLs para Doctor
@@ -14,9 +9,9 @@ urlpatterns = [
          name='doctor-detail'),
 
     # URLs para Patient
-    path('patients/', include(patients_router.urls), name='patient-list'),
-    # path('patients/<uuid:pk>/', PatientRetrieveUpdateDestroy.as_view(),
-    #     name='patient-detail'),
+    path('patients/', PatientListCreate.as_view(), name='patient-list'),
+    path('patients/<uuid:pk>/', PatientRetrieveUpdateDestroy.as_view(),
+         name='patient-detail'),
 
     # URLs para Medicament
     path('medicaments/', MedicamentListCreate.as_view(), name='medicament-list'),

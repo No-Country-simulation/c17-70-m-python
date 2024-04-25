@@ -1,5 +1,4 @@
 from rest_framework import generics
-from rest_framework import viewsets
 from .models import Doctor, Patient, Medicament, Treatment, Recipe, Medical_consultation_history, Medical_consultation, Administrator, CustomUser
 from rest_framework import viewsets
 from . import serializers
@@ -59,7 +58,7 @@ class DoctorRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 # Patient
 
 
-class PatientListCreate(viewsets.ModelViewSet):
+class PatientListCreate(generics.ListCreateAPIView):
     queryset = Patient.objects.all()
     serializer_class = serializers.PatientSerializer
 
@@ -94,13 +93,10 @@ class PatientListCreate(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         return serializer.save()
 
-"""    def partial_update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.update(instance, serializer.validated_data)
-        return Response(serializer.data)"""
 
+class PatientRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Patient.objects.all()
+    serializer_class = serializers.PatientSerializer
 
 # Medicament
 
