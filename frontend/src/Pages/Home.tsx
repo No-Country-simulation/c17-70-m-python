@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/pagination'
@@ -30,25 +30,31 @@ function TypeCategory({ children }: PropType) {
 const listOfSpecialties = [
   {
     Element: <Medical />,
-    description: 'Medicina'
+    description: 'Medicina',
+    search: 'Medicina General'
   },
   {
     Element: <HeartRate />,
-    description: 'Cardiología'
+    description: 'Cardiología',
+    search: 'Cardiologia'
   },
   {
     Element: <Pediatrics />,
-    description: 'Pediatría'
+    description: 'Pediatría',
+    search: 'Pediatría'
   },
   {
     Element: <Medical />,
-    description: 'Medicina'
+    description: 'Psicologia',
+    search: 'Psicologia'
   }
 ]
 
 export function Home() {
   const [showAllSpecialties, setShowAllSpecialties] = useState(false)
   const [appointments, setAppointments] = useState([])
+  const navigate = useNavigate()
+
   const { user, access } = dataUser()
   const first = user.first_name
 
@@ -64,6 +70,9 @@ export function Home() {
     setShowAllSpecialties(prev => !prev)
   }
 
+  const handleSpecialties = (specialty: string) => {
+    return navigate(routes.schedule, { state: { specialty } })
+  }
   return (
     <main className='px-5 py-8 max-w-[500px]'>
       <nav className='flex justify-between mb-7'>
@@ -91,11 +100,13 @@ export function Home() {
               Agenda una consulta médica
             </TipLink>
           </Link>
-          <TipLink type='secondary' classname='max-w-[152px] max-h-[72px]'>
-            <span className='text-center max-w-[152px] max-h-[72px]'>
-              Tus próximas consultas
-            </span>
-          </TipLink>
+          <Link to={routes.profileShedule}>
+            <TipLink type='secondary' classname='max-w-[152px] max-h-[72px]'>
+              <span className='text-center max-w-[152px] max-h-[72px]'>
+                Tus próximas consultas
+              </span>
+            </TipLink>
+          </Link>
         </div>
         <div className='flex flex-col gap-4'>
           <div className='flex justify-between items-center'>
@@ -119,12 +130,14 @@ export function Home() {
               >
                 {listOfSpecialties.map((specialty, index) => {
                   return (
-                    <TypeCategory key={index}>
-                      {specialty.Element}
-                      <span className='text-secondary-500 text-xs'>
-                        {specialty.description}
-                      </span>
-                    </TypeCategory>
+                    <span onClick={() => handleSpecialties(specialty.search)}>
+                      <TypeCategory key={index}>
+                        {specialty.Element}
+                        <span className='text-secondary-500 text-xs'>
+                          {specialty.description}
+                        </span>
+                      </TypeCategory>
+                    </span>
                   )
                 })}
               </div>
@@ -138,12 +151,14 @@ export function Home() {
                 {listOfSpecialties.map((specialty, index) => {
                   return (
                     <SwiperSlide key={index}>
-                      <TypeCategory>
-                        {specialty.Element}
-                        <span className='text-secondary-500 text-xs'>
-                          {specialty.description}
-                        </span>
-                      </TypeCategory>
+                      <span onClick={() => handleSpecialties(specialty.search)}>
+                        <TypeCategory>
+                          {specialty.Element}
+                          <span className='text-secondary-500 text-xs'>
+                            {specialty.description}
+                          </span>
+                        </TypeCategory>
+                      </span>
                     </SwiperSlide>
                   )
                 })}

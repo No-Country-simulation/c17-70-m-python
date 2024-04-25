@@ -1,7 +1,7 @@
 import { format } from '@formkit/tempo'
 import { Box, Modal } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { CheckCircle } from '../Icons/CheckCircle'
 import { LeftArrow } from '../Icons/LeftArrow'
 import {
@@ -190,7 +190,8 @@ function ScheduledTime() {
 
 export function Schedule() {
   const [showCompleted, setShowCompleted] = useState(false)
-  const [selectedSpecialty, setSelectedSpecialty] = useState('')
+  const { state } = useLocation()
+  const [selectedSpecialty, setSelectedSpecialty] = useState(state?.specialty)
   const [doctors, setDoctors] = useState([])
   const [speciality, setSpecialty] = useState<Specialty[]>([])
   const { access } = dataUser()
@@ -237,7 +238,7 @@ export function Schedule() {
                   iconShow={false}
                   isCapitalized={true}
                   options={speciality}
-                  placeholder={speciality[0].value}
+                  placeholder={state?.specialty ?? speciality[0].value}
                 />
               )}
             </div>
