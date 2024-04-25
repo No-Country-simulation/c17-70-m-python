@@ -170,5 +170,6 @@ class DoctorsSpecialtyViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(specialty__isnull=False)
-        queryset = queryset.values_list('specialty', flat=True).distinct()
+        queryset = queryset.values('specialty__name').annotate(
+            specialty=('specialty__name')).order_by().distinct()
         return queryset
