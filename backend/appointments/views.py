@@ -1,5 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import F
 from rest_framework import viewsets, filters
 from rest_framework.response import Response
 from rest_framework import status
@@ -171,5 +172,5 @@ class DoctorsSpecialtyViewSet(viewsets.ModelViewSet):
         queryset = super().get_queryset()
         queryset = queryset.filter(specialty__isnull=False)
         queryset = queryset.values('specialty').annotate(
-            specialty=('specialty')).order_by().distinct()
+            specialty=F('specialty')).order_by().distinct()
         return queryset
