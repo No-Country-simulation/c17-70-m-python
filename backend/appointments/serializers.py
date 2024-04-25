@@ -13,14 +13,10 @@ class AppoimentmentDoctorSerializer(serializers.ModelSerializer):
 
 
 class DoctorsSpecialtySerializer(serializers.ModelSerializer):
+    value = serializers.CharField(source='specialty')
     class Meta:
         model = Doctor
-        fields = ['specialty']
-
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data['value'] = data.pop('specialty')
-        return data
+        fields = ['value']
 
 
 def workshift_date_validator(value):
