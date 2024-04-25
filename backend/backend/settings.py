@@ -27,7 +27,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = [
     'https://c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app',
-    'https://c17-70-m-python-git-78-videollamada-francoespinozavs-projects.vercel.app'
+    'https://c17-70-m-python-git-78-videollamada-francoespinozavs-projects.vercel.app',
     'https://dashboard.render.com',
     'http://localhost:5173',
 ]
