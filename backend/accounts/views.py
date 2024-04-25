@@ -93,6 +93,11 @@ class PatientListCreate(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         return serializer.save()
 
+    def get_serializer_class(self):
+        if self.request.method == 'PUT':
+            return serializers.PatientUpdateSerializer
+        return serializers.PatientSerializer
+
 
 class PatientRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Patient.objects.all()
