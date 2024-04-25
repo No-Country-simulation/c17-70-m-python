@@ -171,7 +171,9 @@ export function Home() {
           <div className='flex flex-col gap-4'>
             {appointments.length !== 0 &&
               appointments.map((info, index) => {
-                return <DoctorInfo key={index} infoDoctor={info} />
+                return (
+                  <DoctorInfo index={index} key={index} infoDoctor={info} />
+                )
               })}
           </div>
           <div
