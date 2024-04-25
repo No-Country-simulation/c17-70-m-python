@@ -90,71 +90,13 @@ class PatientListCreate(generics.ListCreateAPIView):
             patients.get_absolute_url())
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-    def get_serializer_class(self):
-        if self.request.method == 'PUT':
-            return serializers.PatientSerializerPut
-        return serializers.PatientSerializer
-
-    def update(self, request,  **kwargs):
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.get_serializer(
-            instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
-        return Response(serializer.data)
-
     def perform_create(self, serializer):
         return serializer.save()
-
-    def perform_update(self, serializer):
-        original_instance = self.get_object()
-        original_email = original_instance.email
-        original_password = original_instance.password
-        serializer.save()
-        updated_instance = self.get_object()
-
-        if 'email' in self.request.data and original_email != updated_instance.email:
-            updated_instance.email = self.request.data['email']
-        if 'password' in self.request.data and original_password != updated_instance.password:
-            updated_instance.set_password(self.request.data['password'])
-
-        return updated_instance.save()
 
 
 class PatientRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Patient.objects.all()
     serializer_class = serializers.PatientSerializer
-
-    def get_serializer_class(self):
-        if self.request.method == 'PUT':
-            return serializers.PatientSerializerPut
-        return serializers.PatientSerializer
-
-    def update(self, request, **kwargs):
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.get_serializer(
-            instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
-        return Response(serializer.data)
-
-    def perform_update(self, serializer):
-        original_instance = self.get_object()
-        original_email = original_instance.email
-        original_password = original_instance.password
-        serializer.save()
-        updated_instance = self.get_object()
-
-        if 'email' in self.request.data and original_email != updated_instance.email:
-            updated_instance.email = self.request.data['email']
-        if 'password' in self.request.data and original_password != updated_instance.password:
-            updated_instance.set_password(self.request.data['password'])
-
-        return updated_instance.save()
 
 # Medicament
 

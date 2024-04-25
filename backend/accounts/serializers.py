@@ -47,19 +47,6 @@ class PatientSerializer(serializers.ModelSerializer):
             'is_active': {'read_only': True},
         }
 
-
-class PatientSerializerPut(PatientSerializer):
-    email = serializers.EmailField(required=False)
-    password = serializers.CharField(write_only=True, required=False)
-
-    class Meta(PatientSerializer.Meta):
-        fields = PatientSerializer.Meta.fields
-        extra_kwargs = {
-            'password': {'write_only': True},
-            'is_active': {'read_only': True},
-        }
-
-
 class MedicamentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medicament
