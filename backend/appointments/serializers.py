@@ -13,7 +13,7 @@ class AppoimentmentDoctorSerializer(serializers.ModelSerializer):
 
 
 class DoctorsSpecialtySerializer(serializers.ModelSerializer):
-    value = serializers.CharField(source='specialty.name')
+    value = serializers.CharField(source='specialty')
 
     class Meta:
         model = Doctor
