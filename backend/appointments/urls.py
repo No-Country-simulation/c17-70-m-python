@@ -24,4 +24,5 @@ urlpatterns = [
 
     # Citas Medicas Resrervadas por Paciente
     path('patient-appointments/', include(patient_appointments_router.urls)),
+    path('patient-appointments/<pk>/', PatientAppointmentViewSet.as_view({'delete': 'destroy'})),
 ]
