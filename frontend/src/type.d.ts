@@ -92,6 +92,7 @@ export interface Doctor {
 }
 
 export interface PropsDoctor {
+  room_id: string
   id: number
   date: string
   start_time: string

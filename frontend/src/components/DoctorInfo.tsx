@@ -2,7 +2,7 @@ import { format } from '@formkit/tempo'
 import { Link } from 'react-router-dom'
 import { Dots } from '../Icons/Dots'
 import { PropsDoctor } from '../type'
-import { convertirFormatoHora, randomID } from '../utils/date'
+import { convertirFormatoHora } from '../utils/date'
 
 interface Props {
   infoDoctor: PropsDoctor
@@ -10,8 +10,7 @@ interface Props {
 }
 
 export function DoctorInfo({ infoDoctor, index }: Props) {
-  const roomID = randomID(5)
-  const url = `/videocall?roomID=${roomID}`
+  const url = `/videocall?roomID=${infoDoctor.room_id}`
   const date = new Date(infoDoctor.date)
   const formatDate = format(date, 'long')
   return (
@@ -47,7 +46,9 @@ export function DoctorInfo({ infoDoctor, index }: Props) {
         )}
       </div>
       <div className='ml-auto pr-2 pt-1'>
-        <Dots />
+        <button>
+          <Dots />
+        </button>
       </div>
     </div>
   )

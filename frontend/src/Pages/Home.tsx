@@ -15,6 +15,7 @@ import { DrawerRight } from '../components/ComboBox/Drawer'
 import { DoctorInfo } from '../components/DoctorInfo'
 import { TipLink } from '../components/TipLink'
 import { routes } from '../routes'
+import { PropsDoctor } from '../type'
 
 interface PropType {
   children: ReactNode
@@ -52,7 +53,7 @@ const listOfSpecialties = [
 
 export function Home() {
   const [showAllSpecialties, setShowAllSpecialties] = useState(false)
-  const [appointments, setAppointments] = useState([])
+  const [appointments, setAppointments] = useState<PropsDoctor[]>([])
   const navigate = useNavigate()
 
   const { user, access } = dataUser()
