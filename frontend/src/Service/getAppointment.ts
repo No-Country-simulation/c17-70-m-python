@@ -65,3 +65,19 @@ export async function postAppointment({ access, id }: PostAppointment) {
   const json = await response.json()
   return json
 }
+
+export async function deleteAppointment({ access, id }: PostAppointment) {
+  const url = `${URL}api/appointments/patient-appointments/patient-appointments/${id}/cancel_appointment/`
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Referer': `${URL}`,
+      'Authorization': `Bearer ${access}`
+    }
+  })
+  if (!response.ok)
+    throw new Error(`ha ocurrido un problema. Status: ${response.status}`)
+  const json = await response.json()
+  return json
+}

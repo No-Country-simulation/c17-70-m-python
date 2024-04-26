@@ -17,8 +17,7 @@ function convertirAFechaISO8601(fechaString: string) {
   const dia = partesFecha[2]
 
   // Construir la cadena de fecha ISO 8601 con la hora y la zona horaria
-  const fechaISO8601 =
-    año + '-' + mes + '-' + (Number(dia) + 1).toString() + 'T00:00:00Z'
+  const fechaISO8601 = año + '-' + mes + '-' + (Number(dia) + 1).toString()
 
   return fechaISO8601
 }
@@ -26,7 +25,6 @@ function convertirAFechaISO8601(fechaString: string) {
 export function DoctorInfo({ infoDoctor, index }: Props) {
   const url = `/videocall?roomID=${infoDoctor.room_id}`
   const date = new Date(convertirAFechaISO8601(infoDoctor.date))
-  console.log(date)
   const formatDate = format(date, 'long')
   return (
     <div className='bg-neutral-50 p-2 rounded-2xl shadow-md flex gap-x-4 min-w-[276px]'>
