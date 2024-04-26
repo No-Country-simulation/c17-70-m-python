@@ -4,6 +4,19 @@ from datetime import timedelta
 from django.db import models
 from django.utils import timezone
 from accounts.models import Patient, Doctor
+import random
+
+
+def random_id():
+    result = ''
+    if result:
+        return result
+    chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP'
+    max_pos = len(chars)
+    length = 5
+    for _ in range(length):
+        result += chars[random.randint(0, max_pos - 1)]
+    return result
 
 
 def current_time():
@@ -41,6 +54,7 @@ class WorkShift(models.Model):
             Ninguno
 
         """
+
         appointment_duration = timedelta(minutes=30)  # 30 minutes
         start_time = datetime.combine(self.date, self.start_time)
         end_time = datetime.combine(self.date, self.end_time)
@@ -50,7 +64,8 @@ class WorkShift(models.Model):
                 date=self.date,
                 start_time=start_time.time(),
                 patient=None,
-                end_time=start_time + appointment_duration
+                end_time=start_time + appointment_duration,
+                room_id=random_id()
             )
             start_time += appointment_duration
 
@@ -84,6 +99,7 @@ class Appointment(models.Model):
     start_time = models.TimeField(default=current_time)
     end_time = models.TimeField(default=current_time)
     cancelled = models.BooleanField(default=False)
+    room_id = models.CharField(max_length=10, default=random_id())
     objects = AppointmentManager()
 
     class Meta:
