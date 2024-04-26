@@ -25,3 +25,16 @@ export function getUrlParams(url = window.location.href) {
   const urlStr = url.split('?')[1]
   return new URLSearchParams(urlStr)
 }
+
+export function convertirAFechaISO8601(fechaString: string) {
+  // Dividir la cadena de fecha en año, mes y día
+  const partesFecha = fechaString.split('-')
+  const año = partesFecha[0]
+  const mes = partesFecha[1]
+  const dia = partesFecha[2]
+
+  // Construir la cadena de fecha ISO 8601 con la hora y la zona horaria
+  const fechaISO8601 = año + '-' + mes + '-' + (Number(dia) + 1).toString()
+
+  return fechaISO8601
+}

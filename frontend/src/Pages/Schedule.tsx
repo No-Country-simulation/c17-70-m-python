@@ -15,14 +15,14 @@ import { ComboBox } from '../components/ComboBox/ComboBox'
 import { DrawerRight } from '../components/ComboBox/Drawer'
 import { routes } from '../routes'
 import { PropsDoctor } from '../type'
-import { convertirFormatoHora } from '../utils/date'
+import { convertirAFechaISO8601, convertirFormatoHora } from '../utils/date'
 
 interface PropsDoctors {
   doctor: PropsDoctor
   setShowCompleted: (isSelected: boolean) => void
 }
 function DoctorSelect({ doctor, setShowCompleted }: PropsDoctors) {
-  const date = new Date(doctor.date)
+  const date = new Date(convertirAFechaISO8601(doctor.date))
   const formatDate = format(date, 'long')
   return (
     <div className='bg-neutral-50 rounded-xl shadow-md p-2 flex gap-2'>

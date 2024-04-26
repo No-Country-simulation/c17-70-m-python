@@ -10,6 +10,7 @@ import { DrawerRight } from '../components/ComboBox/Drawer'
 import { DoctorInfo } from '../components/DoctorInfo'
 import { routes } from '../routes'
 import { PropsDoctor } from '../type'
+import { convertirAFechaISO8601 } from '../utils/date'
 
 export function MySchedule() {
   const [appointments, setAppointments] = useState<PropsDoctor[]>([])
@@ -23,7 +24,7 @@ export function MySchedule() {
   }, [access])
 
   const dateShortArray = appointments.map(info => {
-    const date = new Date(info.date)
+    const date = new Date(convertirAFechaISO8601(info.date))
     const formatDate = format(date, 'DD/MM/YYYY', 'en')
     return formatDate
   })
