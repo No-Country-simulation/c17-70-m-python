@@ -1,4 +1,3 @@
-from distutils import config
 import os
 from dotenv import load_dotenv
 from pathlib import Path
@@ -130,7 +129,6 @@ DATABASES = {
 DEFAULT_CONNECTION_NAME = "default"
 
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -147,7 +145,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -157,17 +154,13 @@ USE_I18N = True
 USE_TZ = True
 
 
-
-
 STATIC_URL = 'static/'
-
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORES_ALLOW_ORIGINS = [
 
 ]
-
 
 
 REST_FRAMEWORK = {

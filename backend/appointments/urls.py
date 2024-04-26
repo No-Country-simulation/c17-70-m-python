@@ -1,5 +1,4 @@
 from rest_framework import routers
-from rest_framework.documentation import include_docs_urls
 from django.urls import path, include
 from .views import *
 
@@ -42,5 +41,3 @@ urlpatterns = [
     path('patientmedicamentsbyid/', PatientDiagnosisByUserListView.as_view({'get':'list'}), name='diagnosis-medication_by_user-list')
 
 ]
-    # Api
-
