@@ -125,10 +125,19 @@ load_dotenv()
 
 
 DATABASES = {
-    'default': dj_database_url.parse(os.getenv("DATABASE_URL"))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['RAILWAY_DATABASE_NAME'],
+        'USER': os.environ['RAILWAY_DATABASE_USERNAME'],
+        'PASSWORD': os.environ['RAILWAY_DATABASE_PASSWORD'],
+        'HOST': os.environ['RAILWAY_DATABASE_HOST'],
+        'PORT': os.environ['RAILWAY_DATABASE_PORT'],
+    }
 }
-DEFAULT_CONNECTION_NAME = "default"
 
+DATABASES["default"] = dj_database_url.parse(os.getenv("DATABASE_URL"))
+
+DEFAULT_CONNECTION_NAME = "default"
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -147,7 +156,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -157,17 +165,13 @@ USE_I18N = True
 USE_TZ = True
 
 
-
-
 STATIC_URL = 'static/'
-
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORES_ALLOW_ORIGINS = [
 
 ]
-
 
 
 REST_FRAMEWORK = {
