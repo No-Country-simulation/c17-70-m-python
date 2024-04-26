@@ -2,7 +2,7 @@ import { format } from '@formkit/tempo'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { LeftArrow } from '../Icons/LeftArrow'
-import { useDataUser } from '../Service/global/user'
+import { dataUser } from '../Service/global/user'
 import { Button } from '../components/Button'
 import { ComboBox } from '../components/ComboBox/ComboBox'
 import { DrawerRight } from '../components/ComboBox/Drawer'
@@ -49,7 +49,7 @@ const CountryPhone = [
 ]
 
 export function PersonalData() {
-  const { user } = useDataUser()
+  const { user } = dataUser()
   const profile = user
   const date = new Date(profile.birthdate)
   const formateDate = format(date, 'DD/MM/YYYY', 'en')

@@ -10,5 +10,6 @@ export const routes = {
   profileHistoryTreatment: '/profile/history/treatment',
   profileShedule: '/profile/schedule',
   schedule: '/schedule',
+  videoCall: '/videoCall',
   error: '*'
 }

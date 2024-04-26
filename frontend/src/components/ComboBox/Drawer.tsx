@@ -10,7 +10,7 @@ import { LeftArrowCircle } from '../../Icons/LeftArrowCircle'
 import { Note } from '../../Icons/Note'
 import { Option } from '../../Icons/Option'
 import { User } from '../../Icons/User'
-import { useDataUser } from '../../Service/global/user'
+import { dataUser } from '../../Service/global/user'
 import { routes } from '../../routes'
 
 const drawerWidth = 280
@@ -18,7 +18,7 @@ interface Props {
   type?: string
 }
 export function DrawerRight({ type }: Props) {
-  const { user, logout, isLogin } = useDataUser()
+  const { user, logout, isLogin } = dataUser()
   const profile = user
   const [open, setOpen] = React.useState(false)
 
@@ -60,7 +60,7 @@ export function DrawerRight({ type }: Props) {
           <div className='flex px-5 gap-x-4 mb-5'>
             <div className='w-9 h-9 rounded-full overflow-hidden border-2 border-primary-500'>
               <img
-                className=' object-contain w-full'
+                className='w-9 h-9 object-cover object-top'
                 src={profile?.user_photo}
                 alt={`picture the user ${profile?.first_name}`}
               />

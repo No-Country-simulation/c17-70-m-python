@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import { useDataUser } from '../Service/global/user'
+import { dataUser } from '../Service/global/user'
 import { routes } from '../routes'
 
 interface ProtectedRouteProps {
@@ -8,7 +8,7 @@ interface ProtectedRouteProps {
 }
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { isLogin } = useDataUser()
+  const { isLogin } = dataUser()
   const location = useLocation()
 
   return isLogin ? (

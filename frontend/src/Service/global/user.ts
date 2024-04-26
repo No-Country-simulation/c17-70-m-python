@@ -33,6 +33,7 @@ interface UserState {
   user: UserData
   isLogin: boolean
   isLoading: boolean
+  access: string
   fetchUser: ({ userName, password }: Props) => Promise<void>
   getDataUser: () => void
   logout: () => void
@@ -45,7 +46,7 @@ interface Props {
   password: string
 }
 
-export const useDataUser = create<UserState>()(
+export const dataUser = create<UserState>()(
   devtools(
     persist(
       (set, get) => {
@@ -53,6 +54,7 @@ export const useDataUser = create<UserState>()(
           user: InitDataUser,
           isLogin: false,
           isLoading: false,
+          access: '',
           fetchUser: async ({ userName, password }: Props) => {
             const url = `${URL}/api/auth/login/`
 
@@ -61,20 +63,22 @@ export const useDataUser = create<UserState>()(
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'withCredentials': 'true'
+                  'Referer': `${URL}`
                 },
                 body: JSON.stringify({
-                  username: userName,
+                  email: userName,
                   password: password
                 })
               })
 
               if (!response.ok) {
-                throw new Error('Network response was not ok')
+                throw new Error(
+                  `Status ${response.status} Ha ocurrido un problema`
+                )
               }
 
-              const { user_data: userData } = await response.json()
-              set({ user: userData, isLogin: true })
+              const { user, access } = await response.json()
+              set({ user, isLogin: true, access })
             } catch (error) {
               console.error('Hubo un problema con la solicitud:', error)
               throw error
@@ -84,8 +88,13 @@ export const useDataUser = create<UserState>()(
             const { user } = get()
             console.log(user)
           },
-          logout: () => {
-            set({ isLogin: false })
+          logout: async () => {
+            set({
+              user: InitDataUser,
+              isLogin: false,
+              isLoading: false,
+              access: ''
+            })
           },
           isLoadingTrue: () => {
             set({ isLoading: true })

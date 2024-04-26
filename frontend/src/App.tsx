@@ -12,10 +12,14 @@ import { PersonalData } from './Pages/PersonalData'
 import { Profile } from './Pages/Profile'
 import { Register } from './Pages/Register'
 import { Schedule } from './Pages/Schedule'
+import { VideoCall } from './Pages/VideoCall'
+import { dataUser } from './Service/global/user'
+import { Button } from './components/Button'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { routes } from './routes'
 
 function App() {
+  const { logout } = dataUser()
   return (
     <BrowserRouter>
       <Routes>
@@ -28,6 +32,17 @@ function App() {
           }
         />
         <Route path={routes.login} element={<Login />} />
+        <Route
+          path={'/logout'}
+          element={
+            <div>
+              <Button onClick={logout} typeVariant='secondary'>
+                Des Login
+              </Button>
+            </div>
+          }
+        />
+
         <Route path={routes.register} element={<Register />} />
         <Route
           path={routes.profile}
@@ -74,6 +89,14 @@ function App() {
           element={
             <ProtectedRoute>
               <PersonalData />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={routes.videoCall}
+          element={
+            <ProtectedRoute>
+              <VideoCall />
             </ProtectedRoute>
           }
         />

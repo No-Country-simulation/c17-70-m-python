@@ -1,7 +1,7 @@
 import { CircularProgress, Divider } from '@mui/material'
 import { FormEvent } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { useDataUser } from '../Service/global/user'
+import { dataUser } from '../Service/global/user'
 import { Button } from '../components/Button'
 import { FrameCredential } from '../components/Frame/FrameCredential'
 import { InputText } from '../components/InputText'
@@ -20,7 +20,7 @@ function ModalLoading() {
 
 export function Login() {
   const { fetchUser, isLogin, isLoading, isLoadingFalse, isLoadingTrue } =
-    useDataUser()
+    dataUser()
   const navigate = useNavigate()
   const { state } = useLocation()
 
@@ -54,11 +54,7 @@ export function Login() {
           <div className='w-full flex items-center justify-center text-xl font-bold mb-8'>
             <h2>Inicia sesión</h2>
           </div>
-          <form
-            action=''
-            className='flex flex-col gap-4'
-            onSubmit={handleLogin}
-          >
+          <form className='flex flex-col gap-4' onSubmit={handleLogin}>
             <div className='flex flex-col gap-y-4'>
               <InputText
                 name='email'
@@ -75,7 +71,7 @@ export function Login() {
             <div className='flex justify-end text-primary-700'>
               Olvidaste tu contraseña?
             </div>
-            <div>
+            <div className='flex  gap-4'>
               <Button type='submit' className='w-full' typeVariant='primary'>
                 Iniciar sesión
               </Button>

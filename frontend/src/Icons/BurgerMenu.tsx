@@ -22,7 +22,7 @@ export function BurgerMenu({ className, type }: Props) {
           d='M4 18L20 18'
           stroke={color}
           strokeWidth='2'
-          stroke-linecap='round'
+          strokeLinecap='round'
         ></path>{' '}
         <path
           d='M4 12L20 12'

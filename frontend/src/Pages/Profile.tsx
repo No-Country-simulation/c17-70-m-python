@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom'
 import { ReducedLogo } from '../Icons/ReducedLogo'
 import { RightArrow } from '../Icons/RightArrow'
 import { User } from '../Icons/User'
-import { useDataUser } from '../Service/global/user'
+import { dataUser } from '../Service/global/user'
 import { DrawerRight } from '../components/ComboBox/Drawer'
 import { routes } from '../routes'
 
 export function Profile() {
-  const { user } = useDataUser()
+  const { user } = dataUser()
   const profile = user
   return (
     <div
@@ -29,7 +29,7 @@ export function Profile() {
         <div className='flex flex-col items-center justify-center'>
           <div className='w-[78px] h-[78px] overflow-hidden rounded-full my-5'>
             <img
-              className='w-[78px] h-[78px] object-contain object-center'
+              className='w-[78px] h-[78px] object-cover object-top'
               src={profile.user_photo}
               alt={`imagen de perfil del usuario ${profile.first_name}`}
             />
