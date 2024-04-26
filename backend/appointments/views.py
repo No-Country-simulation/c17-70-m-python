@@ -1,13 +1,18 @@
+from datetime import datetime
 from django_filters.rest_framework import DjangoFilterBackend
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import F
 from rest_framework import viewsets, filters
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.decorators import action
 from login.permissions import IsPatient, IsDoctor, IsDoctorOrPatient
+from accounts.models import Doctor, Patient, Diagnosis, Medication
 from .models import Appointment, WorkShift
-from .serializers import AppointmentSerializer, WorkShiftSerializer, PatientAppointmentSerializer, DoctorsSpecialtySerializer
-from accounts.models import Doctor
-
+from .serializers import AppointmentSerializer, WorkShiftSerializer, PatientAppointmentSerializer, DoctorsSpecialtySerializer, DiagnosisSerializer, MedicationSerializer
+from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 
 class WorkShiftViewSet(viewsets.ModelViewSet):
     """
@@ -26,6 +31,7 @@ class WorkShiftViewSet(viewsets.ModelViewSet):
     """
     queryset = WorkShift.objects.all()
     serializer_class = WorkShiftSerializer
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsDoctor]
 
     def create(self, request, *args, **kwargs):
@@ -59,6 +65,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
     filter_fields = ['work_shift__doctor__specialty', 'cancelled']
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsDoctorOrPatient]
 
     def get_queryset(self):
@@ -92,6 +99,7 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
     """
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsPatient]
 
     def create(self, request, *args, **kwargs):
@@ -120,11 +128,10 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
         if patient:
             appointment.patient = patient
             appointment.save()
-
             serializer = self.get_serializer(appointment)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Paciente no encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response({'error': 'Paciente no encontrado.'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class PatientAppointmentViewSet(viewsets.ModelViewSet):
@@ -145,6 +152,7 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
     """
     queryset = Appointment.objects.all()
     serializer_class = PatientAppointmentSerializer
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsPatient]
 
     def get_queryset(self):
@@ -159,11 +167,77 @@ class DoctorsSpecialtyViewSet(viewsets.ModelViewSet):
     "ViewSet para obtener las especialidades los doctores."
     queryset = Doctor.objects.all()
     serializer_class = DoctorsSpecialtySerializer
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsDoctorOrPatient]
 
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(specialty__isnull=False)
-        queryset = sorted(queryset, key=lambda x: (
-            x.specialty), reverse=False)
+        queryset = queryset.values('specialty').annotate(
+            specialty_name=F('specialty')).order_by().distinct()
         return queryset
+    
+
+    
+class MedicationListView(viewsets.ModelViewSet):
+    serializer_class = DiagnosisSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        patient_id = self.request.query_params.get('patient_id')
+
+        if patient_id:
+            patient = get_object_or_404(Patient, id=patient_id)
+            
+            queryset = Diagnosis.objects.filter(patient=patient)
+            return queryset
+        else:
+            return Diagnosis.objects.none()
+
+class PatientDiagnosisListView(viewsets.ModelViewSet):
+    serializer_class = DiagnosisSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        patient_id = self.request.query_params.get('patient_id')
+        date_param = self.request.query_params.get('date')
+
+        print("Patient ID:", patient_id)
+        print("Date:", date_param)
+
+        if patient_id:
+            queryset = Diagnosis.objects.filter(patient_id=patient_id)
+            if date_param:
+                queryset = queryset.filter(date=date_param)
+            return queryset
+        else:
+            return Diagnosis.objects.none()
+class DiagnosisMedicationListView(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = MedicationSerializer
+
+    def get_queryset(self):
+        diagnosis_id = self.request.query_params.get('diagnosis_id')
+        diagnosis = get_object_or_404(Diagnosis, id=diagnosis_id)
+        medications = diagnosis.medications.all()
+        return medications
+
+class PatientDiagnosisByUserListView(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = MedicationSerializer
+
+    def get_queryset(self):
+        # Obtener el id del usuario desde los parámetros de la consulta
+        user_id = self.request.query_params.get('user_id')
+        # Obtener el id del diagnóstico desde los parámetros de la consulta
+        diagnosis_id = self.request.query_params.get('diagnosis_id')
+
+        # Obtener el diagnóstico asociado al usuario y al id del diagnóstico
+        diagnosis = get_object_or_404(Diagnosis, id=diagnosis_id, patient__id=user_id)
+        # Obtener los medicamentos asociados a ese diagnóstico
+        medications = diagnosis.medications.all()
+        return medications

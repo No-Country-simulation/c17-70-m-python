@@ -1,8 +1,9 @@
+from distutils import config
 import os
 from dotenv import load_dotenv
 from pathlib import Path
 import dj_database_url
-
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,16 +22,23 @@ SECRET_KEY = os.getenv(django_insecure_key)
 DEBUG = os.getenv(debug_status, debug_status_default)
 load_dotenv()
 
-CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = False
 
-CORS_ALLOW_PRIVATE_NETWORK = True
+CORS_ORIGIN_WHITELIST = [
+    'https://c17-70-m-python-git-71-f013-ap-251096-francoespinozavs-projects.vercel.app',
+    'https://c17-70-m-python-git-78-videollamada-francoespinozavs-projects.vercel.app',
+    'https://dashboard.render.com',
+    'http://localhost:5173',
+    'https://c17-70-m-python.vercel.app',
+]
 
 CORS_ALLOW_HEADERS = (
     'accept',
     'accept-encoding',
     'authorization',
+    'priority',
     'content-type',
     'dnt',
     'origin',
@@ -39,16 +47,12 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
     'referer'
     'sessionid',
-    'withcredentials'
+    'withCredentials',
+    'Cookie',
 )
 
-SESSION_COOKIE_SAMESITE = 'None'
 
-SESSION_COOKIE_SECURE = True
-
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'c17-70-m-python-production.up.railway.app']
-
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -63,6 +67,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'rest_framework',
+    'rest_framework_simplejwt',
     'rest_framework.authtoken',
     'dj_rest_auth',
     'django.contrib.sites',
@@ -116,29 +121,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 load_dotenv()
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.environ['RAILWAY_DATABASE_NAME'],
-#         'USER': os.environ['RAILWAY_DATABASE_USERNAME'],
-#         'PASSWORD': os.environ['RAILWAY_DATABASE_PASSWORD'],
-#         'HOST': os.environ['RAILWAY_DATABASE_HOST'],
-#         'PORT': os.environ['RAILWAY_DATABASE_PORT'],
-#     }
-# }
 
 
 DATABASES = {
     'default': dj_database_url.parse(os.getenv("DATABASE_URL"))
 }
-
 DEFAULT_CONNECTION_NAME = "default"
 
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -156,8 +147,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -168,31 +157,26 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
+
 
 STATIC_URL = 'static/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORES_ALLOW_ORIGINS = [
 
 ]
 
-############################################################
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "ui/static")]
-# STATIC_ROOT = os.path.join(BASE_DIR, "ui/staticfiles")
 
 
 REST_FRAMEWORK = {
     ...: ...,
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-    )
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'CORS_MIDDLEWARE': 'corsheaders.middleware.CorsMiddleware',
 }
 
 AUTHENTICATION_BACKENDS = (
@@ -202,6 +186,38 @@ AUTHENTICATION_BACKENDS = (
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 SOCIALACCOUNT_ADAPTER = 'login.adapters.CustomSocialAccountAdapter'
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=50),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': False,
+
+    'ALGORITHM': 'HS256',
+
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+    'JWK_URL': None,
+    'LEEWAY': 0,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+    'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
 
 load_dotenv()
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
