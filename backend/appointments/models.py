@@ -1,10 +1,9 @@
+from datetime import datetime, timedelta
 import uuid
-from datetime import datetime
-from datetime import timedelta
+from django.utils import timezone
 from django.db import models
 from accounts.models import Patient, Doctor
 import random
-
 
 def random_id():
     result = ''

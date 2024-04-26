@@ -245,3 +245,20 @@ class DiagnosisMedicationListView(viewsets.ModelViewSet):
         diagnosis = get_object_or_404(Diagnosis, id=diagnosis_id)
         medications = diagnosis.medications.all()
         return medications
+
+class PatientDiagnosisByUserListView(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = MedicationSerializer
+
+    def get_queryset(self):
+        # Obtener el id del usuario desde los parámetros de la consulta
+        user_id = self.request.query_params.get('user_id')
+        # Obtener el id del diagnóstico desde los parámetros de la consulta
+        diagnosis_id = self.request.query_params.get('diagnosis_id')
+
+        # Obtener el diagnóstico asociado al usuario y al id del diagnóstico
+        diagnosis = get_object_or_404(Diagnosis, id=diagnosis_id, patient__id=user_id)
+        # Obtener los medicamentos asociados a ese diagnóstico
+        medications = diagnosis.medications.all()
+        return medications
