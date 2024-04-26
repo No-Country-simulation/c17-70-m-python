@@ -1,15 +1,13 @@
 from rest_framework import generics
-from .models import Doctor, Patient, Medicament, Treatment, Recipe, Medical_consultation_history, Medical_consultation, Administrator, CustomUser
+from .models import Doctor, Patient, Administrator, CustomUser
+from .models import Medication,Diagnosis
 from rest_framework import viewsets
 from . import serializers
 
 from django.contrib.auth.models import Group
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Patient, Medical_consultation, Recipe  # Treatment, Doctor
-# Create your views here.
-
-
+from appointments.serializers import MedicationSerializer, DiagnosisSerializer
 class AdministratorView(viewsets.ModelViewSet):
     serializer_class = serializers.AdministratorSerializer
     queryset = Administrator.objects.all()
@@ -102,63 +100,15 @@ class PatientRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 
 
 class MedicamentListCreate(generics.ListCreateAPIView):
-    queryset = Medicament.objects.all()
-    serializer_class = serializers.MedicamentSerializer
+    queryset = Medication.objects.all()
+    serializer_class = MedicationSerializer
 
 
 class MedicamentRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Medicament.objects.all()
-    serializer_class = serializers.MedicamentSerializer
-
-# Treatment
-
-
-class TreatmentListCreate(generics.ListCreateAPIView):
-    queryset = Treatment.objects.all()
-    serializer_class = serializers.TreatmentSerializer
-
-
-class TreatmentRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Treatment.objects.all()
-    serializer_class = serializers.TreatmentSerializer
-
-# Recipe
-
-
-class RecipeListCreate(generics.ListCreateAPIView):
-    queryset = Recipe.objects.all()
-    serializer_class = serializers.RecipeSerializer
-
-
-class RecipeRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Recipe.objects.all()
-    serializer_class = serializers.RecipeSerializer
+    queryset = Medication.objects.all()
+    serializer_class = MedicationSerializer
 
 # Medical_consultation_history
-
-
-class MedicalConsultationHistoryListCreate(generics.ListCreateAPIView):
-    queryset = Medical_consultation_history.objects.all()
-    serializer_class = serializers.MedicalConsultationHistorySerializer
-
-
-class MedicalConsultationHistoryRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Medical_consultation_history.objects.all()
-    serializer_class = serializers.MedicalConsultationHistorySerializer
-
-# Medical_consultation
-
-
-class MedicalConsultationListCreate(generics.ListCreateAPIView):
-    queryset = Medical_consultation.objects.all()
-    serializer_class = serializers.MedicalConsultationSerializer
-
-
-class MedicalConsultationRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Medical_consultation.objects.all()
-    serializer_class = serializers.MedicalConsultationSerializer
-
-# Administrator
 
 
 class AdministratorListCreate(generics.ListCreateAPIView):
@@ -179,6 +129,16 @@ class UserListCreate(generics.ListCreateAPIView):
 class UserRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = serializers.UserSerializer
+
+class DiagnosListCreate(generics.ListCreateAPIView):
+    queryset = Diagnosis.objects.all()
+    serializer_class = DiagnosisSerializer
+
+
+class DiagnosRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Diagnosis.objects.all()
+    serializer_class = DiagnosisSerializer
+
 
 
 """class GeneratePdf(View):

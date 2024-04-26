@@ -9,6 +9,5 @@ urlpatterns = [
     path('api/auth/', include('login.urls')),
     path('api/appointments/', include('appointments.urls')),
     # path('lobby/', include('videochat.urls')),
-    # path('', home, name='home'),
 
 ]

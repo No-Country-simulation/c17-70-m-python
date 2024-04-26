@@ -2,7 +2,6 @@ import uuid
 from datetime import datetime
 from datetime import timedelta
 from django.db import models
-from django.utils import timezone
 from accounts.models import Patient, Doctor
 import random
 
@@ -17,7 +16,6 @@ def random_id():
     for _ in range(length):
         result += chars[random.randint(0, max_pos - 1)]
     return result
-
 
 def current_time():
     return timezone.now().time().strftime('%H:%M:%S')
@@ -105,3 +103,5 @@ class Appointment(models.Model):
     class Meta:
         verbose_name = 'Appointment'
         verbose_name_plural = 'Appointments'
+
+
