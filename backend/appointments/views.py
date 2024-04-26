@@ -6,6 +6,7 @@ from rest_framework import viewsets, filters
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.decorators import action
 from login.permissions import IsPatient, IsDoctor, IsDoctorOrPatient
 from accounts.models import Doctor, Patient, Diagnosis, Medication
 from .models import Appointment, WorkShift
@@ -129,7 +130,7 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
             appointment.save()
             serializer = self.get_serializer(appointment)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        
+
         return Response({'error': 'Paciente no encontrado.'}, status=status.HTTP_404_NOT_FOUND)
 
 
@@ -160,6 +161,27 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
         queryset = sorted(queryset, key=lambda x: (
             x.date, x.start_time), reverse=False)
         return queryset
+
+    @action(methods=['delete'], detail=True, permission_classes=[IsPatient])
+    def cancel_appointment(self, request, pk=None):
+        appointment = self.get_object()
+        if appointment.cancelled:
+            return Response({'error': 'Appointment is already cancelled'}, status=400)
+        if appointment.patient != request.user.patient:
+            return Response({'error': 'You are not authorized to cancel this appointment'}, status=403)
+        appointment.cancelled = True
+        appointment.save()
+        return Response({'message': 'Appointment cancelled successfully'}, status=200)
+    
+    def destroy(self, request, *args, **kwargs):
+        appointment = self.get_object()
+        if appointment.cancelled:
+            return Response({'error': 'Appointment is already cancelled'}, status=400)
+        if appointment.patient!= request.user.patient:
+            return Response({'error': 'You are not authorized to cancel this appointment'}, status=403)
+        appointment.cancelled = True
+        appointment.save()
+        return Response({'message': 'Appointment cancelled successfully'}, status=200)
 
 
 class DoctorsSpecialtyViewSet(viewsets.ModelViewSet):

@@ -35,4 +35,5 @@ urlpatterns = [
     #Obtener medicamentos por ID de diagnostico 
     path('patientmedicaments/', DiagnosisMedicationListView.as_view({'get': 'list'}), name='diagnosis-medication-list')
 
-]
+    path('patient-appointments/<pk>/', PatientAppointmentViewSet.as_view({'delete': 'destroy'})),
+

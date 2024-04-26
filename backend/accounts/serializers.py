@@ -48,6 +48,10 @@ class PatientSerializer(serializers.ModelSerializer):
         }
 
 
+class MedicamentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Medicament
+        fields = '__all__'
 
 
 

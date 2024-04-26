@@ -11,7 +11,6 @@ class AppoimentmentDoctorSerializer(serializers.ModelSerializer):
         extra_kwargs = {
         }
 
-
 class DoctorsSpecialtySerializer(serializers.ModelSerializer):
     value = serializers.CharField(source='specialty_name')
 
@@ -40,10 +39,11 @@ class AppointmentSerializer(serializers.ModelSerializer):
     end_time = serializers.TimeField(read_only=True)
     doctor = AppoimentmentDoctorSerializer(
         read_only=True, source='work_shift.doctor')
+    room_id = serializers.CharField(read_only=True)
 
     class Meta:
         model = Appointment
-        fields = ['id', 'patient', 'date', 'start_time', 'end_time',
+        fields = ['id', 'room_id', 'patient', 'date', 'start_time', 'end_time',
                   'cancelled', 'doctor']
         extra_kwargs = {
             'patient': {'write_only': False, 'read_only': True},
@@ -57,10 +57,11 @@ class PatientAppointmentSerializer(serializers.ModelSerializer):
     end_time = serializers.TimeField(read_only=True)
     doctor = AppoimentmentDoctorSerializer(
         read_only=True, source='work_shift.doctor')
+    room_id = serializers.CharField(read_only=True)
 
     class Meta:
         model = Appointment
-        fields = ['id', 'date', 'start_time',
+        fields = ['id', 'room_id', 'date', 'start_time',
                   'end_time', 'cancelled', 'doctor', 'patient']
 class DiagnosisSerializer(serializers.ModelSerializer):
     class Meta:
