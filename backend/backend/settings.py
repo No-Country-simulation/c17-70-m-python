@@ -101,6 +101,7 @@ ROOT_URLCONF = 'backend.urls'
 
 SITE_ID = 1
 
+load_dotenv()
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -126,11 +127,11 @@ load_dotenv()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['RAILWAY_DATABASE_NAME'],
-        'USER': os.environ['RAILWAY_DATABASE_USERNAME'],
-        'PASSWORD': os.environ['RAILWAY_DATABASE_PASSWORD'],
-        'HOST': os.environ['RAILWAY_DATABASE_HOST'],
-        'PORT': os.environ['RAILWAY_DATABASE_PORT'],
+        'NAME': os.getenv('RAILWAY_DATABASE_NAME'),
+        'USER': os.getenv('RAILWAY_DATABASE_USERNAME'),
+        'PASSWORD': os.getenv('RAILWAY_DATABASE_PASSWORD'),
+        'HOST': os.getenv('RAILWAY_DATABASE_HOST'),
+        'PORT': os.getenv('RAILWAY_DATABASE_PORT'),
     }
 }
 
