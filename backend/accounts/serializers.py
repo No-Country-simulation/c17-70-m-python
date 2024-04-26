@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'groups', 'birthdate', 'country', 'phone_number', 'gender', 'user_permissions', 'role']
         extra_kwargs = {
             'password': {'write_only': True},
-            'is_active': {'read_only': True},
+            'is_active': {'read_only': True}
         }
 
 
@@ -50,32 +50,9 @@ class PatientSerializer(serializers.ModelSerializer):
 
 class MedicamentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Medicament
+        model = Medication
         fields = '__all__'
 
-
-class TreatmentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Treatment
-        fields = '__all__'
-
-
-class RecipeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Recipe
-        fields = '__all__'
-
-
-class MedicalConsultationHistorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Medical_consultation_history
-        fields = '__all__'
-
-
-class MedicalConsultationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Medical_consultation
-        fields = '__all__'
 
 
 class AdministratorSerializer(serializers.ModelSerializer):

@@ -2,21 +2,11 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from datetime import date
-from datetime import date
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.contrib.auth.hashers import make_password
 from django.urls import reverse
-
-
-class Imagen(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    large = models.CharField(max_length=300)
-    short = models.CharField(max_length=300)
-    icon = models.CharField(max_length=300)
-
-
-""" SACAR VALORES NULL DE LOS CAMPOS First_NAME, LAST_NAME,USERNAME"""
+from django.utils import timezone
 
 
 class CustomUser(AbstractUser):
@@ -54,15 +44,6 @@ class CustomUser(AbstractUser):
         Permission, related_name='custom_user_permissions', blank=True
     )
 
-
-class Medicament(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    medicament_photo = models.ForeignKey(
-        Imagen, on_delete=models.CASCADE, related_name='image_medicament', null=True, blank=True)
-    name_medicament = models.CharField(max_length=100)
-    description = models.TextField(default="description to medicament")
-
-
 class Doctor(CustomUser):
     specialty = models.CharField(max_length=100)
 
@@ -72,24 +53,10 @@ class Doctor(CustomUser):
     class Meta:
         verbose_name = 'Doctor'
         verbose_name_plural = 'Doctors'
-
-
-class Treatment(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-
-class Recipe(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    medicament = models.OneToOneField(
-        Medicament, on_delete=models.CASCADE, default=None)
-    dose = models.CharField(max_length=50)
-    frequency = models.CharField(max_length=100)
-    start_date = models.DateField(default=date.today)
-    ending_date = models.DateField(default=date.today)
-    treatment = models.ForeignKey(
-        Treatment, on_delete=models.CASCADE, related_name='recipes')
-
-
+class Administrator(CustomUser):
+    class meta:
+        verbose_name = 'Administrator'
+        verbose_name_plural = 'Administrators'
 class Patient(CustomUser):
     def get_absolute_url(self):
         return reverse('doctor-detail', args=[str(self.id)])
@@ -99,24 +66,21 @@ class Patient(CustomUser):
         verbose_name_plural = 'Patients'
 
 
-class Medical_consultation_history(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+class Medication(models.Model):
+
+    photo_medicament = models.URLField(blank=True, null=True, max_length=10000)
+    name = models.CharField(max_length=100)
+    Frequency = models.CharField(max_length=100)
+    quantity = models.CharField(max_length=100)
+    description = models.TextField()
+
+class Diagnosis(models.Model):
+
+    issue = models.TextField(default="")
     patient = models.ForeignKey(
-        Patient, on_delete=models.CASCADE, null=True, blank=True
-    )
+        Patient, on_delete=models.CASCADE, related_name='patient')
+    date = models.DateField(default=date.today) 
+    medications = models.ManyToManyField(Medication)
 
 
-class Medical_consultation(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    issue = models.CharField(max_length=100)
-    date = models.DateField()
-    doctor = models.OneToOneField(Doctor, on_delete=models.CASCADE)
-    treatment = models.OneToOneField(Treatment, on_delete=models.CASCADE)
-    consultation_history = models.ForeignKey(
-        Medical_consultation_history, on_delete=models.CASCADE, related_name='history')
-
-
-class Administrator(CustomUser):
-    class meta:
-        verbose_name = 'Administrator'
-        verbose_name_plural = 'Administrators'
