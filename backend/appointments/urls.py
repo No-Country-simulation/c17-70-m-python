@@ -9,7 +9,7 @@ patient_appointments_router = routers.DefaultRouter()
 diagnosis_router =routers.DefaultRouter()
 medication_router =routers.DefaultRouter()
 
-medication_router.register(r'medication', MedicationListView, basename='patient_diagnosis')
+medication_router.register(r'medication', DiagnosisMedicationListView, basename='patient_diagnosis')
 diagnosis_router.register(r'patientconsultation', PatientDiagnosisListView, basename='patient_diagnosis')
 appointment_router.register(r'appointments', AppointmentViewSet)
 work_shifts_router.register(r'work_shifts', WorkShiftViewSet)
@@ -31,5 +31,8 @@ urlpatterns = [
 
     #filtrar los diagnosticos por id de usuario o por usuario y fecha 
     path('patientdiagnosis/', PatientDiagnosisListView.as_view({'get': 'list'}), name='patient-diagnosis-list'),
+
+    #Obtener medicamentos por ID de diagnostico 
+    path('patientmedicaments/', DiagnosisMedicationListView.as_view({'get': 'list'}), name='diagnosis-medication-list')
 
 ]

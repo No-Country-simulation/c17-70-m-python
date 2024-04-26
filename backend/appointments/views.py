@@ -9,7 +9,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from login.permissions import IsPatient, IsDoctor, IsDoctorOrPatient
 from accounts.models import Doctor, Patient, Diagnosis, Medication
 from .models import Appointment, WorkShift
-from .serializers import AppointmentSerializer, WorkShiftSerializer, PatientAppointmentSerializer, DoctorsSpecialtySerializer, DiagnosisSerializer
+from .serializers import AppointmentSerializer, WorkShiftSerializer, PatientAppointmentSerializer, DoctorsSpecialtySerializer, DiagnosisSerializer, MedicationSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 
@@ -213,3 +213,13 @@ class PatientDiagnosisListView(viewsets.ModelViewSet):
             return queryset
         else:
             return Diagnosis.objects.none()
+class DiagnosisMedicationListView(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = MedicationSerializer
+
+    def get_queryset(self):
+        diagnosis_id = self.request.query_params.get('diagnosis_id')
+        diagnosis = get_object_or_404(Diagnosis, id=diagnosis_id)
+        medications = diagnosis.medications.all()
+        return medications

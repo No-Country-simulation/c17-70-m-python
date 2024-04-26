@@ -140,6 +140,7 @@ class DiagnosRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DiagnosisSerializer
 
 
+
 """class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
         patient_id = kwargs.get('pk')
