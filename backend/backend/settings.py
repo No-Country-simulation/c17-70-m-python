@@ -101,7 +101,7 @@ ROOT_URLCONF = 'backend.urls'
 
 SITE_ID = 1
 
-load_dotenv()
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -122,8 +122,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 load_dotenv()
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
