@@ -29,7 +29,7 @@ export function Profile() {
         <div className='flex flex-col items-center justify-center'>
           <div className='w-[78px] h-[78px] overflow-hidden rounded-full my-5'>
             <img
-              className='w-[78px] h-[78px] object-cover object-center'
+              className='w-[78px] h-[78px] object-cover object-top'
               src={profile.user_photo}
               alt={`imagen de perfil del usuario ${profile.first_name}`}
             />
