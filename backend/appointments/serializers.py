@@ -3,6 +3,8 @@ from rest_framework import serializers
 from .models import *
 from accounts.models import Medication, Diagnosis
 from django.utils import timezone
+
+
 class AppoimentmentDoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
@@ -10,6 +12,7 @@ class AppoimentmentDoctorSerializer(serializers.ModelSerializer):
                   'last_name', 'specialty']
         extra_kwargs = {
         }
+
 
 class DoctorsSpecialtySerializer(serializers.ModelSerializer):
     value = serializers.CharField(source='specialty_name')
@@ -33,13 +36,13 @@ class WorkShiftSerializer(serializers.ModelSerializer):
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
-    patient = PatientSerializer(read_only=True)
-    date = serializers.DateField(read_only=True)
-    start_time = serializers.TimeField(read_only=True)
-    end_time = serializers.TimeField(read_only=True)
-    doctor = AppoimentmentDoctorSerializer(
-        read_only=True, source='work_shift.doctor')
-    room_id = serializers.CharField(read_only=True)
+    patient = PatientSerializer()
+    date = serializers.DateField()
+    start_time = serializers.TimeField()
+    end_time = serializers.TimeField()
+    doctor = AppoimentmentDoctorSerializer(source='work_shift.doctor')
+    room_id = serializers.CharField()
+    cancelled = serializers.BooleanField()
 
     class Meta:
         model = Appointment
@@ -52,23 +55,41 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
 class PatientAppointmentSerializer(serializers.ModelSerializer):
     patient = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    date = serializers.DateField(read_only=True)
-    start_time = serializers.TimeField(read_only=True)
-    end_time = serializers.TimeField(read_only=True)
+    date = serializers.DateField()
+    start_time = serializers.TimeField()
+    end_time = serializers.TimeField()
     doctor = AppoimentmentDoctorSerializer(
         read_only=True, source='work_shift.doctor')
-    room_id = serializers.CharField(read_only=True)
+    room_id = serializers.CharField()
+    cancelled = serializers.BooleanField()
 
     class Meta:
         model = Appointment
         fields = ['id', 'room_id', 'date', 'start_time',
                   'end_time', 'cancelled', 'doctor', 'patient']
+
+
+class DoctorAppointmentSerializer(serializers.ModelSerializer):
+    patient = PatientSerializer()
+    date = serializers.DateField()
+    start_time = serializers.TimeField()
+    end_time = serializers.TimeField()
+    doctor = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    room_id = serializers.CharField()
+    cancelled = serializers.BooleanField()
+
+    class Meta:
+        model = Appointment
+        fields = ['id', 'room_id', 'date', 'start_time',
+                  'end_time', 'cancelled', 'doctor', 'patient']
+
+
 class DiagnosisSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diagnosis
         fields = '__all__'
 
-        
+
 class MedicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medication

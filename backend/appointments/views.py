@@ -1,18 +1,18 @@
-from datetime import datetime
 from django_filters.rest_framework import DjangoFilterBackend
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import F
 from rest_framework import viewsets, filters
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.exceptions import MethodNotAllowed
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.decorators import action
 from login.permissions import IsPatient, IsDoctor, IsDoctorOrPatient
-from accounts.models import Doctor, Patient, Diagnosis, Medication
+from accounts.models import Doctor, Patient, Diagnosis
 from .models import Appointment, WorkShift
-from .serializers import AppointmentSerializer, WorkShiftSerializer, PatientAppointmentSerializer, DoctorsSpecialtySerializer, DiagnosisSerializer, MedicationSerializer
+from .serializers import *
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+
 
 class WorkShiftViewSet(viewsets.ModelViewSet):
     """
@@ -47,15 +47,16 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     """
     ViewSet para administrar citas.
 
-    Esta clase proporciona operaciones CRUD para administrar citas. Utiliza la clase `AppointmentSerializer`
-    para la serialización y filtrado.
+    Esta clase proporciona operaciones CRUD para administrar citas. 
+    Utiliza la clase `AppointmentSerializer` para la serialización y filtrado.
 
     Atributos:
         queryset (QuerySet): El QuerySet de todas las citas.
         serializer_class (AppointmentSerializer): La clase serializadora para las citas.
         filter_backends (list): La lista de backends de filtro que se utilizarán.
         filter_fields (list): La lista de campos que se pueden filtrar.
-        permission_classes (list): La lista de clases de permisos necesarias para acceder a la vista.
+        permission_classes (list): La lista de clases de permisos 
+        necesarias para acceder a la vista.
 
     Métodos:
         get_queryset(): Devuelve el QuerySet filtrado basado en el paciente y la especialidad.
@@ -92,10 +93,12 @@ class BookAppointmentViewSet(viewsets.ModelViewSet):
     Atributos:
         queryset (QuerySet): El QuerySet de todas las citas.
         serializer_class (AppointmentSerializer): La clase serializadora para las citas.
-        permission_classes (list): La lista de clases de permisos necesarias para acceder a la vista.
+        permission_classes (list): La lista de clases de permisos necesarias 
+        para acceder a la vista.
 
     Métodos:
-        create(self, request, *args, **kwargs): Reserva una cita utilizando el ID de la cita disponible.
+        create(self, request, *args, **kwargs): Reserva una cita utilizando el ID de 
+        la cita disponible.
     """
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
@@ -145,7 +148,8 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
     Atributos:
         queryset (QuerySet): El QuerySet de todas las citas.
         serializer_class (AppointmentSerializer): La clase serializadora para las citas.
-        permission_classes (list): La lista de clases de permisos necesarias para acceder a la vista.
+        permission_classes (list): La lista de clases de permisos necesarias 
+        para acceder a la vista.
 
     Métodos:
         get_queryset(): Devuelve el QuerySet filtrado por el paciente autenticado.
@@ -157,10 +161,53 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        queryset = queryset.filter(patient__isnull=False)
         queryset = queryset.filter(patient=self.request.user.patient)
         queryset = sorted(queryset, key=lambda x: (
             x.date, x.start_time), reverse=False)
         return queryset
+
+    def create(self, request, *args, **kwargs):
+        raise MethodNotAllowed("CREATE")
+
+    def update(self, request, *args, **kwargs):
+        raise MethodNotAllowed("UPDATE")
+
+
+class DoctorAppointmentViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para obtener las citas de un doctor.
+    Esta clase proporciona operaciones CRUD para obtener las citas de un doctor
+    autenticado. Utiliza la clase `AppointmentSerializer` para la serialización y
+    filtrado.
+
+    Atributos:
+        queryset (QuerySet): El QuerySet de todas las citas.
+        serializer_class (AppointmentSerializer): La clase serializadora para las citas.
+        permission_classes (list): La lista de clases de permisos necesarias 
+        para acceder a la vista.
+
+    Métodos:
+        get_queryset(): Devuelve el QuerySet filtrado por el doctor autenticado.
+    """
+    queryset = Appointment.objects.all()
+
+    serializer_class = DoctorAppointmentSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsDoctor]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(work_shift__doctor=self.request.user.doctor)
+        queryset = sorted(queryset, key=lambda x: (
+            x.date, x.start_time), reverse=False)
+        return queryset
+
+    def create(self, request, *args, **kwargs):
+        raise MethodNotAllowed("CREATE")
+
+    def update(self, request, *args, **kwargs):
+        raise MethodNotAllowed("UPDATE")
 
 
 class DoctorsSpecialtyViewSet(viewsets.ModelViewSet):
@@ -176,9 +223,8 @@ class DoctorsSpecialtyViewSet(viewsets.ModelViewSet):
         queryset = queryset.values('specialty').annotate(
             specialty_name=F('specialty')).order_by().distinct()
         return queryset
-    
 
-    
+
 class MedicationListView(viewsets.ModelViewSet):
     serializer_class = DiagnosisSerializer
     authentication_classes = [JWTAuthentication]
@@ -189,11 +235,12 @@ class MedicationListView(viewsets.ModelViewSet):
 
         if patient_id:
             patient = get_object_or_404(Patient, id=patient_id)
-            
+
             queryset = Diagnosis.objects.filter(patient=patient)
             return queryset
         else:
             return Diagnosis.objects.none()
+
 
 class PatientDiagnosisListView(viewsets.ModelViewSet):
     serializer_class = DiagnosisSerializer
@@ -214,6 +261,8 @@ class PatientDiagnosisListView(viewsets.ModelViewSet):
             return queryset
         else:
             return Diagnosis.objects.none()
+
+
 class DiagnosisMedicationListView(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -224,6 +273,7 @@ class DiagnosisMedicationListView(viewsets.ModelViewSet):
         diagnosis = get_object_or_404(Diagnosis, id=diagnosis_id)
         medications = diagnosis.medications.all()
         return medications
+
 
 class PatientDiagnosisByUserListView(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
@@ -237,7 +287,8 @@ class PatientDiagnosisByUserListView(viewsets.ModelViewSet):
         diagnosis_id = self.request.query_params.get('diagnosis_id')
 
         # Obtener el diagnóstico asociado al usuario y al id del diagnóstico
-        diagnosis = get_object_or_404(Diagnosis, id=diagnosis_id, patient__id=user_id)
+        diagnosis = get_object_or_404(
+            Diagnosis, id=diagnosis_id, patient__id=user_id)
         # Obtener los medicamentos asociados a ese diagnóstico
         medications = diagnosis.medications.all()
         return medications
