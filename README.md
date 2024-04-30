@@ -91,20 +91,7 @@
                   <img src="https://img.shields.io/badge/linkedin-%230A66C2.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/>
                 </a>
               </td>
-            </tr>
-            <tr>
-              <td>Juan Fierro</td>
-              <td>
-                <a href="https://github.com/Patata1234">
-                  <img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
-                </a>
-              </td>
-              <td>
-                <a href="https://www.linkedin.com/in/juan-fierro-/">
-                  <img src="https://img.shields.io/badge/linkedin-%230A66C2.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/>
-                </a>
-              </td>
-            </tr>
+             </tr>
           </tbody>
         </table>
       </dd>
