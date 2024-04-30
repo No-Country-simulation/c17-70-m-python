@@ -161,10 +161,8 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(patient__isnull=False)
         queryset = queryset.filter(patient=self.request.user.patient)
-        queryset = sorted(queryset, key=lambda x: (
-            x.date, x.start_time), reverse=False)
+        queryset = queryset.order_by('date', 'start_time')
         return queryset
 
     def create(self, request, *args, **kwargs):
@@ -172,6 +170,17 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         raise MethodNotAllowed("UPDATE")
+
+    def destroy(self, request, pk):
+        """
+        Cancel an appointment by sending a DELETE request.
+        """
+        appointment = self.get_object()
+        if appointment.patient == request.user.patient:
+            appointment.cancelled = True
+            appointment.delete()
+            return Response({'message': 'Appointment cancelled successfully'}, status=status.HTTP_200_OK)
+        return Response({'error': 'You are not authorized to cancel this appointment'}, status=status.HTTP_403_FORBIDDEN)
 
 
 class DoctorAppointmentViewSet(viewsets.ModelViewSet):
