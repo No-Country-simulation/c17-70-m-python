@@ -211,6 +211,7 @@ class DoctorAppointmentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(work_shift__doctor=self.request.user.doctor)
+        queryset = queryset.filter(patient__isnull=False)
         queryset = queryset.order_by('date', 'start_time')
         return queryset
 
