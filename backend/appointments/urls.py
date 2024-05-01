@@ -8,6 +8,7 @@ patient_appointments_router = routers.DefaultRouter()
 diagnosis_router = routers.DefaultRouter()
 medication_router = routers.DefaultRouter()
 medication_User_router = routers.DefaultRouter()
+doctor_appointments_router = routers.DefaultRouter()
 
 medication_User_router.register(
     r'medication_user', PatientDiagnosisByUserListView, basename='diagnostic_medicaments')
@@ -19,6 +20,9 @@ appointment_router.register(r'appointments', AppointmentViewSet)
 work_shifts_router.register(r'work_shifts', WorkShiftViewSet)
 patient_appointments_router.register(
     r'patient-appointments', PatientAppointmentViewSet, basename='patient-appointments')
+doctor_appointments_router.register(
+    r'doctor-appointments', DoctorAppointmentViewSet, basename='doctor-appointments'
+)
 
 
 urlpatterns = [
@@ -32,8 +36,7 @@ urlpatterns = [
 
     # Citas Medicas Resrervadas por Paciente
     path('patient-appointments/', include(patient_appointments_router.urls)),
-    path('doctor-appointments/',
-         DoctorAppointmentViewSet.as_view({'get': 'list'})),
+    path('', include(doctor_appointments_router.urls)),
 
 
     # filtrar los diagnosticos por id de usuario o por usuario y fecha
