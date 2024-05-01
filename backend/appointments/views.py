@@ -178,12 +178,14 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
             today = timezone.now().date()
             appointment_date = appointment.date
             if appointment_date - today <= timedelta(days=1):
+                if appointment == Appointment.objects.all():
+                    appointment.delete()
+                    return Response({'message': 'Cita cancelada exitosamente'}, status=status.HTTP_204_NO_CONTENT)
                 appointment.patient = None
                 appointment.save()
                 return Response({'message': 'Cita cancelada exitosamente'}, status=status.HTTP_204_NO_CONTENT)
-            else:
-                appointment.delete()
-                return Response({'message': 'Cita cancelada exitosamente'}, status=status.HTTP_204_NO_CONTENT)
+            appointment.delete()
+            return Response({'message': 'Cita cancelada exitosamente'}, status=status.HTTP_204_NO_CONTENT)
         return Response({'error': 'Tu no puedes cancelar esta cita'}, status=status.HTTP_403_FORBIDDEN)
 
 
