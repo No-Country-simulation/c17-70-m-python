@@ -27,8 +27,8 @@ export function Register () {
   // TODO-FEATURE: Falta agregar presistencia de datos
   //       Regresar y volver borra los datos
   const [selectedCountry, setSelectedCountry] = useState('')
-  const [selectedGenre, setSelectedGenre] = useState('')
-  const [selectedCheckbox, setSelectedCheckbox] = useState(false)
+  const [, setSelectedGenre] = useState('')
+  const [, setSelectedCheckbox] = useState(false)
   const [dataForm, setDataForm] = useState({
     firstName: '',
     lastName: '',
@@ -59,8 +59,8 @@ export function Register () {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const form = event.currentTarget
-    const data = new FormData(form)
+    //const form = event.currentTarget
+    //const data = new FormData(form)
   }
 
   const handleInputChange = (evenet: React.ChangeEvent<HTMLInputElement>) => {
