@@ -75,10 +75,8 @@ class AppointmentViewSet(viewsets.ModelViewSet):
         specialty = self.request.query_params.get('specialty', None)
         if specialty:
             queryset = queryset.filter(work_shift__doctor__specialty=specialty)
-            queryset = sorted(queryset, key=lambda x: (
-                x.date, x.start_time), reverse=False)
-        queryset = sorted(queryset, key=lambda x: (
-            x.date, x.start_time), reverse=False)
+            queryset = queryset.order_by('date', 'start_time')
+        queryset = queryset.order_by('date', 'start_time')
         return queryset
 
 
@@ -177,9 +175,15 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
         """
         appointment = self.get_object()
         if appointment.patient == request.user.patient:
-            appointment.cancelled = True
-            appointment.delete()
-            return Response({'message': 'Cita cancelada exitosamente'}, status=status.HTTP_204_NO_CONTENT)
+            today = timezone.now().date()
+            appointment_date = appointment.date
+            if appointment_date - today <= timedelta(days=1):
+                appointment.patient = None
+                appointment.save()
+                return Response({'message': 'Cita cancelada exitosamente'}, status=status.HTTP_204_NO_CONTENT)
+            else:
+                appointment.delete()
+                return Response({'message': 'Cita cancelada exitosamente'}, status=status.HTTP_204_NO_CONTENT)
         return Response({'error': 'Tu no puedes cancelar esta cita'}, status=status.HTTP_403_FORBIDDEN)
 
 
@@ -200,7 +204,6 @@ class DoctorAppointmentViewSet(viewsets.ModelViewSet):
         get_queryset(): Devuelve el QuerySet filtrado por el doctor autenticado.
     """
     queryset = Appointment.objects.all()
-
     serializer_class = DoctorAppointmentSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsDoctor]
@@ -208,8 +211,7 @@ class DoctorAppointmentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(work_shift__doctor=self.request.user.doctor)
-        queryset = sorted(queryset, key=lambda x: (
-            x.date, x.start_time), reverse=False)
+        queryset = queryset.order_by('date', 'start_time')
         return queryset
 
     def create(self, request, *args, **kwargs):
@@ -217,6 +219,16 @@ class DoctorAppointmentViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         raise MethodNotAllowed("UPDATE")
+
+    def destroy(self, request, pk):
+        """
+        Cancel an appointment by sending a DELETE request.
+        """
+        appointment = self.get_object()
+        if appointment.work_shift.doctor == request.user.doctor:
+            appointment.delete()
+            return Response({'message': 'Cita cancelada exitosamente'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'error': 'Tu no puedes cancelar esta cita'}, status=status.HTTP_403_FORBIDDEN)
 
 
 class DoctorsSpecialtyViewSet(viewsets.ModelViewSet):
