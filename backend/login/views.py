@@ -28,7 +28,10 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         user = self.user
-        data['user'] = CustomUserSerializer(user, context=self.context).data
+        user_data = CustomUserSerializer(user, context=self.context).data
+        if user.groups.first().name == 'Doctors':
+            user_data['specialty'] = user.doctor.specialty
+        data['user'] = user_data
         return data
 
 
