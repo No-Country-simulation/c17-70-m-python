@@ -25,6 +25,7 @@ function formatDate (date: string) {
 export function MySchedule () {
   const [appointments, setAppointments] = useState<PropsDoctor[] | Meeting[]>([])
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
+  const [refresh, setRefresh] = useState(false)
   const { user, access } = dataUser()
   const isPatient = user.role === ROLE.patient
   useEffect(() => {
@@ -72,7 +73,7 @@ export function MySchedule () {
         <h2 className='font-semibold'>Próximas consultas el</h2>
         <h1 className='font-bold text-2xl text-primary-500'>{selectedDate !== null && formatDate(selectedDate)}</h1>
         {isPatient && appointments.map((info, index) => {
-          return <DoctorInfo key={index} infoDoctor={info as PropsDoctor} />
+          return <DoctorInfo state={refresh} refresh={setRefresh} key={index} infoDoctor={info as PropsDoctor} />
         })}
 
         {!isPatient && newDates.map((info, index) => {
