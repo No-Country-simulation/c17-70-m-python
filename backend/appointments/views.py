@@ -179,8 +179,8 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
         if appointment.patient == request.user.patient:
             appointment.cancelled = True
             appointment.delete()
-            return Response({'message': 'Appointment cancelled successfully'}, status=status.HTTP_200_OK)
-        return Response({'error': 'You are not authorized to cancel this appointment'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'message': 'Cita cancelada exitosamente'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'error': 'Tu no puedes cancelar esta cita'}, status=status.HTTP_403_FORBIDDEN)
 
 
 class DoctorAppointmentViewSet(viewsets.ModelViewSet):
