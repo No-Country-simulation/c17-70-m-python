@@ -18,6 +18,8 @@ export function HomeDoctor ({ first, prefix }: Props) {
   useEffect(() => {
     const getAppointments = async () => {
       const appointment = await getAppointmentDoctor({ access })
+      console.log("Data entregada por /api/appointments/doctor-appointments/")
+      console.log(appointment)
       setAppointments(appointment)
     }
     getAppointments()
@@ -50,7 +52,7 @@ export function HomeDoctor ({ first, prefix }: Props) {
         <div className='flex flex-col gap-4'>
           {appointments.length !== 0 &&
             appointments.map((info, index) => {
-              return (
+              return info.patient !== null && (
                 <PatientInfo key={index} meetingInfo={info} />
               )
             })}
