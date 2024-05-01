@@ -46,9 +46,9 @@ const office = [
     queries: [
       {
         doctor: {
-          name: 'Dr. Pedro Fernández',
-          specialty: 'Otorrinolaringología',
-          img: 'https://s3-alpha-sig.figma.com/img/f817/6a72/b73a5ae73a8008dd384ab16c5048d684?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ov9o-iG1mkbbCN86LlzUNLIXEcxQROqOvkHuY~L7JPRkV3Z1ZrwfDPfQTFtpJTN8~djW6U~Il9RjdBSEJpuIL2rgt0GCZhDnUP0wQ-L3I7YSwAR55Odu5Y2JOBSuhjrhidMV6q~PWYaueIJMJQfCg~VflasOlThrl1nwY3fCFYWf~TPs-hV9-NJLu8tTV9ZSR6y8xltsMRwiZ17l1XZHzqP7OQ1PAbfhq5ChTTajC6imoNtOGaMaq7XSs2gwdtTlUAfE1D7nUL239v1qvU2a6h4YZ1Hyoc6kujOcY8rMoE6J~7a4XOEUuqfU-s8EBJrBms9qbiPtFiUETd7bl2Z4yw__'
+          name: 'Dr. Franco Greco',
+          specialty: 'Psicologia',
+          img: '/doctor1.jpg'
         },
         date: {
           full: '14 de marzo 2023',
@@ -89,9 +89,9 @@ const office = [
     queries: [
       {
         doctor: {
-          name: 'Dr. Daniel M',
-          specialty: 'Medicina General',
-          img: 'https://s3-alpha-sig.figma.com/img/c8ab/3368/4443f77db8b8bbaf4b585c9ffedad91c?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=RemNQ1SJT6~PoKbQyVnFscBv66fC9lTVxcB-HMAQbDNPrjp908RrAh0bHYWcBRxuNhoqYhIE28P5jkshztarFT2IjA5xT72EiTSTZN0WsSPPVpRTofkkdZ75Rh5owy~oMBOBlMSVDIyXNzADQjLcItN29Ub3sg6WVplj8fN4vGaZ9p9pJmLWtGTTJxbaEpiA1-hx1~L32-fXQRW47Izd1o4B-HkUpnhF~LXdnhY6CEcQp8Djz4ZO30epFtW9x1QkjqHBw5jSmFZxQbNKnaXrM5wFtiyAB~-eoOyzhvsB4lOFccUrwlDKzZuOR-z6Es2f1SEbbwmGrz5LGWbZhII0Eg__'
+          name: 'Dr. Victoria Heredia',
+          specialty: 'Psicologia',
+          img: '/doctor2.jpg'
         },
         date: {
           full: '12 de Diciembre 2023',
@@ -124,9 +124,9 @@ const office = [
       },
       {
         doctor: {
-          name: 'Dr. Daniel M',
-          specialty: 'Medicina General',
-          img: 'https://s3-alpha-sig.figma.com/img/c8ab/3368/4443f77db8b8bbaf4b585c9ffedad91c?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=RemNQ1SJT6~PoKbQyVnFscBv66fC9lTVxcB-HMAQbDNPrjp908RrAh0bHYWcBRxuNhoqYhIE28P5jkshztarFT2IjA5xT72EiTSTZN0WsSPPVpRTofkkdZ75Rh5owy~oMBOBlMSVDIyXNzADQjLcItN29Ub3sg6WVplj8fN4vGaZ9p9pJmLWtGTTJxbaEpiA1-hx1~L32-fXQRW47Izd1o4B-HkUpnhF~LXdnhY6CEcQp8Djz4ZO30epFtW9x1QkjqHBw5jSmFZxQbNKnaXrM5wFtiyAB~-eoOyzhvsB4lOFccUrwlDKzZuOR-z6Es2f1SEbbwmGrz5LGWbZhII0Eg__'
+          name: 'Dr. Jose Casas',
+          specialty: 'Cardiologia',
+          img: '/doctor3.jpg'
         },
         date: {
           full: '12 de Diciembre 2023',
@@ -164,13 +164,13 @@ const office = [
 interface Props {
   officeDoctor: OfficeDoctor
 }
-function DoctorSelect({ officeDoctor }: Props) {
+function DoctorSelect ({ officeDoctor }: Props) {
   return (
     <div className='bg-neutral-50 rounded-xl shadow-md p-2 flex gap-2 flex-col'>
       <div className='flex gap-2 w-full'>
         <div className='w-[89px] h-[84px] rounded-md overflow-hidden'>
           <img
-            className='w-[89px] h-[84px] object-cover object-top'
+            className='w-[89px] h-[84px] aspect-square object-cover object-center'
             src={officeDoctor.doctor.img}
             alt={`imagen del doctor/a ${officeDoctor.doctor.name}`}
           />
@@ -218,7 +218,7 @@ function DoctorSelect({ officeDoctor }: Props) {
   )
 }
 
-export function HistoryOficce() {
+export function HistoryOficce () {
   return (
     <section className='px-8 py-9 max-w-[500px]'>
       <div className='flex justify-between items-center'>
