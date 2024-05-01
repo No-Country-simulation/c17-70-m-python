@@ -12,12 +12,13 @@ import { Option } from '../../Icons/Option'
 import { User } from '../../Icons/User'
 import { dataUser } from '../../Service/global/user'
 import { routes } from '../../routes'
+import { ROLE } from '../../constants'
 
 const drawerWidth = 280
 interface Props {
   type?: string
 }
-export function DrawerRight({ type }: Props) {
+export function DrawerRight ({ type }: Props) {
   const { user, logout, isLogin } = dataUser()
   const profile = user
   const [open, setOpen] = React.useState(false)
@@ -84,13 +85,15 @@ export function DrawerRight({ type }: Props) {
             <Home />
             <span className='text-xl'>Inicio</span>
           </Link>
-          <Link
-            to={routes.schedule}
-            className='flex gap-x-4 justify-start items-center'
-          >
-            <Health />
-            <span className='text-xl'>Especialidades</span>
-          </Link>
+          {user.role === ROLE.patient && (
+            <Link
+              to={routes.schedule}
+              className='flex gap-x-4 justify-start items-center'
+            >
+              <Health />
+              <span className='text-xl'>Especialidades</span>
+            </Link>
+          )}
           <Link
             to={routes.profileShedule}
             className='flex gap-x-4 justify-start items-center'
@@ -98,13 +101,16 @@ export function DrawerRight({ type }: Props) {
             <User />
             <span className='text-xl'>Agenda de consultas</span>
           </Link>
-          <Link
-            to={routes.schedule}
-            className='flex gap-x-4 justify-start items-center'
-          >
-            <Note />
-            <span className='text-xl'>Programa una consulta</span>
-          </Link>
+          {
+            user.role === ROLE.patient && (
+              <Link
+                to={routes.schedule}
+                className='flex gap-x-4 justify-start items-center'
+              >
+                <Note />
+                <span className='text-xl'>Programa una consulta</span>
+              </Link>
+            )}
           <Link
             to={routes.home}
             className='flex gap-x-4 justify-start items-center'

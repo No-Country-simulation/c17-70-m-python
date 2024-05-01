@@ -1,8 +1,5 @@
 import { URL } from '../constants'
-
-interface Access {
-  access: string
-}
+import { Access } from '../type'
 
 async function getResponse(access: string, url: string, body?: string) {
   const response = await fetch(url, {
@@ -67,9 +64,9 @@ export async function postAppointment({ access, id }: PostAppointment) {
 }
 
 export async function deleteAppointment({ access, id }: PostAppointment) {
-  const url = `${URL}api/appointments/patient-appointments/patient-appointments/${id}/cancel_appointment/`
+  const url = `${URL}/api/appointments/patient-appointments/patient-appointments/${id}/`
   const response = await fetch(url, {
-    method: 'POST',
+    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
       'Referer': `${URL}`,
@@ -78,6 +75,4 @@ export async function deleteAppointment({ access, id }: PostAppointment) {
   })
   if (!response.ok)
     throw new Error(`ha ocurrido un problema. Status: ${response.status}`)
-  const json = await response.json()
-  return json
 }

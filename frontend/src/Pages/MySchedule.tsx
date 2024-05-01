@@ -9,19 +9,36 @@ import { Calendar } from '../components/Calendar'
 import { DrawerRight } from '../components/ComboBox/Drawer'
 import { DoctorInfo } from '../components/DoctorInfo'
 import { routes } from '../routes'
-import { PropsDoctor } from '../type'
+import { Meeting, PropsDoctor } from '../type'
 import { convertirAFechaISO8601 } from '../utils/date'
+import { ROLE } from '../constants'
+import { getAppointmentDoctor } from '../Service/doctor/getAppointment'
+import { PatientInfo } from '../components/PatientInfo'
 
-export function MySchedule() {
-  const [appointments, setAppointments] = useState<PropsDoctor[]>([])
-  const { access } = dataUser()
+function formatDate (date: string) {
+  const [day, month, year] = date.split("/").map(Number)
+  const newDate = new Date(year, month - 1, day)
+  const formatDate = format(newDate, 'long')
+  return formatDate
+}
+
+export function MySchedule () {
+  const [appointments, setAppointments] = useState<PropsDoctor[] | Meeting[]>([])
+  const [selectedDate, setSelectedDate] = useState<string | null>(null)
+  const { user, access } = dataUser()
+  const isPatient = user.role === ROLE.patient
   useEffect(() => {
     const getAppointments = async () => {
-      const appointment = await getAppointment({ access })
+      let appointment
+      if (isPatient) {
+        appointment = await getAppointment({ access }) as PropsDoctor[]
+      } else {
+        appointment = await getAppointmentDoctor({ access }) as Meeting[]
+      }
       setAppointments(appointment)
     }
     getAppointments()
-  }, [access])
+  }, [access, isPatient])
 
   const dateShortArray = appointments.map(info => {
     const date = new Date(convertirAFechaISO8601(info.date))
@@ -29,6 +46,15 @@ export function MySchedule() {
     return formatDate
   })
 
+  const filteredDates = appointments.filter(filter => {
+    const date = new Date(convertirAFechaISO8601(filter.date))
+    const formatDate = format(date, 'DD/MM/YYYY', 'en')
+    return formatDate === selectedDate
+  })
+
+  const isSelected = selectedDate === null
+  const conditionDates = isSelected && filteredDates.length === 0
+  const newDates = conditionDates ? appointments : filteredDates
   return (
     <section className='px-8 py-9 max-w-[500px] flex flex-col gap-4'>
       <div className='flex justify-between items-center'>
@@ -40,19 +66,28 @@ export function MySchedule() {
         </h1>
         <DrawerRight />
       </div>
-      <Calendar selectedDates={dateShortArray} />
+
+      <Calendar onDateChange={setSelectedDate} selectedDates={dateShortArray} />
       <div className='flex flex-col gap-4'>
-        <h2 className='font-semibold'>Próximas consultas</h2>
-        {appointments.map((info, index) => {
-          return <DoctorInfo key={index} infoDoctor={info} />
+        <h2 className='font-semibold'>Próximas consultas el</h2>
+        <h1 className='font-bold text-2xl text-primary-500'>{selectedDate !== null && formatDate(selectedDate)}</h1>
+        {isPatient && appointments.map((info, index) => {
+          return <DoctorInfo key={index} infoDoctor={info as PropsDoctor} />
+        })}
+
+        {!isPatient && newDates.map((info, index) => {
+          return <PatientInfo key={index} meetingInfo={info as Meeting} />
         })}
       </div>
 
-      <Link className='w-full' to={routes.schedule}>
-        <Button className='w-full' typeVariant='primary'>
-          Agendar nueva consulta
-        </Button>
-      </Link>
+      {
+        user.role === ROLE.patient && (
+          <Link className='w-full' to={routes.schedule}>
+            <Button className='w-full' typeVariant='primary'>
+              Agendar nueva consulta
+            </Button>
+          </Link>
+        )}
     </section>
   )
 }

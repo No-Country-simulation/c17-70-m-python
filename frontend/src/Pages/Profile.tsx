@@ -5,8 +5,9 @@ import { User } from '../Icons/User'
 import { dataUser } from '../Service/global/user'
 import { DrawerRight } from '../components/ComboBox/Drawer'
 import { routes } from '../routes'
+import { ROLE } from '../constants'
 
-export function Profile() {
+export function Profile () {
   const { user } = dataUser()
   const profile = user
   return (
@@ -29,7 +30,7 @@ export function Profile() {
         <div className='flex flex-col items-center justify-center'>
           <div className='w-[78px] h-[78px] overflow-hidden rounded-full my-5'>
             <img
-              className='w-[78px] h-[78px] object-cover object-top'
+              className='w-[78px] h-[78px] object-cover aspect-square object-top'
               src={profile.user_photo}
               alt={`imagen de perfil del usuario ${profile.first_name}`}
             />
@@ -49,15 +50,18 @@ export function Profile() {
             <RightArrow />
           </div>
         </Link>
-        <Link className='flex justify-between' to={routes.profileHistory}>
-          <div className='flex gap-4'>
-            <User />
-            <span className='font-semibold text-xl'>Historial médico</span>
-          </div>
-          <div>
-            <RightArrow />
-          </div>
-        </Link>
+        {
+          user.role === ROLE.patient && (
+            <Link className='flex justify-between' to={routes.profileHistory}>
+              <div className='flex gap-4'>
+                <User />
+                <span className='font-semibold text-xl'>Historial médico</span>
+              </div>
+              <div>
+                <RightArrow />
+              </div>
+            </Link>
+          )}
         <Link className='flex justify-between' to={routes.profileShedule}>
           <div className='flex gap-4'>
             <User />

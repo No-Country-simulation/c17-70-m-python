@@ -13,7 +13,8 @@ const InitDataUser = {
   last_name: 'Segundo nombre',
   phone_number: 'Numero',
   role: 0,
-  user_photo: 'IMG'
+  user_photo: 'IMG',
+  specialty: undefined
 }
 
 interface UserData {
@@ -28,6 +29,7 @@ interface UserData {
   phone_number: string
   role: number
   user_photo: string
+  specialty: string | undefined
 }
 interface UserState {
   user: UserData

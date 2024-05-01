@@ -16,12 +16,13 @@ import { DrawerRight } from '../components/ComboBox/Drawer'
 import { routes } from '../routes'
 import { PropsDoctor } from '../type'
 import { convertirAFechaISO8601, convertirFormatoHora } from '../utils/date'
+import { useDebounce } from "@uidotdev/usehooks";
 
 interface PropsDoctors {
   doctor: PropsDoctor
   setShowCompleted: (isSelected: boolean) => void
 }
-function DoctorSelect({ doctor, setShowCompleted }: PropsDoctors) {
+function DoctorSelect ({ doctor, setShowCompleted }: PropsDoctors) {
   const date = new Date(convertirAFechaISO8601(doctor.date))
   const formatDate = format(date, 'long')
   return (
@@ -43,9 +44,8 @@ function DoctorSelect({ doctor, setShowCompleted }: PropsDoctors) {
         </div>
         <div className='w-full flex justify-between'>
           <div className='flex flex-col'>
-            <span className='text-xs'>{`${
-              doctor.doctor.gender === 'Femenino' ? 'Dra' : 'Dr'
-            } ${doctor.doctor.first_name} ${doctor.doctor.last_name}`}</span>
+            <span className='text-xs'>{`${doctor.doctor.gender === 'Femenino' ? 'Dra' : 'Dr'
+              } ${doctor.doctor.first_name} ${doctor.doctor.last_name}`}</span>
             <span className='text-xs'>{doctor.doctor.specialty}</span>
           </div>
           <BasicModal
@@ -55,9 +55,8 @@ function DoctorSelect({ doctor, setShowCompleted }: PropsDoctors) {
             hour={`${convertirFormatoHora(
               doctor.start_time
             )} a ${convertirFormatoHora(doctor.end_time)} hs`}
-            doctor={`${doctor.doctor.gender === 'Femenino' ? 'Dra' : 'Dr'} ${
-              doctor.doctor.first_name
-            } ${doctor.doctor.last_name}`}
+            doctor={`${doctor.doctor.gender === 'Femenino' ? 'Dra' : 'Dr'} ${doctor.doctor.first_name
+              } ${doctor.doctor.last_name}`}
             speciality={doctor.doctor.specialty}
           />
         </div>
@@ -78,7 +77,7 @@ interface PropModal {
   id: number
   setShowCompleted: (isSelected: boolean) => void
 }
-function BasicModal({
+function BasicModal ({
   date,
   hour,
   doctor,
@@ -154,7 +153,7 @@ function BasicModal({
   )
 }
 
-function ScheduledTime() {
+function ScheduledTime () {
   return (
     <div className='w-full flex flex-col items-end gap-10'>
       <div className=''>
@@ -188,13 +187,15 @@ function ScheduledTime() {
   )
 }
 
-export function Schedule() {
+export function Schedule () {
   const [showCompleted, setShowCompleted] = useState(false)
   const { state } = useLocation()
   const [selectedSpecialty, setSelectedSpecialty] = useState(state?.specialty)
   const [doctors, setDoctors] = useState([])
   const [speciality, setSpecialty] = useState<Specialty[]>([])
   const { access } = dataUser()
+
+  const doc = useDebounce(selectedSpecialty, 400)
 
   useEffect(() => {
     const specialties = async () => {
@@ -208,12 +209,12 @@ export function Schedule() {
     const getDoctors = async () => {
       const doctors = await getDoctorSpecialties({
         access,
-        specialty: selectedSpecialty
+        specialty: doc
       })
       setDoctors(doctors)
     }
     getDoctors()
-  }, [access, selectedSpecialty])
+  }, [access, doc])
 
   return (
     <section className='px-4 py-2 max-w-[500px] flex flex-col gap-4'>

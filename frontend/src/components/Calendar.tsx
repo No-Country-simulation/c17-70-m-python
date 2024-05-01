@@ -7,12 +7,12 @@ const l = 'en'
 const t = new Date()
 interface CalendarProps {
   selectedDates: string[]
+  onDateChange?: (date: string) => void;
 }
 
-export function Calendar({ selectedDates }: CalendarProps) {
+export function Calendar ({ selectedDates, onDateChange }: CalendarProps) {
   const [currentDate, setCurrentDate] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
-  console.log(selectedDate)
   const today = format(t, 'DD/MM/YYYY', l)
   const newSelectedDate = [...selectedDates, today]
   // Función para verificar si una fecha está seleccionada
@@ -22,6 +22,7 @@ export function Calendar({ selectedDates }: CalendarProps) {
 
   const handleDayClick = (date: string) => {
     setSelectedDate(date)
+    if (onDateChange) onDateChange(date)
   }
 
   // Función para obtener el primer día de la semana del mes
@@ -68,11 +69,10 @@ export function Calendar({ selectedDates }: CalendarProps) {
         <div
           onClick={() => handleDayClick(dateString)}
           key={dateString}
-          className={`p-2 text-center rounded-full cursor-pointer ${dayClasses} ${
-            selectedDate === dateString
-              ? 'ring-1 ring-secondary-500 hover:bg-secondary-100 text-black'
-              : ''
-          }`}
+          className={`p-2 text-center rounded-full cursor-pointer ${dayClasses} ${selectedDate === dateString
+            ? 'ring-1 ring-secondary-500 hover:bg-secondary-100 text-black'
+            : ''
+            }`}
         >
           {i}
         </div>

@@ -34,7 +34,7 @@ export function convertirAFechaISO8601(fechaString: string) {
   const dia = partesFecha[2]
 
   // Construir la cadena de fecha ISO 8601 con la hora y la zona horaria
-  const fechaISO8601 = año + '-' + mes + '-' + (Number(dia) + 1).toString()
+  const fechaISO8601 = año + '-' + mes + '-' + Number(dia).toString()
 
   return fechaISO8601
 }

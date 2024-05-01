@@ -1,56 +1,4 @@
-import { DateInput } from '@formkit/tempo'
-
 export type TypeButton = 'primary' | 'secondary' | 'tertiary'
-
-export interface Result {
-  gender: string
-  name: Name
-  location: Location
-  email: string
-  login: Login
-  dob: Dob
-  registered: Dob
-  phone: string
-  cell: string
-  id: ID
-  picture: Picture
-  nat: string
-}
-
-export interface Dob {
-  date: DateInput
-  age: number
-}
-
-export interface ID {
-  name: string
-  value: string
-}
-
-export interface Location {
-  street: Street
-  city: string
-  state: string
-  country: string
-  postcode: number
-  coordinates: Coordinates
-  timezone: Timezone
-}
-
-export interface Coordinates {
-  latitude: string
-  longitude: string
-}
-
-export interface Street {
-  number: number
-  name: string
-}
-
-export interface Timezone {
-  offset: string
-  description: string
-}
 
 export interface Login {
   uuid: string
@@ -99,4 +47,26 @@ export interface PropsDoctor {
   end_time: string
   cancelled: boolean
   doctor: Doctor
+}
+
+export interface Access {
+  access: string
+}
+
+export interface Meeting extends PropsDoctor {
+  patient: Patient
+}
+
+export interface Patient {
+  id: string
+  user_photo: string
+  email: string
+  first_name: string
+  last_name: string
+  id_number: number
+  birthdate: Date
+  country: string
+  gender: string
+  phone_number: string
+  role: number
 }

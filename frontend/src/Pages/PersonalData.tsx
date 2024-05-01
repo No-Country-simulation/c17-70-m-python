@@ -48,7 +48,7 @@ const CountryPhone = [
   }
 ]
 
-export function PersonalData() {
+export function PersonalData () {
   const { user } = dataUser()
   const profile = user
   const date = new Date(profile.birthdate)
@@ -73,7 +73,7 @@ export function PersonalData() {
       <div className='flex justify-center items-center py-11'>
         <div className='rounded-full overflow-hidden border-2 border-primary-500 w-[128px] h-[128px]'>
           <img
-            className='object-contain object-center'
+            className='w-[128px] h-[128px] aspect-square object-cover object-center'
             src={profile.user_photo}
             alt={`imagen de perfil del usuario ${profile?.first_name}`}
           />
@@ -115,7 +115,7 @@ export function PersonalData() {
       </div>
 
       <Button className='my-4 w-full' typeVariant='primary'>
-        Guardar Vambios
+        Guardar Cambios
       </Button>
     </section>
   )

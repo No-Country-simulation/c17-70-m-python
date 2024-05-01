@@ -21,7 +21,7 @@ interface Props {
   handleCountryChange?: (countryName: string) => void
 }
 
-export function ComboBox({
+export function ComboBox ({
   isCapitalized,
   options,
   className,
@@ -110,7 +110,7 @@ export function ComboBox({
   const filteredOptions = options.filter(option =>
     option.value.toLowerCase().includes(inputValue.toLowerCase())
   )
-
+  console.log(typeof selectedImage)
   return (
     <div
       className={`${className ? className : ''} relative`}
@@ -156,11 +156,9 @@ export function ComboBox({
         }}
         onBlur={handleBlur}
         placeholder={placeholder}
-        className={`${className ? className : ''} rounded-full mb-2 mt-2 ${
-          iconShow != null && iconShow !== false ? 'pr-12' : ''
-        } ${
-          flagShow != null && flagShow !== false ? 'pl-12' : 'pl-5'
-        } border-neutral-900 border px-2 py-2 text-black focus:outline-none focus:border-primary-500 shadow-sm focus:ring-primary-500 focus:ring-2 focus:caret-primary-500 disabled:bg-neutral-100 disabled:placeholder:text-neutral:300 disabled:border-neutral-300`}
+        className={`${className ? className : ''} rounded-full mb-2 mt-2 ${iconShow != null && iconShow !== false ? 'pr-12' : ''
+          } ${flagShow != null && flagShow !== false ? 'pl-12' : 'pl-5'
+          } border-neutral-900 border px-2 py-2 text-black focus:outline-none focus:border-primary-500 shadow-sm focus:ring-primary-500 focus:ring-2 focus:caret-primary-500 disabled:bg-neutral-100 disabled:placeholder:text-neutral:300 disabled:border-neutral-300`}
       />
       {readonly !== true && isActive && (
         <OptionComboBox
