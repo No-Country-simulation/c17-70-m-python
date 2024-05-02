@@ -76,3 +76,17 @@ export async function deleteAppointment({ access, id }: PostAppointment) {
   if (!response.ok)
     throw new Error(`ha ocurrido un problema. Status: ${response.status}`)
 }
+
+export async function deleteAppointmentDoctor({ access, id }: PostAppointment) {
+  const url = `${URL}/api/appointments/doctor-appointments/${id}/`
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Referer': `${URL}`,
+      'Authorization': `Bearer ${access}`
+    }
+  })
+  if (!response.ok)
+    throw new Error(`ha ocurrido un problema. Status: ${response.status}`)
+}

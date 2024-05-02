@@ -2,7 +2,7 @@ import { format } from '@formkit/tempo'
 import { dataUser } from '../Service/global/user'
 import { type Meeting } from '../type'
 import { convertirAFechaISO8601, convertirFormatoHora } from '../utils/date'
-import { deleteAppointment } from '../Service/getAppointment'
+import { deleteAppointmentDoctor } from '../Service/getAppointment'
 import { Trash } from '../Icons/Trash'
 import { Link } from 'react-router-dom'
 
@@ -43,7 +43,7 @@ export function PatientInfo ({ meetingInfo }: Props) {
       </div>
       <div className='ml-auto pr-2 '>
         <button
-          onClick={() => deleteAppointment({ access, id: meetingInfo.id })}
+          onClick={() => deleteAppointmentDoctor({ access, id: meetingInfo.id })}
         >
           <Trash />
         </button>

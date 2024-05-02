@@ -37,7 +37,6 @@ interface UserState {
   isLoading: boolean
   access: string
   fetchUser: ({ userName, password }: Props) => Promise<void>
-  getDataUser: () => void
   logout: () => void
   isLoadingTrue: () => void
   isLoadingFalse: () => void
@@ -51,7 +50,7 @@ interface Props {
 export const dataUser = create<UserState>()(
   devtools(
     persist(
-      (set, get) => {
+      set => {
         return {
           user: InitDataUser,
           isLogin: false,
@@ -85,10 +84,6 @@ export const dataUser = create<UserState>()(
               console.error('Hubo un problema con la solicitud:', error)
               throw error
             }
-          },
-          getDataUser: () => {
-            const { user } = get()
-            console.log(user)
           },
           logout: async () => {
             set({

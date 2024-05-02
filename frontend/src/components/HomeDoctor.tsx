@@ -18,8 +18,6 @@ export function HomeDoctor ({ first, prefix }: Props) {
   useEffect(() => {
     const getAppointments = async () => {
       const appointment = await getAppointmentDoctor({ access })
-      console.log("Data entregada por /api/appointments/doctor-appointments/")
-      console.log(appointment)
       setAppointments(appointment)
     }
     getAppointments()

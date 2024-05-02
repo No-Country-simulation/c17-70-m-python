@@ -29,7 +29,7 @@ export function Register () {
   const [selectedCountry, setSelectedCountry] = useState('')
   const [, setSelectedGenre] = useState('')
   const [, setSelectedCheckbox] = useState(false)
-  const [dataForm, setDataForm] = useState({
+  const [, setDataForm] = useState({
     firstName: '',
     lastName: '',
     dni: '',
@@ -47,7 +47,6 @@ export function Register () {
   }
   const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.checked
-    console.log(value)
     setSelectedCheckbox(value)
   }
   const handleChangeStep =
@@ -70,7 +69,6 @@ export function Register () {
       [name]: value
     }))
   }
-  console.log(dataForm)
   return (
     <form onSubmit={handleSubmit}>
       {step === 1 && (

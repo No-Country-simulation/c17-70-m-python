@@ -110,7 +110,6 @@ export function ComboBox ({
   const filteredOptions = options.filter(option =>
     option.value.toLowerCase().includes(inputValue.toLowerCase())
   )
-  console.log(typeof selectedImage)
   return (
     <div
       className={`${className ? className : ''} relative`}
