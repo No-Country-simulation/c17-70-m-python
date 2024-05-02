@@ -7,32 +7,14 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenError
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
-from .serializers import CustomUserSerializer
+from .serializers import CustomTokenObtainPairSerializer
 
 User = get_user_model()
-
-
-class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    def create(self, validated_data):
-        raise NotImplementedError('create() method not implemented')
-
-    def update(self, instance, validated_data):
-        raise NotImplementedError('update() method not implemented')
-
-    def validate(self, attrs):
-        data = super().validate(attrs)
-        user = self.user
-        user_data = CustomUserSerializer(user, context=self.context).data
-        if user.groups.first().name == 'Doctors':
-            user_data['specialty'] = user.doctor.specialty
-        data['user'] = user_data
-        return data
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
