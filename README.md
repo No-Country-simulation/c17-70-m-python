@@ -10,6 +10,9 @@
 <a href='https://c17-70-m-python.vercel.app/login' target='_blank'>
   <img src='https://img.shields.io/badge/Ver%20Demo-2E2E3E?style=for-the-badge&logo=Vercel&logoColor=white' />
 </a>
+<a href='https://documenter.getpostman.com/view/28045932/2sA3JDfjcC' target='_blank'>
+  <img src='[https://img.shields.io/badge/Ver%20Demo-2E2E3E?style=for-the-badge&logo=Vercel&logoColor=white](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)' alt="postman-logo" />
+</a>
 </p>
 
 ## Funcionalidades
