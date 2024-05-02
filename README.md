@@ -19,6 +19,10 @@
 - Envío de diagnóstico y receta médica al paciente
 - Videollamada como forma de consulta
 
+  
+<img src="/figma/Frame 1.png" alt="Mockup de Medicall" />
+<img src="/figma/Frame 3.png" alt="Mockup de Medicall" />
+<img src="/figma/Frame 24.png" alt="Mockup de Medicall" />
 ## Team
 
 <dl>
