@@ -5,7 +5,7 @@
 
 # Descripción del proyecto
 
-*Medicall* es una plataforma de telemedicina diseñada para mejorar la eficiencia en las consultas médicas. Nuestro objetivo principal es permitir el acceso a servicios médicos desde cualquier ubicación, facilitando así la atención médica remota. Esta plataforma busca ofrecer una experiencia fluida y conveniente para pacientes y profesionales de la salud, contribuyendo así a optimizar el proceso de atención médica.
+*Medicall* es una plataforma de telemedicina diseñada para mejorar la eficiencia en las consultas médicas. Nuestro objetivo principal es permitir el acceso a servicios médicos desde cualquier ubicación, facilitando así la atención médica remota. Esta plataforma busca ofrecer una experiencia fluida y conveniente para pacientes y profesionales de la salud, contribuyendo así a optimizar el proceso de atención médica, reduciendo los tiempos de espera y los costos de desplazamiento.
 <p align='left'>
 <a href='https://c17-70-m-python.vercel.app/login' target='_blank'>
   <img src='https://img.shields.io/badge/Ver%20Demo-2E2E3E?style=for-the-badge&logo=Vercel&logoColor=white' />
