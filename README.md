@@ -22,7 +22,8 @@
   
 <img src="/figma/Frame 1.png" alt="Mockup de Medicall" />
 <img src="/figma/Frame 3.png" alt="Mockup de Medicall" />
-<img src="/figma/Frame 24.png" alt="Mockup de Medicall" />
+<img src="/figma/Frame 25.png" alt="Mockup de Medicall" />
+
 ## Team
 
 <dl>
